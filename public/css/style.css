@@ -1,0 +1,24 @@
+body {
+    font-family: 'poppins';
+    width: 100vw;
+    height: 100vh;
+    background-color: #EFDCAB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body .card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    height: 60%;
+    width: 70%;
+    background-color: #443627;
+}
+
+body .card a {
+    text-decoration: none;
+    color: #F2F6D0;
+}
