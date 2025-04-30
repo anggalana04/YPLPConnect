@@ -21,9 +21,11 @@
     </div>
     <div class="herowrapper">
         <div class="card">
-            <a href="{{ route('about') }}">
+            
                 <h1>HALAMAN LANDING PAGE</h1>
-            </a>
+
+                <h1>lol</h1>
+            
         </div>
     </div>
 </body>
