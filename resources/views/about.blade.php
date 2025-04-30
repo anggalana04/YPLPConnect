@@ -12,5 +12,7 @@
     <h2>haloo dunia</h2>
 
     <h3>ASSALAMUALAIKUM</h3>
+    <h1>PANTEQ</h1>
+    <h1>gyugygi</h1>
 </body>
 </html>
