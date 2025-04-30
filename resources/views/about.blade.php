@@ -10,5 +10,7 @@
 <body>
     <h1>HALAMAN ABOUT</h1>
     <h2>haloo dunia</h2>
+
+    <h3>ASSALAMUALAIKUM</h3>
 </body>
 </html>
