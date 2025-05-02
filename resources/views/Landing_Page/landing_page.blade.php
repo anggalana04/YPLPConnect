@@ -11,7 +11,7 @@
 </head>
 <body>
     {{-- NAVBAR START --}}
-      <nav class="navbar position-fixed">
+      <nav class="navbar">
         <div class="konten-nav">
            <a href="#"> <img class="logo" src="{{ asset('image/logoYPLP/logo.svg') }}" alt="LogoYPLP">
            </a> 

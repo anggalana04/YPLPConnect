@@ -1,10 +1,11 @@
 body{
-    padding-top: 90px;
+    padding-top: 80px;
 }
 
 .navbar{
     /* display: flex;
     justify-content: flex-start; */
+    position: fixed;
     top: 15px; 
     left: 20px; /* menggantikan margin-left */
     right: 20px; /* menggantikan margin-right */
@@ -51,7 +52,7 @@ body p{
 
 body ul{
    display: inline-flex;
-   margin-left: 80%;
+   margin-left: 77%;
    align-items: center;
    justify-content: center;
    list-style: none;
