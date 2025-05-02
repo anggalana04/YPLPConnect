@@ -1,0 +1,269 @@
+body{
+    padding-top: 90px;
+}
+
+.navbar{
+    /* display: flex;
+    justify-content: flex-start; */
+    top: 15px; 
+    left: 20px; /* menggantikan margin-left */
+    right: 20px; /* menggantikan margin-right */
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    background-color: rgba(63, 125, 88, 0.85);
+    width: 97%;
+    height: 78px;
+    border-radius: 35px;
+
+}
+
+.konten-nav{
+    display: flex;
+    align-items: center;
+    height: 0px;
+}
+
+.logo {
+    width: 120px;
+    margin-top: 5px;
+    height: auto; /* menjaga aspek rasio */
+}
+
+
+body .headerNavbar{
+    display: inline-block;
+    margin-top: 15px;
+    color: white;
+}
+
+body h1{
+    font-size: 30px;
+    margin-bottom: 0%;
+    width: max-content;
+}
+
+body p{
+    font-size: 15.5px;
+    margin-top: 0%;
+}
+
+body ul{
+   display: inline-flex;
+   margin-left: 80%;
+   align-items: center;
+   justify-content: center;
+   list-style: none;
+   gap: 30px;
+   margin-right: 20px;
+   margin-top: 16px;
+   
+}
+
+body ul li a {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    padding-bottom: 5px; /* beri ruang untuk underline */
+}
+
+body ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+body ul li a:hover::after {
+    width: 100%;
+}
+
+.login button {
+    color: black;
+    background-color: white;
+    border-radius: 20px;
+    width: 70px;
+    height: 35px;
+    padding-bottom: 5px;
+    border: none;
+    outline: none;
+    
+    display: flex;           /* Aktifkan flexbox */
+    justify-content: center; /* Rata tengah horizontal */
+    align-items: center;     /* Rata tengah vertikal */
+  }
+
+
+/* CSS FOTO START */
+  .konten-foto{
+    background-color: lightgray;
+    width: 97%;
+    border-radius: 35px;
+    margin-left:20px;
+    margin-right:20px;
+    margin-top: 30px;
+    height: 450px;
+  }
+/* CSS FOTO END */
+
+/* CSS ABOUT US START */
+#about {
+    display: flex;
+    width: 97%;
+    margin-left:20px;
+    margin-right:20px;
+    padding-top: 10%;
+    text-align: justify;
+}
+
+.about-header{
+    margin-left: 290px;
+    margin-bottom: 60px;
+    font-weight: bold;
+}
+
+.about-desc {
+    width: 250%;
+    margin-right: 30px;
+}
+
+.foto-about {
+    background-color: lightgray;
+    border-radius: 35px;
+    height: 370px;
+    width: 190%;
+}
+
+/* Statistik Styles */
+.statistik-container {
+    display: flex;
+    justify-content: start;
+    gap: 50px;
+    margin-top: 40px;
+    width: 100%;
+}
+
+.statistik-box {
+    text-align: center;
+}
+
+.angka {
+    color: green;
+    margin: 0;
+}
+
+.label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 5px;
+    display: inline;
+}
+/* CSS ABOUT US END */
+
+/* CSS SERVICES START*/
+#services{
+    width: 97%;
+    margin-left:20px;
+    margin-right:20px;
+    padding-top: 9%;
+}
+
+.services-header {
+    text-align: center;
+    margin: 0 auto 40px auto;
+}
+
+
+.box-konten{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+    margin-top: 60px;
+}
+
+.sub-box-konten{
+    background-color: lightgray;
+    width: 350px;
+    border-radius: 35px;
+    display: flex;
+    justify-content: center;  /* horizontal center */
+    height: 350px;            /* atur tinggi sesuai kebutuhan */
+    text-align: center;
+}
+
+.sub-box-konten h1{
+    padding-top: 15px;
+    font-size: 25px;
+    font-weight:lighter;
+    
+}
+/* CSS SERVICES END*/
+
+/* CSS WORKS START */
+#works{
+    width: 97%;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-top: 9%;
+}
+
+.works-header{
+    text-align: center;
+    margin: 0 auto;
+
+}
+
+.works-konten{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 70px;
+        margin-top: 50px;
+}
+
+.sub-works-konten{
+    background-color: lightgray;
+    border-radius: 35px;
+    width: 350px;
+    height: 350px;
+}
+/* CSS WORKS END */
+
+
+/* CSS CONTACT US START */
+#contact{
+    width: 97%;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-top: 9%;
+    padding-bottom: 7%;
+}
+
+.contact-header{
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+
+.contact-konten{
+    display: flex;
+    justify-content: center;
+    gap: 90px;
+}
+
+.contact-box{
+    background-color: lightgray;
+    width: 350px;
+    height: 350px;
+    border-radius: 35px;
+    text-align: center;
+}
+/* CSS CONTACT US END */
+
+  
