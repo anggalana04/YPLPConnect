@@ -1,33 +1,49 @@
-body{
-    padding-top: 80px;
-}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+body {
+    font-family: 'Montserrat';
+  }
+
+html {
+    scroll-behavior: smooth;
+  }
+  
 
 .navbar{
     /* display: flex;
     justify-content: flex-start; */
-    position: fixed;
-    top: 15px; 
-    left: 20px; /* menggantikan margin-left */
-    right: 20px; /* menggantikan margin-right */
-    z-index: 1000;
+
+    margin-top: 15px; 
+    margin-left: 20px; /* menggantikan margin-left */
+    margin-right: 20px; /* menggantikan margin-right */
 
     display: flex;
     align-items: center;
-    background-color: rgba(63, 125, 88, 0.85);
-    width: 97%;
+    background-color: #5A8E6F ;
+    width: 95.8%;
     height: 78px;
     border-radius: 35px;
+}
 
+/* Tambahan untuk animasi hide/show navbar */
+#navbar {
+    transition: top 0.3s;
+    position: fixed;
+    top: 0;
+    z-index: 999;
 }
 
 .konten-nav{
     display: flex;
     align-items: center;
+    margin-left: 20px;
     height: 0px;
 }
 
 .logo {
-    width: 120px;
+    width: 80px;
     margin-top: 5px;
     height: auto; /* menjaga aspek rasio */
 }
@@ -35,7 +51,7 @@ body{
 
 body .headerNavbar{
     display: inline-block;
-    margin-top: 15px;
+    margin-bottom: 5px;
     color: white;
 }
 
@@ -43,16 +59,18 @@ body h1{
     font-size: 30px;
     margin-bottom: 0%;
     width: max-content;
+    margin-right: 5px;
 }
 
 body p{
     font-size: 15.5px;
     margin-top: 0%;
+    margin-left: 5px;
 }
 
 body ul{
    display: inline-flex;
-   margin-left: 77%;
+    margin-left: 61%;
    align-items: center;
    justify-content: center;
    list-style: none;
@@ -84,11 +102,16 @@ body ul li a:hover::after {
     width: 100%;
 }
 
+button .logo-login{
+    width: 20px;
+    margin-right: 6px;
+}
+
 .login button {
     color: black;
     background-color: white;
     border-radius: 20px;
-    width: 70px;
+    width: 80px;
     height: 35px;
     padding-bottom: 5px;
     border: none;
@@ -101,13 +124,13 @@ body ul li a:hover::after {
 
 
 /* CSS FOTO START */
-  .konten-foto{
+  .beranda{
     background-color: lightgray;
     width: 97%;
     border-radius: 35px;
     margin-left:20px;
     margin-right:20px;
-    margin-top: 30px;
+    margin-top: 120px;
     height: 450px;
   }
 /* CSS FOTO END */
@@ -119,6 +142,7 @@ body ul li a:hover::after {
     margin-left:20px;
     margin-right:20px;
     padding-top: 10%;
+    margin-bottom: 4%;
     text-align: justify;
 }
 
@@ -171,7 +195,7 @@ body ul li a:hover::after {
     width: 97%;
     margin-left:20px;
     margin-right:20px;
-    padding-top: 9%;
+    padding-top: 6%;
 }
 
 .services-header {
@@ -201,40 +225,10 @@ body ul li a:hover::after {
 .sub-box-konten h1{
     padding-top: 15px;
     font-size: 25px;
-    font-weight:lighter;
+    font-weight:500;
     
 }
 /* CSS SERVICES END*/
-
-/* CSS WORKS START */
-#works{
-    width: 97%;
-    margin-left: 20px;
-    margin-right: 20px;
-    padding-top: 9%;
-}
-
-.works-header{
-    text-align: center;
-    margin: 0 auto;
-
-}
-
-.works-konten{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 70px;
-        margin-top: 50px;
-}
-
-.sub-works-konten{
-    background-color: lightgray;
-    border-radius: 35px;
-    width: 350px;
-    height: 350px;
-}
-/* CSS WORKS END */
 
 
 /* CSS CONTACT US START */
@@ -242,8 +236,8 @@ body ul li a:hover::after {
     width: 97%;
     margin-left: 20px;
     margin-right: 20px;
-    padding-top: 9%;
-    padding-bottom: 7%;
+    padding-top: 7%;
+    margin-bottom: 6%;
 }
 
 .contact-header{
@@ -255,16 +249,44 @@ body ul li a:hover::after {
 .contact-konten{
     display: flex;
     justify-content: center;
-    gap: 90px;
+    gap: 30px;
 }
 
-.contact-box{
+.contact-box1{
     background-color: lightgray;
     width: 350px;
     height: 350px;
     border-radius: 35px;
     text-align: center;
 }
+
+.head-contact{
+    font-size: 25px;
+    padding-left: 15px;
+    font-weight:500;
+}
+
+.contact_info{
+    margin-left: 15px;
+    margin-top: 35px;
+}
+
+
+.sub-contact-info {
+    display: flex;
+    align-items: center; /* Ini yang membuat ikon dan teks sejajar vertikal */
+    gap: 10px; /* Jarak antara ikon dan teks */
+    margin-bottom: 30px; /* Jarak antar baris (opsional) */
+
+  }
+  
+.detail_contact{
+    font-size: 23px;
+}
+
+
+
+
 /* CSS CONTACT US END */
 
   

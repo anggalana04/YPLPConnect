@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+
+body{
+    background-color: #5A8E6F;
+}
+
+.sidebar {
+    background-color: white;
+    width: 20%;
+    height: 593px;
+}
+
+.head-sidebar {
+    display: flex; /* flex membuat anak-anak sejajar horizontal */
+    align-items: center; /* sejajarkan vertikal */
+    border-bottom: 1px #5A8E6F solid;
+    justify-content: center;
+}
+
+.img-sidebar {
+    width: 80px; /* disesuaikan agar tidak terlalu besar */
+    height: auto;
+}
+
+.head-sidebar-text {
+    display: flex;
+    flex-direction: column; /* supaya h1 dan h4 vertikal di samping gambar */
+    margin-left: 10px;
+    padding-top: 10px;
+}
+.head-sidebar-text h1 {
+    font-size: 25px;
+    margin: 0;
+}
+.head-sidebar-text h4 {
+    font-weight: lighter;
+    font-size: 16px;
+    margin-top: 4px;
+}
+
+.menu-sidebar{
+    margin-top: 30px;
+}
+
+.menu-sidebar .menu-item {
+    display: flex;
+    gap: 8px; /* Jarak antara icon dan teks */
+    padding-left: 20px; /* Supaya mentok kiri */
+    list-style: none; /* Hilangkan bullet point */
+}
+
+span a{
+    text-decoration: none;
+    color: black;
+}
+
+.menu-item{
+    margin-bottom: 30px;
+}
+
+.dropdown-item{
+    margin-left: 20px;
+}
+
+#laporanCollapse{
+    margin-left: 29px;
+    margin-bottom: 20px;
+      
+}
+
+.nav.flex-column {
+    gap:30px; /* Jarak antar dropdown-item */
+    margin-top: 0px;
+}
+
+
+.icon-dropdown{
+    margin-left: 100px;
+    transition: transform 0.3s ease;
+}
+
+.icon-dropdown.rotate {
+    transform: rotate(180deg);
+}
