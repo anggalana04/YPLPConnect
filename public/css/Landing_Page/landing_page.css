@@ -236,8 +236,8 @@ button .logo-login{
     width: 97%;
     margin-left: 20px;
     margin-right: 20px;
-    padding-top: 7%;
-    margin-bottom: 6%;
+    padding-top: 6%;
+    margin-bottom: 4%;
 }
 
 .contact-header{
@@ -249,6 +249,7 @@ button .logo-login{
 .contact-konten{
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 30px;
 }
 
@@ -284,9 +285,10 @@ button .logo-login{
     font-size: 23px;
 }
 
+.img-lokasi{
+    width: 405px;
 
-
-
+}
 /* CSS CONTACT US END */
 
   
