@@ -9,6 +9,6 @@ use App\Http\Controllers\AboutController;
 //route dengan middleware
 
 Route::get('/', function () {
-        return view('v_layouts.index');
+        return view('Landing_Page.landing_page');
     });
 

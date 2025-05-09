@@ -167,7 +167,7 @@ button .logo-login{
 /* Statistik Styles */
 .statistik-container {
     display: flex;
-    justify-content: start;
+    justify-content: center;
     gap: 50px;
     margin-top: 40px;
     width: 100%;
