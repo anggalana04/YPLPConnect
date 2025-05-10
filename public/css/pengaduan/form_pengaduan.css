@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+body{
+    background-color: #5A8E6F;
+    font-family: 'Montserrat' !important;
+}
+
+.konten {
+  height: 95vh; /* pastikan tinggi penuh layar */
+  display: flex;
+  justify-content: center; /* horizontal center */
+  align-items: center;     /* vertical center */
+}
+
+.form-box {
+  /* opsional styling */
+  padding: 30px;
+  background: #f5f5f5;
+  border-radius: 40px;
+  width: 100vh;
+  height: 80vh;
+}
+
+.sub-head-box{
+    background-color: white;
+    font-size: 1.4rem;
+    height: 5vh;
+    padding: 10px;
+}
+
+.sub-head-box input{
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 20px;
+}
+
+.sub-head-box:first-child {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.isi-pengaduan{
+    margin-top: 10px;
+    background-color: white;
+    height: 67vh;
+}
+
+.isi-pengaduan textarea{
+    padding: 10px 10px 0 10px;
+    height: 56vh;
+    resize: none;
+    border: none;
+    outline: none;
+    top: 0px;
+}
+
+.button-pengaduan{
+    display: flex;
+    align-items: center;
+    background-color: #D9D9D9;
+    height: 9vh;
+    border-radius: 20px;
+    margin-top: 0px;
+    padding: 15px;
+}
+
+.kategori {
+  display: flex;
+  flex-direction: column;
+}
+
+.kategori label {
+  font-weight: 400;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.kategori select {
+  padding: 8px;
+  border-radius: 20px;
+  border: 1px black solid;
+  outline: none;
+  background-color: #D9D9D9;
+  cursor: pointer;
+  
+}
+
+.all-button{
+    display: flex;
+    margin-left: 20%;
+    gap: 20px;
+}
+
+button{
+    border: none;
+    border-radius: 20px;
+    padding: 5px;
+    width: 90px;
+    cursor: pointer;
+}
+
+.batal{
+    background-color: red ;
+}
+
+.bukti{
+    background-color: yellow;
+}
+
+.kirim{
+    background-color: #88CFA5;
+}
+
+

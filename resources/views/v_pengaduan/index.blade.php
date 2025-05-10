@@ -41,7 +41,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Table rows will be added here dynamically -->
+                        <tr>
+                            <td>1</td>
+                            <td>Keluhan tentang pelayanan customer service</td>
+                            <td>PID-2023-001</td>
+                            <td>10/05/2023</td>
+                            <td><span class="status diproses">Diproses</span></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Laporan masalah teknis aplikasi</td>
+                            <td>PID-2023-002</td>
+                            <td>11/05/2023</td>
+                            <td><span class="status selesai">Selesai</span></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

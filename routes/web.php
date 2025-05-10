@@ -9,6 +9,6 @@ use App\Http\Controllers\AboutController;
 //route dengan middleware
 
 Route::get('/', function () {
-        return view('v_pengaduan.index');
+        return view('v_pengaduan.form_pengaduan');
     });
 
