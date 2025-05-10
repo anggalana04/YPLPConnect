@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 
-
 body{
     background-color: #5A8E6F;
+    font-family: 'Montserrat';
 }
 
 .sidebar {
@@ -35,8 +35,8 @@ body{
     margin: 0;
 }
 .head-sidebar-text h4 {
-    font-weight: lighter;
-    font-size: 16px;
+    font-weight: 300;
+    font-size: 15.5px;
     margin-top: 4px;
 }
 

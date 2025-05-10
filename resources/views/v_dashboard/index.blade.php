@@ -11,6 +11,15 @@
 <body>
     @extends('v_layouts.index')
 
-    <h1>hai</h1>
+    <div class="konten">
+        <div class="konten-head">
+            
+        </div>
+
+        <div class="konten-body">
+            
+        </div>
+   
+    </div>
 </body>
 </html>
