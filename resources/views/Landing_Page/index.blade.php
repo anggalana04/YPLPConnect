@@ -14,7 +14,7 @@
       <nav class="navbar" id="navbar">
         <div class="konten-nav">
            <a href="#"> <img class="logo" src="{{ asset('image/logoYPLP/logo.svg') }}" alt="LogoYPLP">
-           </a> 
+           </a>
         <div class="headerNavbar">
             <h1>YPLP PGRI</h1>
             <p>KABUPATEN BOGOR</p>
@@ -35,7 +35,9 @@
             </ul>
 
             <div class="login">
+                <a href="{{ route('login') }}">
                 <button><img class="logo-login" src="{{ asset('image/icon-Landing_Page/icon-login.svg') }}" alt="">Login</button>
+                </a>
             </div>
     </div>
 </nav>
@@ -101,17 +103,17 @@
                         <img src="{{ asset('image/icon-Landing_Page/icon-contact-location.svg') }}" alt="">
                         <span class="detail_contact">Jl. in aja dulu</span>
                     </div>
-                    
+
                     <div class="sub-contact-info">
                         <img src="{{ asset('image/icon-Landing_Page/icon-contact-telpon.svg') }}" alt="">
                         <span class="detail_contact">08587684765736</span>
                     </div>
-                    
+
                     <div class="sub-contact-info">
                         <img src="{{ asset('image/icon-Landing_Page/icon-contact-email.svg') }}" alt="">
                         <span class="detail_contact">yplppgri@gmail.com</span>
                     </div>
-                    
+
                 </div>
             </div>
             <div class="contact-box2"><img class="img-lokasi" src="{{ asset('image/Lokasi/lokasi.svg') }}" alt=""></div>
