@@ -12,7 +12,7 @@
     <div class="konten">
         <div class="form-box">
             <div class="sub-head-box">
-                <input type="text" placeholder="Judul Pengajuan Masalah">
+                <input type="text" placeholder="Judul Pengajuan Masalah...">
             </div>
 
             <div class="isi-pengaduan">

@@ -140,3 +140,130 @@ th:last-child {
 
 /* CSS TABLE */
 
+/* CSS HEAD FORM BOX */
+.modal-pengaduan {
+    display: none; /* disembunyikan awalnya */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-pengaduan .form-box {
+    background-color: #F0F0F0;
+    padding: 20px;
+    border-radius: 40px;
+    width: 100vh;
+    height: 80vh;
+    max-width: 90%;
+}
+
+.sub-head-box input{
+    margin-bottom: 5px;
+    font-size: 1rem;
+    padding: 10px;
+    width: 100%;
+    outline: none;
+    border: none;
+}
+
+.sub-head-box input:first-child {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+/* CSS HEAD FORM BOX */
+
+/* CSS ISI-PENGADUAN */
+.sub-form-box{
+    background-color: white;
+    height: 58vh;
+}
+
+.sub-form-box:last-child {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.isi-pengaduan{
+    margin: 5px;
+}
+
+#deskripsi{
+    margin-top: 5px;
+    width: 100%;
+    height: 30vh;
+
+    outline: none;
+    resize: none;
+}
+/* CSS ISI-PENGADUAN */
+
+/* CSS BUTTON */
+.button-pengaduan{
+    background-color: #D9D9D9;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    margin-top: 80px;
+}
+
+.kategori {
+  display: flex;
+  flex-direction: column;
+}
+
+.kategori label {
+  font-weight: 400;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.kategori select {
+  padding: 5px;
+  border-radius: 20px;
+  border: 1px black solid;
+  outline: none;
+  background-color: #D9D9D9;
+  cursor: pointer;
+}
+
+.all-button{
+    display: flex;
+    margin-left: 70px;
+    gap: 10px;
+}
+
+.batal{
+    background-color: red ;
+}
+
+.bukti{
+    background-color: yellow;
+    font-size: 1px;
+}
+
+.kirim{
+    background-color: #88CFA5;
+}
+
+.batal:hover{
+    background-color: rgb(129, 16, 16) ;
+}
+
+.bukti:hover{
+    background-color: rgb(165, 165, 22);
+    font-size: 1px;
+}
+
+.kirim:hover{
+    background-color: #47825f;
+}
+
+
+

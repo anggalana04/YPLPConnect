@@ -19,7 +19,7 @@
                     <p>Ajukan pengaduan jika sekolah anda mengalami masalah</p>
                 </div>
 
-                <button>Ajukan Pengaduan</button>
+                <button onclick="openModal()">Ajukan Pengaduan</button>
             </div>
 
             <div class="search-container">
@@ -60,5 +60,50 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Form Pengaduan (Disembunyikan awalnya) -->
+<div class="modal-pengaduan" id="modalPengaduan">
+    <div class="form-box">
+            <div class="sub-head-box">
+                    <input type="text" placeholder="Judul Pengajuan Masalah">
+            </div>
+
+            <div class="sub-form-box">
+                <div class="isi-pengaduan">
+                    <textarea id="deskripsi" name="deskripsi" rows="4" cols="50" placeholder="Tulis pengaduan Anda..."></textarea>
+                </div>
+
+                <div class="button-pengaduan">
+                    <div class="kategori">
+                        <label for="kategori">Kategori Masalah</label>
+                            <select id="kategori" name="kategori">
+                                <option value="">Pilih Kategori</option>
+                                <option value="kendala">Kendala Teknis</option>
+                                <option value="pelayanan">Pelayanan</option>
+                                <option value="lainnya">Lainnya</option>
+                            </select>
+                    </div>
+
+                    <div class="all-button">
+                        <button class="batal" onclick="closeModal()">Batal</button>
+                        <input type="file" id="buktiInput" accept="image/*" style="display: none;">
+                        <button class="bukti" onclick="document.getElementById('buktiInput').click()">Tambahkan Bukti</button>
+                        <button class="kirim">Kirim</button>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+<script>
+    function openModal() {
+        document.getElementById('modalPengaduan').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('modalPengaduan').style.display = 'none';
+    }
+</script>
+
 </body>
 </html>
