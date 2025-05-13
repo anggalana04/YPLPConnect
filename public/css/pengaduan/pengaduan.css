@@ -191,13 +191,22 @@ th:last-child {
 
 .isi-pengaduan{
     margin: 5px;
+    position: relative;
+}
+
+#preview {
+    position: absolute;
+    top: 180%;
+    left: 0;
+    max-width: 200px;
 }
 
 #deskripsi{
     margin-top: 5px;
     width: 100%;
-    height: 30vh;
-
+    height: 15vh;
+    border: none;
+    outline: none;
     outline: none;
     resize: none;
 }
@@ -210,7 +219,7 @@ th:last-child {
     border-radius: 20px;
     display: flex;
     align-items: center;
-    margin-top: 80px;
+    margin-top: 180px;
 }
 
 .kategori {

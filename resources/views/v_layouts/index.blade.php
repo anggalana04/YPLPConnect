@@ -42,6 +42,16 @@
                     <li><a class="dropdown-item" href="#">Data Sekolah</a></li>
                 </ul>
             </div>
+
+            <ul class="menu-item">
+                <img src="{{ asset('image/icon-sidebar/icon-dokumen.svg') }}" alt=""> 
+                <SPan><a href="#">Dokumen</a></SPan>
+            </ul>
+
+            <ul class="menu-item">
+                <img src="{{ asset('image/icon-sidebar/icon-dokumen.svg') }}" alt=""> 
+                <SPan><a href="#">Dokumen</a></SPan>
+            </ul>
         
             <ul class="menu-item">
                 <img src="{{ asset('image/icon-sidebar/icon-dokumen.svg') }}" alt=""> 
