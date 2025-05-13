@@ -30,7 +30,7 @@
             <ul class="menu-item">
                 <a id="laporanToggle" data-bs-toggle="collapse" href="#laporanCollapse" role="button" aria-expanded="false" aria-controls="laporanCollapse" style="text-decoration: none; color: inherit;">
                     <img src="{{ asset('image/icon-sidebar/icon_laporan.svg') }}" alt="">
-                    <SPan> Laporan</SPan> 
+                    <Span> Data Sekolah</Span> 
                     <img class="icon-dropdown" src="{{ asset('image/icon-sidebar/icon-dropdown.svg') }}" alt="">
                 </a>
             </ul>
@@ -38,21 +38,16 @@
             <!-- PISAHKAN dropdown dari menu utama -->
             <div class="collapse" id="laporanCollapse">
                 <ul class="nav flex-column">
-                    <li><a class="dropdown-item" href="#">Keuangan</a></li>
-                    <li><a class="dropdown-item" href="#">Data Sekolah</a></li>
+                    <li><a class="dropdown-item" href="#">Siswa</a></li>
+                    <li><a class="dropdown-item" href="#">Guru</a></li>
                 </ul>
             </div>
 
             <ul class="menu-item">
-                <img src="{{ asset('image/icon-sidebar/icon-dokumen.svg') }}" alt=""> 
-                <SPan><a href="#">Dokumen</a></SPan>
+                <img src="{{ asset('image/icon-sidebar/icon-keuangan.svg') }}" alt=""> 
+                <SPan><a href="#">Keuangan</a></SPan>
             </ul>
-
-            <ul class="menu-item">
-                <img src="{{ asset('image/icon-sidebar/icon-dokumen.svg') }}" alt=""> 
-                <SPan><a href="#">Dokumen</a></SPan>
-            </ul>
-        
+            
             <ul class="menu-item">
                 <img src="{{ asset('image/icon-sidebar/icon-dokumen.svg') }}" alt=""> 
                 <SPan><a href="#">Dokumen</a></SPan>
