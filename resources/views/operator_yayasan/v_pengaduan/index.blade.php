@@ -9,7 +9,7 @@
     <title>Pengaduan</title>
 </head>
 <body>
-    @extends('v_layouts.index')
+    @extends('operator_yayasan.v_layouts.index')
 
     <div class="konten">
         <div class="body-konten">

@@ -12,7 +12,7 @@ class PengaduanController extends Controller
      */
     public function index()
     {
-        //
+        return view('operator_yayasan.v_pengaduan.index');
     }
 
     /**

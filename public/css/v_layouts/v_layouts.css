@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 
-body{
+body {
     background-color: #5A8E6F;
     font-family: 'Montserrat';
 }
@@ -13,65 +13,75 @@ body{
 }
 
 .head-sidebar {
-    display: flex; /* flex membuat anak-anak sejajar horizontal */
-    align-items: center; /* sejajarkan vertikal */
+    display: flex;
+    /* flex membuat anak-anak sejajar horizontal */
+    align-items: center;
+    /* sejajarkan vertikal */
     border-bottom: 1px #5A8E6F solid;
     justify-content: center;
 }
 
 .img-sidebar {
-    width: 80px; /* disesuaikan agar tidak terlalu besar */
+    width: 80px;
+    /* disesuaikan agar tidak terlalu besar */
     height: auto;
 }
 
 .head-sidebar-text {
     display: flex;
-    flex-direction: column; /* supaya h1 dan h4 vertikal di samping gambar */
+    flex-direction: column;
+    /* supaya h1 dan h4 vertikal di samping gambar */
     margin-left: 10px;
     padding-top: 10px;
 }
+
 .head-sidebar-text h1 {
     font-size: 25px;
     margin: 0;
 }
+
 .head-sidebar-text h4 {
     font-weight: 300;
     font-size: 15.5px;
     margin-top: 4px;
 }
 
-.menu-sidebar{
+.menu-sidebar {
     margin-top: 30px;
 }
 
 .menu-sidebar .menu-item {
     display: flex;
-    gap: 8px; /* Jarak antara icon dan teks */
-    padding-left: 20px; /* Supaya mentok kiri */
-    list-style: none; /* Hilangkan bullet point */
+    gap: 8px;
+    /* Jarak antara icon dan teks */
+    padding-left: 20px;
+    /* Supaya mentok kiri */
+    list-style: none;
+    /* Hilangkan bullet point */
 }
 
-span a{
+span a {
     text-decoration: none;
     color: black;
 }
 
-.menu-item{
+.menu-item {
     margin-bottom: 30px;
 }
 
-.dropdown-item{
+.dropdown-item {
     margin-left: 20px;
 }
 
-#laporanCollapse{
+#laporanCollapse {
     margin-left: 29px;
     margin-bottom: 20px;
-      
+
 }
 
 .nav.flex-column {
-    gap:30px; /* Jarak antar dropdown-item */
+    gap: 30px;
+    /* Jarak antar dropdown-item */
     margin-top: 0px;
 }
 
@@ -84,3 +94,5 @@ span a{
 .icon-dropdown.rotate {
     transform: rotate(180deg);
 }
+
+

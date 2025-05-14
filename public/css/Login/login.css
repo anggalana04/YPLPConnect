@@ -20,13 +20,15 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.2); /* putih transparan 30% */
+    background-color: rgba(255, 255, 255, 0.2);
+    /* putih transparan 30% */
     z-index: 0;
 }
 
 .container {
     position: relative;
-    z-index: 1; /* pastikan konten di atas overlay */
+    z-index: 1;
+    /* pastikan konten di atas overlay */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,7 +54,7 @@ body {
 .login-box h1 {
     color: white;
     font-weight: 400;
-    
+
 }
 
 .login-box input {
@@ -62,7 +64,7 @@ body {
     border: none;
     border-radius: 20px;
     outline: none;
-    
+
 }
 
 .login-box button {
@@ -81,3 +83,6 @@ body {
 .login-box button:hover {
     background-color: #e6e6e6;
 }
+
+
+
