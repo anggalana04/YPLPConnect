@@ -17,7 +17,30 @@
         </div>
 
         <div class="konten-body">
+<<<<<<< HEAD:resources/views/v_dashboard/index.blade.php
+            <div class="card">
+                <span>Jumlah Guru</span>
+                <div class="detail-card">
+                    <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Guru.svg') }}" alt="">
+                    <p>xxx</p>
+                </div>
+            </div>
+            <div class="card">
+                <span>Jumlah Siswa</span>
+                <div class="detail-card">
+                    <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Siswa.svg') }}" alt="">
+                    <p>xxx</p>
+                </div>
+            </div>
+            <div class="card">
+                <span>Notifikasi Keuangan</span>
+            </div>
+            <div class="card">
+                <span>Notifikasi Pengaduan</span>
+            </div>
+=======
             <h1>HELLO </h1>
+>>>>>>> 0cd4c15a57eed6f489b05c0d3dd60f7ea881aab9:resources/views/operator_yayasan/v_dashboard/index.blade.php
         </div>
 
     </div>
