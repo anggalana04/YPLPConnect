@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+body {
+    font-family: 'Montserrat' !important;
+  }
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.konten{
+    margin-left: 276px;
+    margin-top: 40px;
+    margin-right: 20px;
+}
+
+/* CSS BOX-KONTEN */
+.box-konten{
+    background-color: #F0F0F0;
+    border-radius: 40px;
+    height: 87vh;
+    padding: 20px;
+}
+
+.head-box-konten{
+    display: flex;
+    align-items: center;
+    gap: 74vh;
+}
+
+.head-box-konten button{
+    height: 40px;
+    border: none;
+    background-color: yellow;
+    border-radius: 40px;
+    font-size: 14px ;
+    padding: 10px;
+    font-weight: 500;
+}
+
+.teks-head-box-konten h1{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.teks-head-box-konten p{
+    font-size: 1rem;
+}
+/* CSS BOX-KONTEN */
+
+/* CSS KATEGORI & SEARCH */
+.option-head-box{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.kategori select {
+    padding: 9px;
+    border-radius: 20px;
+    border: 1px black solid;
+    outline: none;
+    background-color: #F0F0F0;
+    cursor: pointer;   
+}
+
+.search-container {
+  position: relative;
+  max-width: 200px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 15px 8px 40px;
+  border: none;
+  border-radius: 40px;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+/* CSS KATEGORI & SEARCH */
+
+
+/* CSS TABLE */
+.table-box {
+    width: 100%;
+    background-color: white;
+    height: 52vh;
+    overflow-x: auto;
+    border-radius: 20px;
+    margin-top: 20px;
+    padding: 15px;
+
+}
+
+.table-konten {
+    width: 100%;
+    border-collapse: separate; /* WAJIB agar border-radius bisa bekerja */
+    border-spacing: 0;
+    font-size: 12px;
+}
+
+
+.table-konten th {
+    position: sticky;
+    top: 0;
+    background-color: #F0F0F0;   
+    text-align: left;
+    font-weight: 600;
+    color: black;
+    padding: 10px;
+    z-index: 10;
+    opacity: 1;
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+}
+
+/* Radius hanya pada sudut-sudut */
+th:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+th:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.table-konten td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e9ecef;
+    color: black;
+}
+
+/* CSS TABLE */

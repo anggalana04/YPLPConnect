@@ -21,8 +21,8 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', function () {
-    return view('operator_yayasan.v_dashboard.index');
-});
+    return view('operator_yayasan.v_data_siswa.index');
+})->name('dashboard');
 
 #profile
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -32,4 +32,4 @@ Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.
 #pengaduan
 Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
 
-// require __DIR__ . '/auth.php';
+require __DIR__ . '/auth.php';

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="{{ asset('css/dashboard/dashboard.css') }}">
-    <title>Document</title>
+    <title>Dashboard</title>
 </head>
 <body>
     @extends('operator_yayasan.v_layouts.index')
@@ -37,8 +37,6 @@
             <div class="card">
                 <span>Notifikasi Pengaduan</span>
             </div>
-=======
-            <h1>HELLO </h1>
         </div>
 
     </div>
