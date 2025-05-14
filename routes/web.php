@@ -5,7 +5,6 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-
 Route::get('/dashboard', function () {
     return view('operator_yayasan.v_dashboard.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
