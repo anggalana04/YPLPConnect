@@ -17,7 +17,26 @@
         </div>
 
         <div class="konten-body">
-            
+            <div class="card">
+                <span>Jumlah Guru</span>
+                <div class="detail-card">
+                    <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Guru.svg') }}" alt="">
+                    <p>xxx</p>
+                </div>
+            </div>
+            <div class="card">
+                <span>Jumlah Siswa</span>
+                <div class="detail-card">
+                    <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Siswa.svg') }}" alt="">
+                    <p>xxx</p>
+                </div>
+            </div>
+            <div class="card">
+                <span>Notifikasi Keuangan</span>
+            </div>
+            <div class="card">
+                <span>Notifikasi Pengaduan</span>
+            </div>
         </div>
    
     </div>
