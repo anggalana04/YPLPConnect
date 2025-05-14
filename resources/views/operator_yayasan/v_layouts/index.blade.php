@@ -38,8 +38,8 @@
             <!-- PISAHKAN dropdown dari menu utama -->
             <div class="collapse" id="laporanCollapse">
                 <ul class="nav flex-column">
-                    <li><a class="dropdown-item" href="#">Keuangan</a></li>
-                    <li><a class="dropdown-item" href="#">Data Sekolah</a></li>
+                    <li><a class="dropdown-item" href="#">Siswa</a></li>
+                    <li><a class="dropdown-item" href="#">Guru</a></li>
                 </ul>
             </div>
 
