@@ -9,17 +9,17 @@
     <title>Document</title>
 </head>
 <body>
-    @extends('v_layouts.index')
+    @extends('operator_yayasan.v_layouts.index')
 
     <div class="konten">
         <div class="konten-head">
-            
+
         </div>
 
         <div class="konten-body">
-            
+            <h1>HELLO </h1>
         </div>
-   
+
     </div>
 </body>
 </html>

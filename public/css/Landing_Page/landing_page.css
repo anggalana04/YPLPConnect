@@ -1,27 +1,28 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 
 body {
     font-family: 'Montserrat';
-  }
+}
 
 html {
     scroll-behavior: smooth;
-  }
-  
+}
 
-.navbar{
+
+.navbar {
     /* display: flex;
     justify-content: flex-start; */
 
-    margin-top: 15px; 
-    margin-left: 20px; /* menggantikan margin-left */
-    margin-right: 20px; /* menggantikan margin-right */
+    margin-top: 15px;
+    margin-left: 20px;
+    /* menggantikan margin-left */
+    margin-right: 20px;
+    /* menggantikan margin-right */
 
     display: flex;
     align-items: center;
-    background-color: #5A8E6F ;
+    background-color: #5A8E6F;
     width: 95.8%;
     height: 78px;
     border-radius: 35px;
@@ -35,7 +36,7 @@ html {
     z-index: 999;
 }
 
-.konten-nav{
+.konten-nav {
     display: flex;
     align-items: center;
     margin-left: 20px;
@@ -45,46 +46,48 @@ html {
 .logo {
     width: 80px;
     margin-top: 5px;
-    height: auto; /* menjaga aspek rasio */
+    height: auto;
+    /* menjaga aspek rasio */
 }
 
 
-body .headerNavbar{
+body .headerNavbar {
     display: inline-block;
     margin-bottom: 5px;
     color: white;
 }
 
-body h1{
+body h1 {
     font-size: 30px;
     margin-bottom: 0%;
     width: max-content;
     margin-right: 5px;
 }
 
-body p{
+body p {
     font-size: 15.5px;
     margin-top: 0%;
     margin-left: 5px;
 }
 
-body ul{
-   display: inline-flex;
+body ul {
+    display: inline-flex;
     margin-left: 61%;
-   align-items: center;
-   justify-content: center;
-   list-style: none;
-   gap: 30px;
-   margin-right: 20px;
-   margin-top: 16px;
-   
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    gap: 30px;
+    margin-right: 20px;
+    margin-top: 16px;
+
 }
 
 body ul li a {
     position: relative;
     color: white;
     text-decoration: none;
-    padding-bottom: 5px; /* beri ruang untuk underline */
+    padding-bottom: 5px;
+    /* beri ruang untuk underline */
 }
 
 body ul li a::after {
@@ -102,7 +105,7 @@ body ul li a:hover::after {
     width: 100%;
 }
 
-button .logo-login{
+button .logo-login {
     width: 20px;
     margin-right: 6px;
 }
@@ -116,37 +119,41 @@ button .logo-login{
     padding-bottom: 5px;
     border: none;
     outline: none;
-    
-    display: flex;           /* Aktifkan flexbox */
-    justify-content: center; /* Rata tengah horizontal */
-    align-items: center;     /* Rata tengah vertikal */
-  }
+
+    display: flex;
+    /* Aktifkan flexbox */
+    justify-content: center;
+    /* Rata tengah horizontal */
+    align-items: center;
+    /* Rata tengah vertikal */
+}
 
 
 /* CSS FOTO START */
-  .beranda{
+.beranda {
     background-color: #F0F0F0;
     width: 97%;
     border-radius: 35px;
-    margin-left:20px;
-    margin-right:20px;
+    margin-left: 20px;
+    margin-right: 20px;
     margin-top: 120px;
     height: 450px;
-  }
+}
+
 /* CSS FOTO END */
 
 /* CSS ABOUT US START */
 #about {
     display: flex;
     width: 97%;
-    margin-left:20px;
-    margin-right:20px;
+    margin-left: 20px;
+    margin-right: 20px;
     padding-top: 10%;
     margin-bottom: 4%;
     text-align: justify;
 }
 
-.about-header{
+.about-header {
     margin-left: 290px;
     margin-bottom: 60px;
     font-weight: bold;
@@ -188,13 +195,14 @@ button .logo-login{
     margin-top: 5px;
     display: inline;
 }
+
 /* CSS ABOUT US END */
 
 /* CSS SERVICES START*/
-#services{
+#services {
     width: 97%;
-    margin-left:20px;
-    margin-right:20px;
+    margin-left: 20px;
+    margin-right: 20px;
     padding-top: 6%;
 }
 
@@ -204,7 +212,7 @@ button .logo-login{
 }
 
 
-.box-konten{
+.box-konten {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -212,27 +220,30 @@ button .logo-login{
     margin-top: 60px;
 }
 
-.sub-box-konten{
+.sub-box-konten {
     background-color: #F0F0F0;
     width: 350px;
     border-radius: 35px;
     display: flex;
-    justify-content: center;  /* horizontal center */
-    height: 350px;            /* atur tinggi sesuai kebutuhan */
+    justify-content: center;
+    /* horizontal center */
+    height: 350px;
+    /* atur tinggi sesuai kebutuhan */
     text-align: center;
 }
 
-.sub-box-konten h1{
+.sub-box-konten h1 {
     padding-top: 15px;
     font-size: 25px;
-    font-weight:500;
-    
+    font-weight: 500;
+
 }
+
 /* CSS SERVICES END*/
 
 
 /* CSS CONTACT US START */
-#contact{
+#contact {
     width: 97%;
     margin-left: 20px;
     margin-right: 20px;
@@ -240,20 +251,20 @@ button .logo-login{
     margin-bottom: 4%;
 }
 
-.contact-header{
+.contact-header {
     text-align: center;
     margin: 0 auto;
     margin-bottom: 50px;
 }
 
-.contact-konten{
+.contact-konten {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 30px;
 }
 
-.contact-box1{
+.contact-box1 {
     background-color: #F0F0F0;
     width: 350px;
     height: 350px;
@@ -261,13 +272,13 @@ button .logo-login{
     text-align: center;
 }
 
-.head-contact{
+.head-contact {
     font-size: 25px;
     padding-left: 15px;
-    font-weight:500;
+    font-weight: 500;
 }
 
-.contact_info{
+.contact_info {
     margin-left: 15px;
     margin-top: 35px;
 }
@@ -275,20 +286,29 @@ button .logo-login{
 
 .sub-contact-info {
     display: flex;
-    align-items: center; /* Ini yang membuat ikon dan teks sejajar vertikal */
-    gap: 10px; /* Jarak antara ikon dan teks */
-    margin-bottom: 30px; /* Jarak antar baris (opsional) */
+    align-items: center;
+    /* Ini yang membuat ikon dan teks sejajar vertikal */
+    gap: 10px;
+    /* Jarak antara ikon dan teks */
+    margin-bottom: 30px;
+    /* Jarak antar baris (opsional) */
 
-  }
-  
-.detail_contact{
+}
+
+.detail_contact {
     font-size: 23px;
 }
 
-.img-lokasi{
+.img-lokasi {
     width: 405px;
 
 }
+
 /* CSS CONTACT US END */
 
-  
+
+
+a {
+    text-decoration: none;
+    color: red;
+}
