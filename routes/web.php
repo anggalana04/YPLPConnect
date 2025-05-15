@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', function () {
-    return view('operator_yayasan.v_layouts.index');
+    return view('operator_yayasan.v_keuangan.index');
 })->name('dashboard');
 
 #profile

@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+body {
+    font-family: 'Montserrat' !important;
+  }
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.konten{
+    margin-left: 296px;
+    margin-top: 40px;
+    margin-right: 40px;
+}   
+
+/* CSS BOX-KONTEN */
+.box-konten{
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    padding: 20px;
+    height: 90vh;
+}
+
+.head-box-konten h1{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.head-box-konten p{
+    font-weight: 1rem;
+}
+
+.option-box-konten{
+    display: flex;
+    align-items: center;
+    right: 10px;
+    gap: 111vh;
+}
+
+.download button{
+    border: none;
+    border-radius: 20px;
+    background-color: #301AF4;
+    color: white;
+    padding: 8px;
+    font-size: 12px;
+}
+
+.kategori label {
+  font-weight: 400;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.kategori select {
+  padding: 5px;
+  border-radius: 20px;
+  border: 1px black solid;
+  outline: none;
+  background-color: #D9D9D9;
+  cursor: pointer;
+}
+/* CSS BOX-KONTEN */
+
+/* CSS TAHUN */
+.bulan-wrapper {
+    max-height: 360px; /* 6 baris x 60px tinggi rata-rata */
+    overflow-y: auto;
+    border-radius: 16px;
+    width: 100%;
+    margin: 30px auto;
+}
+
+
+.bulan-list {
+    width: 100%;
+    border-radius: 30px;
+    background-color: white;
+}
+
+.bulan-item.genap {
+    background-color: white !important;
+}
+
+.bulan-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 40px;
+    padding: 10px 20px;
+}
+
+.bulan-item:nth-child(odd) {
+    background-color: #D9D9D9;
+}
+
+.bulan-item .icon-plus {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.nama {
+    flex: 1;
+    font-size: 16px;
+}
+
+.status {
+    width: 60px;
+    height: 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    display: flex;             /* Gunakan flex */
+    align-items: center;       /* Vertikal tengah */
+    justify-content: center;   /* Horizontal tengah */
+    padding: 0;                /* Hilangkan padding bawaan */
+}
+.status-hijau {
+    background-color: lime;
+}
+
+.status img {
+    width: 16px;
+    height: 16px;
+}
+
+
+.status-merah {
+    background-color: red;
+}
+
+.detail-collapsible {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: #D9D9D9;
+    border-radius: 20px;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+.bulan-item.genap + .detail-collapsible {
+    background-color: white;
+}
+
+.detail-content {
+    position: relative;
+    padding: 10px 20px;
+    font-size: 14px;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+}
+
+.detail-teks {
+    align-items: center;
+}
+
+.detail-teks p {
+    margin: 2px 0; /* Kurangi margin vertikal */
+    line-height: 1.4; /* Atur tinggi baris agar tetap terbaca tapi tidak terlalu renggang */
+}
+
+.upload-button-container {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+}
+
+.upload-button-container .upload-bukti-button {
+    border: none;
+    background-color: yellow;
+    border-radius: 20px;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.bayar-button {
+    background-color: #00FF22; /* warna hijau */
+    color: black;
+    font-weight: 500;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+/* CSS TAHUN */
+
+/* CSS POPUP */
+.popup-rekening {
+    display: none; /* Tersembunyi awalnya */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Transparan gelap */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+}
+
+.popup-content button{
+    border: none;
+    border-radius: 20px;
+    background-color: red;
+    padding: 10px;
+}
+/* CSS POPUP */
