@@ -9,7 +9,7 @@ body {
 .sidebar {
     background-color: white;
     width: 20%;
-    height: 500vh;
+    height: 100vh;
 }
 
 .head-sidebar {
@@ -95,4 +95,41 @@ span a {
     transform: rotate(180deg);
 }
 
+form.logout {
+    display: inline;
+    position: fixed;
+    bottom: 10px;
+}
+
+form.logout .logout-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 16px;
+    background-color: #D9D9D9;
+    color: black;
+    text-decoration: none;
+    border-radius: 20px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    bottom: 0px;
+}
+
+
+form.logout .logout-icon {
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+}
+
+form.logout .logout-icon .icon-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.logout-text{
+    font-weight: 500;
+}
 

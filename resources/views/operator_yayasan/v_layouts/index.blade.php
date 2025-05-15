@@ -53,7 +53,19 @@
                 <SPan><a href="{{ route('pengaduan.index') }}">Pengaduan</a></SPan>
             </ul>
 
-            <form method="POST" action="{{ route('logout') }}">
+            <form class="logout" method="POST" action="{{ route('logout') }}">
+                @csrf
+                <a href="{{ route('logout') }}" class="logout-btn"
+                onclick="event.preventDefault(); this.closest('form').submit();">
+                    <span class="logout-icon">
+                        <img src="{{ asset('image/icon-sidebar/Icon-Logout.svg') }}" alt="Logout Icon" class="icon-img">
+                    </span>
+                    <span class="logout-text">LogOut</span>
+                </a>
+            </form>
+
+
+            {{-- <form class="logout" method="POST" action="{{ route('logout') }}">
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
@@ -61,7 +73,7 @@
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
-                        </form>
+            </form> --}}
         </div>
 
 

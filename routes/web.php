@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', function () {
-    return view('operator_yayasan.v_data_siswa.index');
+    return view('operator_yayasan.v_layouts.index');
 })->name('dashboard');
 
 #profile
