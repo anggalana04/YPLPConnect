@@ -23,14 +23,14 @@ body {
 .box-konten{
     background-color: #F0F0F0;
     border-radius: 40px;
-    height: 87vh;
+    height: 87dvh;
     padding: 20px;
 }
 
 .head-box-konten{
     display: flex;
     align-items: center;
-    gap: 74vh;
+    gap: 74dvh;
 }
 
 .head-box-konten button{
@@ -49,7 +49,7 @@ body {
 }
 
 .teks-head-box-konten p{
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 /* CSS BOX-KONTEN */
 
@@ -99,12 +99,9 @@ body {
     width: 100%;
     background-color: white;
     height: 48dvh;
-    overflow-x: auto;
     border-radius: 20px;
     margin-top: 20px;
     padding: 15px;
-    /* overflow-y: auto;
-    position: relative; */
 
 }
 
@@ -115,12 +112,14 @@ body {
     font-size: 12px;
 }
 
+
 .table-konten th {
     background-color: #F0F0F0;   
     text-align: left;
     font-weight: 600;
     color: black;
     padding: 10px;
+   
 }
 
 /* Radius hanya pada sudut-sudut */
@@ -139,10 +138,14 @@ th:last-child {
     padding: 12px 15px;
     border-bottom: 1px solid #e9ecef;
     color: black;
+    cursor: pointer;
+}
+
+.clickable-row:hover{
+    background-color: #F0F0F0;
 }
 
 /* CSS TABLE */
-
 
 /* CSS PAGINATION */
 .pagination {
@@ -184,3 +187,4 @@ th:last-child {
 }
 
 /* CSS PAGINATION */
+

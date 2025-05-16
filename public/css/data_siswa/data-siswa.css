@@ -23,14 +23,14 @@ body {
 .box-konten{
     background-color: #F0F0F0;
     border-radius: 40px;
-    height: 87vh;
+    height: 87dvh;
     padding: 20px;
 }
 
 .head-box-konten{
     display: flex;
     align-items: center;
-    gap: 74vh;
+    gap: 74dvh;
 }
 
 .head-box-konten button{
@@ -98,7 +98,7 @@ body {
 .table-box {
     width: 100%;
     background-color: white;
-    height: 52vh;
+    height: 48dvh;
     overflow-x: auto;
     border-radius: 20px;
     margin-top: 20px;
@@ -115,16 +115,12 @@ body {
 
 
 .table-konten th {
-    position: sticky;
-    top: 0;
     background-color: #F0F0F0;   
     text-align: left;
     font-weight: 600;
     color: black;
     padding: 10px;
-    z-index: 10;
-    opacity: 1;
-    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+   
 }
 
 /* Radius hanya pada sudut-sudut */
@@ -146,3 +142,44 @@ th:last-child {
 }
 
 /* CSS TABLE */
+
+/* CSS PAGINATION */
+.pagination {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+    justify-content: end;
+    margin-top: 4px;
+}
+
+.page-item {
+    margin: 0 3px;
+}
+
+.page-item.disabled .page-link {
+    pointer-events: none;
+    color: #6c757d;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+}
+
+.page-link {
+    display: block;
+    padding: 6px 12px;
+    color: #007bff;
+    text-decoration: none;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.page-link:hover:not(.disabled) {
+    background-color: #e9ecef;
+    text-decoration: none;
+}
+
+/* CSS PAGINATION */

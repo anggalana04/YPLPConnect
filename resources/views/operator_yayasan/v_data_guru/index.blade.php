@@ -113,38 +113,14 @@
                     </tbody>
                 </table>
             </div>
-
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" id="pagination">
+                    <!-- Pagination buttons akan dibuat otomatis lewat JS -->
+                </ul>
+            </nav>
         </div>
     </div>
 </body>
 
-<script>
-    const tableBox = document.querySelector('.table-box');
-    const tableHeader = document.getElementById('table-header');
-    let lastScrollTop = 0;
-    let isHidden = false;
-
-    tableBox.addEventListener('scroll', function () {
-        const currentScrollTop = tableBox.scrollTop;
-
-        // Scroll down: hide header
-        if (currentScrollTop > lastScrollTop + 10 && !isHidden) {
-            tableHeader.style.transform = 'translateY(-100%)';
-            tableHeader.style.opacity = '0';
-            isHidden = true;
-        }
-
-        // Scroll up: show header
-        if (currentScrollTop < lastScrollTop - 10 && isHidden) {
-            tableHeader.style.transform = 'translateY(0)';
-            tableHeader.style.opacity = '1';
-            isHidden = false;
-        }
-
-        lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
-    });
-</script>
-
-
-
+<script src="{{ asset('JavaScript/Pagination.js') }}"></script>
 </html>

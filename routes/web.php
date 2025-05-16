@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\PengaduanController;
@@ -35,6 +36,9 @@ Route::middleware('auth')->group(function () {
     Route::get('keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
 
     #dokumen
+    Route::get('/dokumen', [DokumenController::class, 'index'])->name('dokumen.index');
+    Route::get('/detail_dokumen/{id}', [DokumenController::class, 'show'])->name('detail_dokumen.show');
+
 
     #data sekolah
 

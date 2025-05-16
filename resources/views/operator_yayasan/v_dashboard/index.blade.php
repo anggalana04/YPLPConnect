@@ -12,16 +12,15 @@
     @extends('operator_yayasan.v_layouts.index')
 
     <div class="konten">
-        <div class="konten-head">
-            <h3>Halooooo</h3>
-            <h4>Selamat datang !{{ Auth::user()->name }}
-                @if ( Auth::user()->role  == 'operator_yayasan')
+       <div class="konten-head">
+            <h1>Hallo...</h1>
+            <h2>Selamat datang! {{ Auth::user()->name }}</h2>
+            
+            @if (Auth::user()->role == 'operator_yayasan')
                 <h2>Kamu adalah operator yayasan!</h2>
-
-                @endif
-            </h4>
-
+            @endif
         </div>
+
 
         <div class="konten-body">
             <div class="card">

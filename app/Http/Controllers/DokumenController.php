@@ -12,7 +12,7 @@ class DokumenController extends Controller
      */
     public function index()
     {
-        //
+        return view('operator_yayasan.v_dokumen.index');
     }
 
     /**
@@ -34,9 +34,24 @@ class DokumenController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Dokumen $dokumen)
+    public function show($id)
     {
-        //
+        // Contoh data dummy, nanti kamu bisa ganti dengan ambil data dari database
+        $dataDokumen = [
+            'PGJ001' => ['id' => 'PGJ001', 'npa' => '10123456', 'nama' => 'Ahmad Ramadhan', 'jenis' => 'SK Pengangkatan', 'status' => 'Disetujui'],
+            'PGJ002' => ['id' => 'PGJ002', 'npa' => '10123457', 'nama' => 'Siti Aminah', 'jenis' => 'SK Pensiun', 'status' => 'Diproses'],
+            // ... data lainnya
+        ];
+
+        // Cek apakah $id ada di data
+        if (!isset($dataDokumen[$id])) {
+            abort(404, 'Dokumen tidak ditemukan');
+        }
+
+        $dokumen = $dataDokumen[$id];
+
+        // Kirim data ke view detail_dokumen.blade.php (buat file view ini di folder resources/views)
+        return view('operator_yayasan.v_dokumen.detail_dokumen', compact('dokumen'));
     }
 
     /**

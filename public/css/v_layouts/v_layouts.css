@@ -65,6 +65,10 @@ span a {
     color: black;
 }
 
+a span{
+    color: black;
+}
+
 .menu-item {
     margin-bottom: 30px;
 }

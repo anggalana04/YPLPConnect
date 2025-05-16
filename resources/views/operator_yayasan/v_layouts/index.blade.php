@@ -30,7 +30,7 @@
             <ul class="menu-item">
                 <a id="laporanToggle" data-bs-toggle="collapse" href="#laporanCollapse" role="button" aria-expanded="false" aria-controls="laporanCollapse" style="text-decoration: none; color: inherit;">
                     <img src="{{ asset('image/icon-sidebar/icon_laporan.svg') }}" alt="">
-                    <SPan> Data Sekolah</SPan>
+                    <Span> Data Sekolah</Span>
                     <img class="icon-dropdown" src="{{ asset('image/icon-sidebar/icon-dropdown.svg') }}" alt="">
                 </a>
             </ul>
@@ -50,7 +50,7 @@
 
             <ul class="menu-item">
                 <img src="{{ asset('image/icon-sidebar/icon-dokumen.svg') }}" alt="">
-                <SPan><a href="#">Dokumen</a></SPan>
+                <SPan><a href="{{ route('dokumen.index') }}">Dokumen</a></SPan>
             </ul>
 
             <ul class="menu-item">
