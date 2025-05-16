@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\PengaduanController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GuruController;
+use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\KeuanganController;
+use App\Http\Controllers\PengaduanController;
 
 
 // Route::get('/dashboard', function () {
@@ -21,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', function () {
-    return view('operator_yayasan.v_keuangan.index');
+    return view('operator_yayasan.v_dashboard.index');
 })->name('dashboard');
 
 #profile
@@ -31,5 +34,26 @@ Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.
 
 #pengaduan
 Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
+
+
+#keuangan
+Route::get('keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
+
+#dokumen
+
+#data sekolah
+
+#data siswa
+Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
+
+
+#data guru
+Route::get('guru', [GuruController::class, 'index'])->name('guru.index');
+
+
+
+
+
+
 
 require __DIR__ . '/auth.php';
