@@ -9,7 +9,7 @@
     <title>Detail Pengaduan</title>
 </head>
 <body>
-    @extends('operator_yayasan.v_layouts.index')
+    @extends('operator_sekolah.v_layouts.index')
 
     <div class="konten">
         <h1>DETAIL PENGADUAN</h1>

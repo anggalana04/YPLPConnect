@@ -9,7 +9,7 @@
     <title>Pengaduan</title>
 </head>
 <body>
-    @extends('operator_yayasan.v_layouts.index')
+    @extends('operator_sekolah.v_layouts.index')
 
     <div class="konten">
         <div class="body-konten">
@@ -41,15 +41,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <a href="{{ route('pengaduan.index') }}">
-                            <tr>
-                                <td>1</td>
-                                <td>Keluhan tentang pelayanan customer service</td>
-                                <td>PID-2023-001</td>
-                                <td>10/05/2023</td>
-                                <td><span class="status diproses">Diproses</span></td>
-                            </tr>
-                        </a>
+
+                        <tr>
+                            <td><a href="{{ route('pengaduan.detail') }}">1</a></td>
+
+                            <td>Keluhan tentang pelayanan customer service</td>
+                            <td>PID-2023-001</td>
+                            <td>10/05/2023</td>
+                            <td><span class="status diproses">Diproses</span></td>
+                        </tr>
                         <tr>
                             <td>2</td>
                             <td>Laporan masalah teknis aplikasi</td>
@@ -57,7 +57,6 @@
                             <td>11/05/2023</td>
                             <td><span class="status selesai">Selesai</span></td>
                         </tr>
-
                     </tbody>
                 </table>
             </div>

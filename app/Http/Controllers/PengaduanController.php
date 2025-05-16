@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengaduan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PengaduanController extends Controller
 {
@@ -12,8 +13,15 @@ class PengaduanController extends Controller
      */
     public function index()
     {
-        return view('operator_yayasan.v_pengaduan.index');
+        if (Auth::user()->role === 'operator_yayasan') {
+            return view('operator_yayasan.v_pengaduan.index');
+        } elseif (Auth::user()->role === 'operator_sekolah') {
+            return view('operator_sekolah.v_pengaduan.index');
+        } else {
+            return redirect('/'); // Jika role tidak sesuai, arahkan ke halaman utama
+        }
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -36,7 +44,7 @@ class PengaduanController extends Controller
      */
     public function show(Pengaduan $pengaduan)
     {
-        //
+        return view('operator_yayasan.v_pengaduan.detail');
     }
 
     /**
