@@ -1,9 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-
 body {
     font-family: 'Montserrat' !important;
-  }
+}
 
 .sidebar {
     position: fixed;
@@ -13,48 +12,48 @@ body {
     padding: 0;
 }
 
-.konten{
+.konten {
     margin-left: 276px;
     margin-top: 40px;
     margin-right: 20px;
 }
 
 /* CSS BOX-KONTEN */
-.box-konten{
+.box-konten {
     background-color: #F0F0F0;
     border-radius: 40px;
     height: 87dvh;
     padding: 20px;
 }
 
-.head-box-konten{
+.head-box-konten {
     display: flex;
     align-items: center;
     gap: 74dvh;
 }
 
-.head-box-konten button{
+.head-box-konten button {
     height: 40px;
     border: none;
     background-color: yellow;
     border-radius: 40px;
-    font-size: 14px ;
+    font-size: 14px;
     padding: 10px;
     font-weight: 500;
 }
 
-.teks-head-box-konten h1{
+.teks-head-box-konten h1 {
     font-size: 1.5rem;
     font-weight: 600;
 }
 
-.teks-head-box-konten p{
+.teks-head-box-konten p {
     font-size: 0.9rem;
 }
 /* CSS BOX-KONTEN */
 
 /* CSS KATEGORI & SEARCH */
-.option-head-box{
+.option-head-box {
     display: flex;
     align-items: center;
     gap: 30px;
@@ -67,32 +66,31 @@ body {
     border: 1px black solid;
     outline: none;
     background-color: #F0F0F0;
-    cursor: pointer;   
+    cursor: pointer;
 }
 
 .search-container {
-  position: relative;
-  max-width: 200px;
+    position: relative;
+    max-width: 200px;
 }
 
 .search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
 }
 
 .search-input {
-  width: 100%;
-  padding: 8px 15px 8px 40px;
-  border: none;
-  border-radius: 40px;
-  font-size: 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    padding: 8px 15px 8px 40px;
+    border: none;
+    border-radius: 40px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 /* CSS KATEGORI & SEARCH */
-
 
 /* CSS TABLE */
 .table-box {
@@ -102,36 +100,32 @@ body {
     border-radius: 20px;
     margin-top: 20px;
     padding: 15px;
-
 }
 
 .table-konten {
     width: 100%;
-    border-collapse: separate; /* WAJIB agar border-radius bisa bekerja */
+    border-collapse: separate;
     border-spacing: 0;
     font-size: 12px;
 }
 
-
 .table-konten th {
-    background-color: #F0F0F0;   
+    background-color: #F0F0F0;
     text-align: left;
     font-weight: 600;
     color: black;
     padding: 10px;
-   
 }
 
-/* Radius hanya pada sudut-sudut */
 th:first-child {
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 th:last-child {
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  margin-bottom: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .table-konten td {
@@ -141,10 +135,9 @@ th:last-child {
     cursor: pointer;
 }
 
-.clickable-row:hover{
+.clickable-row:hover {
     background-color: #F0F0F0;
 }
-
 /* CSS TABLE */
 
 /* CSS PAGINATION */
@@ -185,68 +178,137 @@ th:last-child {
     background-color: #e9ecef;
     text-decoration: none;
 }
-
 /* CSS PAGINATION */
 
-/* CSS FORM *//* dokumen.css */
-
+/* CSS HEAD FORM BOX */
 .modal-pengaduan {
     display: none;
     position: fixed;
-    z-index: 1000;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
     justify-content: center;
     align-items: center;
+    z-index: 999;
 }
 
-.form-box {
-    background: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    width: 600px;
+.modal-pengaduan .form-box {
+    background-color: #F0F0F0;
+    padding: 20px;
+    border-radius: 40px;
+    width: 100vh;
+    height: 77vh;
     max-width: 90%;
 }
 
+.sub-head-box h1 {
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+    padding: 10px;
+    width: 100%;
+    background-color: white;
+}
+
+.sub-head-box h1:first-child {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+/* CSS HEAD FORM BOX */
+
+/* CSS form ajukan SK */
+.border-form{
+    border: 2px black solid;
+    padding: 10px;
+}
+
+.sub-form-box {
+    background-color: white;
+    height: 62vh;
+    padding: 20px;
+    
+}
+
+.sub-form-box:last-child {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
 .form-group {
-    margin-bottom: 15px;
+    display: flex;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.form-group label {
+    width: 150px;
 }
 
 .form-group input,
-.form-group textarea,
 .form-group select {
-    width: 100%;
+    flex: 1;
     padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.button-pengaduan {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.button-pengaduan button {
-    padding: 8px 14px;
     border: none;
-    border-radius: 4px;
+    border-radius: 20px;
+    background-color: #D9D9D9;
+    outline: none;
+}
+
+.form-group select {
+    appearance: none;
+    background: url('data:image/svg+xml;utf8,<svg fill="black" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+    background-color: white;
+    border: 1px black solid;
+    background-size: 12px;
+    padding-right: 30px;
+}
+
+.kategori {
+    display: flex;
+    flex-direction: column;
+}
+
+.kategori label {
+    font-weight: 400;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.kategori select {
+    padding: 5px;
+    border-radius: 20px;
+    border: 1px black solid;
+    background-color: white;
     cursor: pointer;
 }
 
-.button-pengaduan .batal {
-    background-color: #ccc;
+/* CSS form ajukan SK */
+
+/* CSS BUTTON */
+.all-button{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 20px;
+    margin-top: 10px;
 }
 
-.button-pengaduan .bukti {
-    background-color: #ffa500;
-    color: #fff;
+.all-button button{
+    border: none;
+    border-radius: 20px;
+    font-weight: 300;
+    padding: 5px;
+    width: 70px;
 }
 
-.button-pengaduan .kirim {
-    background-color: #28a745;
-    color: #fff;
+.batal{
+    background-color: red;
 }
 
-/* CSS FORM */
+.kirim{
+    background-color: #88CFA5;
+}
+
+/* CSS BUTTON */

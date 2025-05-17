@@ -13,32 +13,35 @@
 
     <div class="konten">
         <div class="box-konten">
+
+            <!-- Header Konten -->
             <div class="head-box-konten">
                 <div class="teks-head-box-konten">
                     <h1>Dokumen SK</h1>
                     <p>Mengajukan dan melihat file Surat Keputusan</p>
                 </div>
-
-                <button onclick="openModal()">Mengajukan SK</button>
+                <button onclick="openPopUpForm()">Mengajukan SK</button>
             </div>
 
+            <!-- Search & Filter -->
             <div class="option-head-box">
                 <div class="search-container">
                     <div class="search-icon">
-                        <img src="{{asset('image/search/search.svg') }}" alt="">
+                        <img src="{{ asset('image/search/search.svg') }}" alt="">
                     </div>
                     <input type="text" placeholder="Cari Siswa" class="search-input">
                 </div>
 
                 <div class="kategori">
-                        <select id="kategori" name="kategori">
-                            <option value="">Kategori SK</option>
-                            <option value="kelas1">SK Kepala Sekolah</option>
-                            <option value="kelas2">SK Guru</option>
-                        </select>
+                    <select id="kategori" name="kategori">
+                        <option value="">Kategori SK</option>
+                        <option value="kelas1">SK Kepala Sekolah</option>
+                        <option value="kelas2">SK Guru</option>
+                    </select>
                 </div>
             </div>
-            
+
+            <!-- Tabel Data -->
             <div class="table-box">
                 <table class="table-konten">
                     <thead id="table-header">
@@ -53,104 +56,100 @@
                     <tbody>
                         @php
                             $data = [
-                            ['PGJ001', '10123456', 'Ahmad Ramadhan', 'SK Pengangkatan', 'Disetujui'],
-                            ['PGJ002', '10123457', 'Siti Aminah', 'SK Pensiun', 'Diproses'],
-                            ['PGJ003', '10123458', 'Rizky Hidayat', 'SK Mutasi', 'Ditolak'],
-                            ['PGJ004', '10123459', 'Nur Aini', 'SK Kenaikan Pangkat', 'Disetujui'],
-                            ['PGJ005', '10123460', 'Bagas Pratama', 'SK Pengangkatan', 'Diproses'],
-                            ['PGJ006', '10123461', 'Lina Marlina', 'SK Pensiun', 'Disetujui'],
-                            ['PGJ007', '10123462', 'Andi Saputra', 'SK Mutasi', 'Diproses'],
-                            ['PGJ008', '10123463', 'Desi Rahmawati', 'SK Pengangkatan', 'Ditolak'],
-                            ['PGJ009', '10123464', 'Herman Wijaya', 'SK Kenaikan Pangkat', 'Disetujui'],
-                            ['PGJ010', '10123465', 'Rina Anggraini', 'SK Mutasi', 'Diproses'],
+                                ['PGJ001', '10123456', 'Ahmad Ramadhan', 'SK Pengangkatan', 'Disetujui'],
+                                ['PGJ002', '10123457', 'Siti Aminah', 'SK Pensiun', 'Diproses'],
+                                ['PGJ003', '10123458', 'Rizky Hidayat', 'SK Mutasi', 'Ditolak'],
+                                ['PGJ004', '10123459', 'Nur Aini', 'SK Kenaikan Pangkat', 'Disetujui'],
+                                ['PGJ005', '10123460', 'Bagas Pratama', 'SK Pengangkatan', 'Diproses'],
+                                ['PGJ006', '10123461', 'Lina Marlina', 'SK Pensiun', 'Disetujui'],
+                                ['PGJ007', '10123462', 'Andi Saputra', 'SK Mutasi', 'Diproses'],
+                                ['PGJ008', '10123463', 'Desi Rahmawati', 'SK Pengangkatan', 'Ditolak'],
+                                ['PGJ009', '10123464', 'Herman Wijaya', 'SK Kenaikan Pangkat', 'Disetujui'],
+                                ['PGJ010', '10123465', 'Rina Anggraini', 'SK Mutasi', 'Diproses'],
                             ];
                         @endphp
 
                         @foreach ($data as $row)
                             <tr class="clickable-row" data-id="{{ $row[0] }}">
-                            <td>{{ $row[0] }}</td>
-                            <td>{{ $row[1] }}</td>
-                            <td>{{ $row[2] }}</td>
-                            <td>{{ $row[3] }}</td>
-                            <td>{{ $row[4] }}</td>
+                                <td>{{ $row[0] }}</td>
+                                <td>{{ $row[1] }}</td>
+                                <td>{{ $row[2] }}</td>
+                                <td>{{ $row[3] }}</td>
+                                <td>{{ $row[4] }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            
+
+            <!-- Pagination -->
             <nav aria-label="Page navigation example">
                 <ul class="pagination" id="pagination">
-                    <!-- Pagination buttons akan dibuat otomatis lewat JS -->
+                    <!-- Pagination akan diisi oleh JS -->
                 </ul>
             </nav>
 
         </div>
     </div>
 
+    <!-- Modal Form Pengajuan SK -->
+    <div class="modal-pengaduan" id="PopUpForm">
+        <div class="form-box">
+            <div class="sub-head-box">
+                <h1>Form Pengajuan Surat Keputusan</h1>
+            </div>
 
-<!-- Modal Form Pengaduan (Disembunyikan awalnya) -->
-<div class="modal-pengaduan" id="modalPengaduan">
-    <div class="form-box">
-
-        <!-- Judul Pengajuan -->
-        <div class="sub-head-box">
-            <input type="text" id="judul" name="judul" placeholder="Judul Pengajuan Masalah">
-        </div>
-
-        <div class="sub-form-box">
-
-            <!-- Form Isi Pengaduan -->
-            <div class="isi-pengaduan">
-    <div class="form-group">
-        <label for="judul">Judul Pengajuan</label>
-        <input type="text" id="judul" name="judul" placeholder="Masukkan judul">
-    </div>
-
-    <div class="form-group">
-        <label for="deskripsi">Deskripsi</label>
-        <textarea id="deskripsi" name="deskripsi" placeholder="Tulis pengaduan Anda..."></textarea>
-    </div>
-
-    <div class="form-group">
-        <label for="kategori">Kategori Masalah</label>
-        <select id="kategori" name="kategori">
-            <option value="">Pilih Kategori</option>
-            <option value="kendala">Kendala Teknis</option>
-            <option value="pelayanan">Pelayanan</option>
-            <option value="lainnya">Lainnya</option>
-        </select>
-    </div>
-</div>
-
-
-            <!-- Tombol Aksi -->
-            <div class="button-pengaduan">
-
-                <!-- Input Bukti (Hidden) -->
-                <input type="file" id="buktiInput" accept="image/*" style="display: none;" onchange="previewImage(event)">
-
-                <div class="all-button">
-                    <button class="batal" onclick="closeModal()">Batal</button>
-                    <button class="bukti" onclick="document.getElementById('buktiInput').click()">Tambahkan Bukti</button>
-                    <button class="kirim">Kirim</button>
+            <div class="sub-form-box">
+                <div class="border-form">
+                    <div class="form-group">
+                    <label for="nama">Nama</label>
+                    <input type="text" id="nama" name="nama">
+                </div>
+                <div class="form-group">
+                    <label for="npa">NPA PGRI</label>
+                    <input type="text" id="npa" name="npa">
+                </div>
+                <div class="form-group">
+                    <label for="ttl">Tempat, Tanggal Lahir</label>
+                    <input type="text" id="ttl" name="ttl">
+                </div>
+                <div class="form-group">
+                    <label for="alamat">Alamat Unit Kerja</label>
+                    <input type="text" id="alamat" name="alamat">
+                </div>
+                <div class="form-group">
+                    <label for="kategori">Jenis SK</label>
+                    <select id="kategori" name="kategori">
+                        <option value=""></option>
+                        <option value="kelas1">SK Kepala Sekolah</option>
+                        <option value="kelas2">SK Guru</option>
+                    </select>
+                </div>
                 </div>
 
+                <!-- Tombol Aksi -->
+                <div class="all-button">
+                    <button class="batal">Batal</button>
+                    <button class="kirim">kirim</button>
+                </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</body>
-<script src="{{ asset('JavaScript/Pagination.js') }}"></script>
 
-<script>
-    function openModal() {
-        document.getElementById('modalPengaduan').style.display = 'flex';
-    }
+    <!-- Script -->
+    <script src="{{ asset('JavaScript/Pagination.js') }}"></script>
+    <script src="{{ asset('JavaScript/PopUpForm/PopUpform.js') }}"></script>
+    <script>
+  // Ambil elemen tombol dan popup
+  const batalButton = document.querySelector('.batal');
+  const popup = document.querySelector('.modal-pengaduan');
 
-    function closeModal() {
-        document.getElementById('modalPengaduan').style.display = 'none';
-    }
+  // Tambahkan event listener untuk tombol batal
+  batalButton.addEventListener('click', function () {
+    popup.style.display = 'none';
+  });
 </script>
 
+</body>
 </html>

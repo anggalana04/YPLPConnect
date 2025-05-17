@@ -50,7 +50,7 @@
 
             <ul class="menu-item">
                 <img src="{{ asset('image/icon-sidebar/icon-dokumen.svg') }}" alt="">
-                <SPan><a href="#">Dokumen</a></SPan>
+                <SPan><a href="{{ route('dokumen.index') }}">Dokumen</a></SPan>
             </ul>
 
             <ul class="menu-item">
