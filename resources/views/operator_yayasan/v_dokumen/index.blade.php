@@ -19,7 +19,7 @@
                     <p>Mengajukan dan melihat file Surat Keputusan</p>
                 </div>
 
-                <button>Mengajukan SK</button>
+                <button onclick="openModal()">Mengajukan SK</button>
             </div>
 
             <div class="option-head-box">
@@ -87,19 +87,70 @@
 
         </div>
     </div>
+
+
+<!-- Modal Form Pengaduan (Disembunyikan awalnya) -->
+<div class="modal-pengaduan" id="modalPengaduan">
+    <div class="form-box">
+
+        <!-- Judul Pengajuan -->
+        <div class="sub-head-box">
+            <input type="text" id="judul" name="judul" placeholder="Judul Pengajuan Masalah">
+        </div>
+
+        <div class="sub-form-box">
+
+            <!-- Form Isi Pengaduan -->
+            <div class="isi-pengaduan">
+    <div class="form-group">
+        <label for="judul">Judul Pengajuan</label>
+        <input type="text" id="judul" name="judul" placeholder="Masukkan judul">
+    </div>
+
+    <div class="form-group">
+        <label for="deskripsi">Deskripsi</label>
+        <textarea id="deskripsi" name="deskripsi" placeholder="Tulis pengaduan Anda..."></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="kategori">Kategori Masalah</label>
+        <select id="kategori" name="kategori">
+            <option value="">Pilih Kategori</option>
+            <option value="kendala">Kendala Teknis</option>
+            <option value="pelayanan">Pelayanan</option>
+            <option value="lainnya">Lainnya</option>
+        </select>
+    </div>
+</div>
+
+
+            <!-- Tombol Aksi -->
+            <div class="button-pengaduan">
+
+                <!-- Input Bukti (Hidden) -->
+                <input type="file" id="buktiInput" accept="image/*" style="display: none;" onchange="previewImage(event)">
+
+                <div class="all-button">
+                    <button class="batal" onclick="closeModal()">Batal</button>
+                    <button class="bukti" onclick="document.getElementById('buktiInput').click()">Tambahkan Bukti</button>
+                    <button class="kirim">Kirim</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <script src="{{ asset('JavaScript/Pagination.js') }}"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const rows = document.querySelectorAll('.clickable-row');
-    rows.forEach(row => {
-        row.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-            window.location.href = `/detail_dokumen/${id}`;
-        });
-    });
-});
+    function openModal() {
+        document.getElementById('modalPengaduan').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('modalPengaduan').style.display = 'none';
+    }
 </script>
 
 </html>
