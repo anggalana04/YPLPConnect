@@ -1,0 +1,278 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+body {
+    font-family: 'Montserrat' !important;
+  }
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.konten{
+    margin-left: 296px;
+    margin-top: 40px;
+    margin-right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}   
+
+.body-konten{
+    background-color: #F0F0F0;
+    height: 87vh;
+    width: 100%;
+    border-radius: 40px;
+    padding: 20px;
+}
+
+
+/* CSS HEAD-BODY-KONTEN */
+.head-body-konten{
+    display: flex;
+    align-items: center;
+    gap: 250px;
+}
+
+.teks-body h1{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.teks-body p{
+    font-size: 1rem;
+}
+
+button{
+    height: 40px;
+    border: none;
+    background-color: yellow;
+    border-radius: 40px !important;
+    font-size: 14px !important;
+    padding: 10px;
+    font-weight: 500;
+}
+/* CSS HEAD-BODY-KONTEN */
+
+/* CSS SEARCH */
+.search-container {
+  position: relative;
+  max-width: 200px;
+  margin-top: 10px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 15px 10px 40px;
+  border: none;
+  border-radius: 40px;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+/* CSS SEARCH */
+
+/* CSS TABLE */
+.table-box {
+    width: 100%;
+    background-color: white;
+    height: 54vh;
+    overflow-x: auto;
+    border-radius: 20px;
+    margin-top: 20px;
+    padding: 15px;
+
+}
+
+.table-konten {
+    width: 100%;
+    border-collapse: separate; /* WAJIB agar border-radius bisa bekerja */
+    border-spacing: 0;
+    font-size: 12px;
+}
+
+
+.table-konten th {
+    background-color: #F0F0F0;   
+    text-align: left;
+    font-weight: 600;
+    color: black;
+    padding: 10px;
+}
+
+/* Radius hanya pada sudut-sudut */
+th:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+th:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.table-konten td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e9ecef;
+    color: black;
+}
+
+/* .table-konten tr:last-child td {
+    border-bottom: none;
+}
+
+.table-konten tr:hover {
+    background-color: #f5f5f5;
+} */
+
+
+/* CSS TABLE */
+
+/* CSS HEAD FORM BOX */
+.modal-pengaduan {
+    display: none; /* disembunyikan awalnya */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-pengaduan .form-box {
+    background-color: #F0F0F0;
+    padding: 20px;
+    border-radius: 40px;
+    width: 100vh;
+    height: 80vh;
+    max-width: 90%;
+}
+
+.sub-head-box input{
+    margin-bottom: 5px;
+    font-size: 1rem;
+    padding: 10px;
+    width: 100%;
+    outline: none;
+    border: none;
+}
+
+.sub-head-box input:first-child {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+/* CSS HEAD FORM BOX */
+
+/* CSS ISI-PENGADUAN */
+.sub-form-box{
+    background-color: white;
+    height: 58vh;
+}
+
+.sub-form-box:last-child {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.isi-pengaduan{
+    margin: 5px;
+    position: relative;
+}
+
+#preview {
+    position: absolute;
+    top: 180%;
+    left: 0;
+    max-width: 200px;
+}
+
+#deskripsi{
+    margin-top: 5px;
+    width: 100%;
+    height: 15vh;
+    border: none;
+    outline: none;
+    outline: none;
+    resize: none;
+}
+/* CSS ISI-PENGADUAN */
+
+/* CSS BUTTON */
+.button-pengaduan{
+    background-color: #D9D9D9;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    margin-top: 180px;
+}
+
+.kategori {
+  display: flex;
+  flex-direction: column;
+}
+
+.kategori label {
+  font-weight: 400;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.kategori select {
+  padding: 5px;
+  border-radius: 20px;
+  border: 1px black solid;
+  outline: none;
+  background-color: #D9D9D9;
+  cursor: pointer;
+}
+
+.all-button{
+    display: flex;
+    margin-left: 70px;
+    gap: 10px;
+}
+
+.batal{
+    background-color: red ;
+}
+
+.bukti{
+    background-color: yellow;
+    font-size: 1px;
+}
+
+.kirim{
+    background-color: #88CFA5;
+}
+
+.batal:hover{
+    background-color: rgb(129, 16, 16) ;
+}
+
+.bukti:hover{
+    background-color: rgb(165, 165, 22);
+    font-size: 1px;
+}
+
+.kirim:hover{
+    background-color: #47825f;
+}
+
+
+

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('css/Operator Yayasan/dashboard_yayasan.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard/dashboard.css') }}">
     <title>Dashboard</title>
 </head>
 <body>
@@ -15,14 +15,11 @@
     <div class="konten">
        <div class="konten-head">
             <h1>Hallo...</h1>
-
-            <div class="welcome">
-                <h2>Selamat datang! {{ Auth::user()->name }}, </h2>
-                
-                @if (Auth::user()->role == 'operator_yayasan')
-                    <h2>Kamu adalah operator yayasan!</h2>
-                @endif
-            </div>
+            <h2>Selamat datang! {{ Auth::user()->name }}</h2>
+            
+            @if (Auth::user()->role == 'operator_yayasan')
+                <h2>Kamu adalah operator yayasan!</h2>
+            @endif
         </div>
 
 
@@ -34,7 +31,6 @@
                     <p>xxx</p>
                 </div>
             </div>
-
             <div class="card">
                 <span>Jumlah Siswa</span>
                 <div class="detail-card">
@@ -42,21 +38,11 @@
                     <p>xxx</p>
                 </div>
             </div>
-
-            <div class="card">
-                <span>Notifikasi Dokumen</span>
-            </div>
-
             <div class="card">
                 <span>Notifikasi Keuangan</span>
             </div>
-
             <div class="card">
                 <span>Notifikasi Pengaduan</span>
-            </div>
-
-            <div class="card">
-                <span>Notifikasi Pengajuan</span>
             </div>
         </div>
 

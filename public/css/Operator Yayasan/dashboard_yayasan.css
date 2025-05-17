@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+body {
+    font-family: 'Montserrat' !important;
+  }
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.konten{
+    margin-left: 276px;
+    margin-top: 20px;
+    margin-right: 20px;
+    display: block;
+    justify-content: center;
+    
+}
+
+.konten-head {
+    background-color: #F0F0F0;
+    border-radius: 40px;
+    height: 65px;
+
+    margin: auto;
+    padding: 20px;
+    padding-left: 30px;
+
+    display: flex;
+    flex-direction: column;      /* susunan vertikal */
+    justify-content: center;     /* center vertikal */
+    align-items: flex-start;         /* center horizontal */
+    gap: 4px;                   /* jarak antar heading */
+    text-align: center;
+}
+
+.welcome{
+    display: flex;
+    gap: 10px;
+}
+
+.konten-head h1 {
+    font-size: 1.9rem ;
+    margin: 0;
+}
+.konten-head h2 {
+    font-size: 1.2rem;
+    margin: 0;
+    font-weight: 500;
+    
+}
+
+
+/* CSS konten-body*/
+.konten-body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 kolom per baris */
+    gap: 30px;
+    padding: 20px;
+    margin-top: 30px;
+    border-radius: 40px;
+    background-color: white;
+    max-width: 1000px;  /* Biar tidak terlalu melebar */
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+}
+
+.card {
+    background-color: #f0f0f0 !important;
+    border-radius: 20px !important;
+    padding: 20px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+
+.card span{
+    font-size: 1.4rem;
+}
+/* CSS KONTEN-BODY*/
+
+/* CSS DALAM CARD */
+.detail-card{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 3rem;
+    margin-top: 10px;
+}
+
+.detail-card img{
+    width: 75px;
+    height: 75px;
+}
+/* CSS DALAM CARD */

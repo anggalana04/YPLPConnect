@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Pengaduan</title>
+    <title>User Manage</title>
 
     <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('css/pengaduan/pengaduan.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/Operator Yayasan/User Manage/UserManage.css') }}">
 </head>
 <body>
     @extends('operator_yayasan.v_layouts.index')
 
     <div class="konten">
         <div class="body-konten">
-
             <!-- Header -->
             <div class="head-body-konten">
                 <div class="teks-body">

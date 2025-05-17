@@ -7,6 +7,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 
+    <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/v_layouts/v_layouts.css') }}">
     <title>Document</title>
 </head>
@@ -60,7 +61,7 @@
 
             @if (Auth::user()->role == 'operator_yayasan')
             <ul class="menu-item">
-                <img src="{{ asset('image/icon-sidebar/icon-pengaduan.svg') }}" alt="">
+                <img src="{{ asset('image/icon-sidebar/icon-ManageUser.svg') }}" alt="">
                 <SPan><a href="{{ route('pengaduan.index') }}">Users</a></SPan>
             </ul>
             @endif
