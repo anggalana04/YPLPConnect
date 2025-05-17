@@ -21,8 +21,6 @@
                 <h2>Kamu adalah operator yayasan!</h2>
             @endif
         </div>
-
-
         <div class="konten-body">
             <div class="card">
                 <span>Jumlah Guru</span>

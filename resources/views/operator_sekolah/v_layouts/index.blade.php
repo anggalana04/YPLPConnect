@@ -23,6 +23,7 @@
         </div>
 
         <div class="menu-sidebar">
+            @if(Auth::user(->role == 'operator_sekolah'))
             <ul class="menu-item">
                 <img src="{{ asset('image/icon-sidebar/Icon-dashboard.svg') }}" alt="">
                 <Span><a href="{{ route('dashboard') }}">Dashboard</a></Span>
@@ -58,13 +59,14 @@
                 <img src="{{ asset('image/icon-sidebar/icon-pengaduan.svg') }}" alt="">
                 <SPan><a href="{{ route('pengaduan.index') }}">Pengaduan</a></SPan>
             </ul>
+            @endif
 
-            @if (Auth::user()->role == 'operator_yayasan')
+            {{-- @if (Auth::user()->role == 'operator_yayasan')
             <ul class="menu-item">
                 <img src="{{ asset('image/icon-sidebar/icon-pengaduan.svg') }}" alt="">
                 <SPan><a href="{{ route('pengaduan.index') }}">Users</a></SPan>
             </ul>
-            @endif
+            @endif --}}
 
             <form class="logout" method="POST" action="{{ route('logout') }}">
                 @csrf
