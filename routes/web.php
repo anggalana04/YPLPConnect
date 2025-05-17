@@ -7,6 +7,7 @@ use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\PengaduanController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 
 // Route::get('/dashboard', function () {
@@ -37,7 +38,10 @@ Route::middleware('auth')->group(function () {
 
     #dokumen
     Route::get('/dokumen', [DokumenController::class, 'index'])->name('dokumen.index');
-    Route::get('/detail_dokumen/{id}', [DokumenController::class, 'show'])->name('detail_dokumen.show');
+    Route::get('/dokumen/detail/{id}', function ($id) {
+    return view('operator_yayasan.v_dokumen.detail_dokumen', compact('id'));
+});
+
 
 
     #data sekolah
@@ -48,6 +52,11 @@ Route::middleware('auth')->group(function () {
 
     #data guru
     Route::get('guru', [GuruController::class, 'index'])->name('guru.index');
+
+
+    // Route Users
+    Route::get('/users', [RegisteredUserController::class, 'index'])->name('users.index');
+
 });
 
 

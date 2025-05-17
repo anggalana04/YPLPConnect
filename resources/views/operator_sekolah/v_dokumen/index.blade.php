@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('css/Dokumen/dokumen.css') }}">
+    <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon" />
+    <link rel="stylesheet" href="{{ asset('css/Dokumen/dokumen.css') }}" />
     <title>Dokumen</title>
 </head>
 <body>
@@ -28,9 +28,9 @@
             <div class="option-head-box">
                 <div class="search-container">
                     <div class="search-icon">
-                        <img src="{{ asset('image/search/search.svg') }}" alt="">
+                        <img src="{{ asset('image/search/search.svg') }}" alt="" />
                     </div>
-                    <input type="text" placeholder="Cari Siswa" class="search-input">
+                    <input type="text" placeholder="Cari Siswa" class="search-input" />
                 </div>
 
                 <div class="kategori">
@@ -94,7 +94,7 @@
     </div>
 
     <!-- Modal Form Pengajuan SK -->
-    <div class="modal-pengaduan" id="PopUpForm">
+    <div class="modal-pengaduan" id="PopUpForm" style="display:none;">
         <div class="form-box">
             <div class="sub-head-box">
                 <h1>Form Pengajuan Surat Keputusan</h1>
@@ -103,36 +103,35 @@
             <div class="sub-form-box">
                 <div class="border-form">
                     <div class="form-group">
-                    <label for="nama">Nama</label>
-                    <input type="text" id="nama" name="nama">
-                </div>
-                <div class="form-group">
-                    <label for="npa">NPA PGRI</label>
-                    <input type="text" id="npa" name="npa">
-                </div>
-                <div class="form-group">
-                    <label for="ttl">Tempat, Tanggal Lahir</label>
-                    <input type="text" id="ttl" name="ttl">
-                </div>
-                <div class="form-group">
-                    <label for="alamat">Alamat Unit Kerja</label>
-                    <input type="text" id="alamat" name="alamat">
-                </div>
-                <div class="form-group">
-                    <label for="kategori">Jenis SK</label>
-                    <select id="kategori" name="kategori">
-                        <option value=""></option>
-                        <option value="kelas1">SK Kepala Sekolah</option>
-                        <option value="kelas2">SK Guru</option>
-                    </select>
-                </div>
+                        <label for="nama">Nama</label>
+                        <input type="text" id="nama" name="nama" />
+                    </div>
+                    <div class="form-group">
+                        <label for="npa">NPA PGRI</label>
+                        <input type="text" id="npa" name="npa" />
+                    </div>
+                    <div class="form-group">
+                        <label for="ttl">Tempat, Tanggal Lahir</label>
+                        <input type="text" id="ttl" name="ttl" />
+                    </div>
+                    <div class="form-group">
+                        <label for="alamat">Alamat Unit Kerja</label>
+                        <input type="text" id="alamat" name="alamat" />
+                    </div>
+                    <div class="form-group">
+                        <label for="kategori">Jenis SK</label>
+                        <select id="kategori" name="kategori">
+                            <option value=""></option>
+                            <option value="kelas1">SK Kepala Sekolah</option>
+                            <option value="kelas2">SK Guru</option>
+                        </select>
+                    </div>
                 </div>
 
                 <!-- Tombol Aksi -->
                 <div class="all-button">
                     <button class="batal">Batal</button>
-                    <button class="kirim">kirim</button>
-                </div>
+                    <button class="kirim">Kirim</button>
                 </div>
             </div>
         </div>
@@ -141,16 +140,24 @@
     <!-- Script -->
     <script src="{{ asset('JavaScript/Pagination.js') }}"></script>
     <script src="{{ asset('JavaScript/PopUpForm/PopUpform.js') }}"></script>
+
     <script>
-  // Ambil elemen tombol dan popup
-  const batalButton = document.querySelector('.batal');
-  const popup = document.querySelector('.modal-pengaduan');
+        // Tombol batal untuk menutup popup
+        const batalButton = document.querySelector('.batal');
+        const popup = document.querySelector('.modal-pengaduan');
 
-  // Tambahkan event listener untuk tombol batal
-  batalButton.addEventListener('click', function () {
-    popup.style.display = 'none';
-  });
-</script>
+        batalButton.addEventListener('click', function () {
+            popup.style.display = 'none';
+        });
 
+        // Membuat setiap baris tabel bisa diklik untuk menuju detail
+        document.querySelectorAll('tr[data-id]').forEach(row => {
+            row.style.cursor = 'pointer';
+            row.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                window.location.href = `/dokumen/detail/${id}`;
+            });
+        });
+    </script>
 </body>
 </html>

@@ -17,10 +17,10 @@
             <!-- Header -->
             <div class="head-body-konten">
                 <div class="teks-body">
-                    <h1>PENGADUAN</h1>
-                    <p>Ajukan pengaduan jika sekolah anda mengalami masalah</p>
+                    <h1>Manage User</h1>
+                    <p>Lihat Dan Kelola Data User</p>
                 </div>
-                <button onclick="openPopUpForm()">Ajukan Pengaduan</button>
+                <button onclick="openPopUpForm()">Tambah User</button>
             </div>
 
             <!-- Search -->
@@ -28,7 +28,7 @@
                 <div class="search-icon">
                     <img src="{{ asset('image/search/search.svg') }}" alt="Search Icon">
                 </div>
-                <input type="text" placeholder="Cari Pengaduan..." class="search-input">
+                <input type="text" placeholder="Cari User..." class="search-input">
             </div>
 
             <!-- Tabel Pengaduan -->
@@ -36,85 +36,51 @@
                 <table class="table-konten">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>Deskripsi Pengaduan</th>
-                            <th>ID Pengaduan</th>
-                            <th>Tanggal Pengaduan</th>
-                            <th>Status</th>
+                            <th>Nama</th>
+                            <th>Role</th>
+                            <th>Sekolah</th>
+                            <th>Alamat</th>
+                            <th>No Hp</th>
                         </tr>
                     </thead>
+                    @php
+                        $data = [
+                            ['nama' => 'Ahmad Ramadhan', 'role' => 'Guru', 'sekolah' => 'SMA Negeri 1 Jakarta', 'alamat' => 'Jl. Merdeka No. 10', 'hp' => '081234567890'],
+                            ['nama' => 'Siti Aminah', 'role' => 'Kepala Sekolah', 'sekolah' => 'SMP Negeri 2 Bandung', 'alamat' => 'Jl. Pahlawan No. 22', 'hp' => '082134567891'],
+                            ['nama' => 'Rizky Hidayat', 'role' => 'Wakil Kepala', 'sekolah' => 'SMA Negeri 3 Surabaya', 'alamat' => 'Jl. Kartini No. 7', 'hp' => '083134567892'],
+                            ['nama' => 'Lina Marlina', 'role' => 'Staff TU', 'sekolah' => 'SMK Negeri 4 Malang', 'alamat' => 'Jl. Mawar No. 12', 'hp' => '084134567893'],
+                            ['nama' => 'Andi Saputra', 'role' => 'Guru', 'sekolah' => 'SMA Negeri 5 Medan', 'alamat' => 'Jl. Cempaka No. 15', 'hp' => '085234567894'],
+                            ['nama' => 'Desi Rahmawati', 'role' => 'Kepala Sekolah', 'sekolah' => 'SMP Negeri 6 Semarang', 'alamat' => 'Jl. Teratai No. 8', 'hp' => '086234567895'],
+                            ['nama' => 'Herman Wijaya', 'role' => 'Wakil Kepala', 'sekolah' => 'SMK Negeri 7 Yogyakarta', 'alamat' => 'Jl. Dahlia No. 21', 'hp' => '087234567896'],
+                            ['nama' => 'Rina Anggraini', 'role' => 'Guru', 'sekolah' => 'SMA Negeri 8 Makassar', 'alamat' => 'Jl. Melati No. 4', 'hp' => '088234567897'],
+                            ['nama' => 'Bagas Pratama', 'role' => 'Staff TU', 'sekolah' => 'SMP Negeri 9 Palembang', 'alamat' => 'Jl. Anggrek No. 2', 'hp' => '089234567898'],
+                            ['nama' => 'Nur Aini', 'role' => 'Guru', 'sekolah' => 'SMA Negeri 10 Balikpapan', 'alamat' => 'Jl. Kenanga No. 17', 'hp' => '081234567899'],
+                        ];
+                    @endphp
+
                     <tbody>
-                        <tr onclick="window.location='{{ route('pengaduan.index') }}'" style="cursor:pointer;">
-                            <td>1</td>
-                            <td>Keluhan tentang pelayanan customer service</td>
-                            <td>PID-2023-001</td>
-                            <td>10/05/2023</td>
-                            <td><span class="status diproses">Diproses</span></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Laporan masalah teknis aplikasi</td>
-                            <td>PID-2023-002</td>
-                            <td>11/05/2023</td>
-                            <td><span class="status selesai">Selesai</span></td>
-                        </tr>
+                        @foreach ($data as $d)
+                            <tr>
+                                <td>{{ $d['nama'] }}</td>
+                                <td>{{ $d['role'] }}</td>
+                                <td>{{ $d['sekolah'] }}</td>
+                                <td>{{ $d['alamat'] }}</td>
+                                <td>{{ $d['hp'] }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-
-        </div>
-    </div>
-
-    <!-- Modal Form Pengaduan (Disembunyikan awalnya) -->
-    <div class="modal-pengaduan" id="PopUpForm">
-        <div class="form-box">
-
-            <!-- Judul Pengajuan -->
-            <div class="sub-head-box">
-                <input type="text" id="judul" name="judul" placeholder="Judul Pengajuan Masalah">
-            </div>
-
-            <div class="sub-form-box">
-                <!-- Form Isi Pengaduan -->
-                <div class="isi-pengaduan">
-                    <div class="form-group">
-                        <label for="judul">Judul Pengajuan</label>
-                        <input type="text" id="judul" name="judul" placeholder="Masukkan judul">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="deskripsi">Deskripsi</label>
-                        <textarea id="deskripsi" name="deskripsi" placeholder="Tulis pengaduan Anda..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="kategori">Kategori Masalah</label>
-                        <select id="kategori" name="kategori">
-                            <option value="">Pilih Kategori</option>
-                            <option value="kendala">Kendala Teknis</option>
-                            <option value="pelayanan">Pelayanan</option>
-                            <option value="lainnya">Lainnya</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Tombol Aksi -->
-                <div class="button-pengaduan">
-                    <!-- Input Bukti (Hidden) -->
-                    <input type="file" id="buktiInput" accept="image/*" style="display: none;" onchange="previewImage(event)">
-
-                    <div class="all-button">
-                        <button class="batal" onclick="closePopUpForm()">Batal</button>
-                        <button class="bukti" onclick="document.getElementById('buktiInput').click()">Tambahkan Bukti</button>
-                        <button class="kirim">Kirim</button>
-                    </div>
-                </div>
-            </div>
+            
+             <nav aria-label="Page navigation example">
+                <ul class="pagination" id="pagination">
+                    <!-- Pagination buttons akan dibuat otomatis lewat JS -->
+                </ul>
+            </nav>
         </div>
     </div>
 
     <!-- Script -->
-    <script src="{{ asset('JavaScript/PopUpForm/PopUpform.js') }}"></script>
-    <script src="{{ asset('JavaScript/Preview/Preview.js') }}"></script>
+    <script src="{{ asset('JavaScript/Pagination.js') }}"></script>
 </body>
 </html>

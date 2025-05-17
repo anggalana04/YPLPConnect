@@ -62,7 +62,7 @@
             @if (Auth::user()->role == 'operator_yayasan')
             <ul class="menu-item">
                 <img src="{{ asset('image/icon-sidebar/icon-ManageUser.svg') }}" alt="">
-                <SPan><a href="{{ route('pengaduan.index') }}">Users</a></SPan>
+                <SPan><a href="{{ route('users.index') }}">Users</a></SPan>
             </ul>
             @endif
 

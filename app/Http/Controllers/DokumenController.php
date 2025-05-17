@@ -36,13 +36,6 @@ class DokumenController extends Controller
      */
     public function show($id)
     {
-        // Contoh data dummy, nanti kamu bisa ganti dengan ambil data dari database
-        $dataDokumen = [
-            'PGJ001' => ['id' => 'PGJ001', 'npa' => '10123456', 'nama' => 'Ahmad Ramadhan', 'jenis' => 'SK Pengangkatan', 'status' => 'Disetujui'],
-            'PGJ002' => ['id' => 'PGJ002', 'npa' => '10123457', 'nama' => 'Siti Aminah', 'jenis' => 'SK Pensiun', 'status' => 'Diproses'],
-            // ... data lainnya
-        ];
-
         // Cek apakah $id ada di data
         if (!isset($dataDokumen[$id])) {
             abort(404, 'Dokumen tidak ditemukan');

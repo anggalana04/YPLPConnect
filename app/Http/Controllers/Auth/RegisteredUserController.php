@@ -14,9 +14,10 @@ use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
+    public function index()
+    {
+        return view('operator_yayasan.v_ManageUser.index');
+    }
     public function create(): View
     {
         return view('auth.register');
