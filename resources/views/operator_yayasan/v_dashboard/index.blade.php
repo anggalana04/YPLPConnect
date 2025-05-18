@@ -21,7 +21,7 @@
             <h2>Kamu adalah operator yayasan!</h2>
         </div>
     @else
-        <h1>Halo...</h1>
+        <h1>Hallo...</h1>
         <div class="welcome">
             <h2>Selamat datang! {{ Auth::user()->name }}</h2>
         </div>

@@ -69,12 +69,19 @@
                                     <p><strong>Detail:</strong> Rp. 2000 x Jumlah Siswa</p>
                                     <p><strong>Total:</strong></p>
                                 </div>
+
                                 <div class="upload-button-container" style="display: flex; gap: 10px;">
-                                    <label for="uploadBukti{{ $loop->iteration }}" class="upload-bukti-button">Cek Bukti</label>
-                                    <input type="file" id="uploadBukti{{ $loop->iteration }}" class="upload-input" style="display: none;">
-                                    
-                                    <button class="bayar-button">Sudah Bayar</button>
+                                    @if(Auth::user()->role == 'operator_yayasan')
+                                        <label for="uploadBukti{{ $loop->iteration }}" class="upload-bukti-button">Cek Bukti</label>
+                                        <input type="file" id="uploadBukti{{ $loop->iteration }}" class="upload-input" style="display: none;">
+                                        <button class="bayar-button">Sudah Bayar</button>
+                                    @else
+                                        <label for="uploadBukti{{ $loop->iteration }}" class="upload-bukti-button">Upload Bukti</label>
+                                        <input type="file" id="uploadBukti{{ $loop->iteration }}" class="upload-input" style="display: none;">
+                                        <button class="bayar-button">Bayar</button>
+                                    @endif
                                 </div>
+
                             </div>
                         </div>
                     @endforeach

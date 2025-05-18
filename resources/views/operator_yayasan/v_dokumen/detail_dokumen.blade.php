@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
+    <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/Dokumen/detail_dokumen.css') }}" />
     <title>Detail Dokumen</title>
 </head>
@@ -38,6 +39,7 @@
                             <th>Nama</th>
                             <th>Jenis SK</th>
                             <th>Alamat Kerja</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,6 +66,9 @@
                                 <td><?= $row[2] ?></td>
                                 <td><?= $row[3] ?></td>
                                 <td><?= $row[4] ?></td>
+                                <td>
+                                    <a href="{{ asset('file/sk/' . $row[0] . '.pdf') }}" class="btn-download" download>Download</a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

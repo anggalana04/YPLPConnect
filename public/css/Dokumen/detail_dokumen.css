@@ -119,10 +119,7 @@ th:last-child {
     padding: 12px 15px;
     border-bottom: 1px solid #e9ecef;
     color: black;
-    cursor: pointer;
 }
-
-
 /* CSS TABLE */
 
 
@@ -167,3 +164,18 @@ th:last-child {
 
 /* CSS PAGINATION */
 
+/* CSS DOWNLOAD */
+.btn-download {
+    background-color: yellow;
+    color: black;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.btn-download:hover {
+    background-color: rgb(176, 176, 20);
+}
+
+/* CSS DOWNLOAD */

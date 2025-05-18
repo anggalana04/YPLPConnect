@@ -171,6 +171,8 @@ body {
 
 .upload-button-container {
     position: absolute;
+    display: flex;
+    gap: 50px;
     bottom: 10px;
     right: 20px;
 }
