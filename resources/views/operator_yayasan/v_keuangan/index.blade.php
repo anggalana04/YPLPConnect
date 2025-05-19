@@ -10,7 +10,7 @@
     <title>Data Keuangan</title>
 </head>
 <body>
-    @extends('operator_yayasan.v_layouts.index')
+    @extends('v_layouts.index')
 
     <div class="konten">
         <div class="box-konten">
@@ -72,7 +72,7 @@
                                 <div class="upload-button-container" style="display: flex; gap: 10px;">
                                     <label for="uploadBukti{{ $loop->iteration }}" class="upload-bukti-button">Cek Bukti</label>
                                     <input type="file" id="uploadBukti{{ $loop->iteration }}" class="upload-input" style="display: none;">
-                                    
+
                                     <button class="bayar-button">Sudah Bayar</button>
                                 </div>
                             </div>

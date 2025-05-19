@@ -9,7 +9,7 @@
     <title>Detail Dokumen</title>
 </head>
 <body>
-    @extends('operator_yayasan.v_layouts.index')
+    @extends('v_layouts.index')
 
     <div class="konten">
         <div class="box-konten">

@@ -9,7 +9,7 @@
     <title>Data Guru</title>
 </head>
 <body>
-    @extends('operator_yayasan.v_layouts.index')
+    @extends('v_layouts.index')
 
     <div class="konten">
         <div class="box-konten">
@@ -30,7 +30,7 @@
                     <input type="text" placeholder="Cari Siswa" class="search-input">
                 </div>
             </div>
-            
+
             <div class="table-box">
                 <table class="table-konten">
                     <thead id="table-header">

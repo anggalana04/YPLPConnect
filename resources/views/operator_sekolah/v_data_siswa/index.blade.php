@@ -10,7 +10,7 @@
     <title>Data Siswa</title>
 </head>
 <body>
-    @extends('operator_yayasan.v_layouts.index')
+    @extends('v_layouts.index')
 
     <div class="konten">
         <div class="box-konten">
@@ -40,7 +40,7 @@
                         </select>
                 </div>
             </div>
-            
+
             <div class="table-box">
                 <table class="table-konten">
                     <thead id="table-header">
@@ -113,7 +113,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <nav aria-label="Page navigation example">
                 <ul class="pagination" id="pagination">
                     <!-- Pagination buttons akan dibuat otomatis lewat JS -->

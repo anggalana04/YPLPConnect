@@ -10,7 +10,7 @@
         <title>Dashboard</title>
     </head>
     <body>
-        @extends('operator_yayasan.v_layouts.index')
+        @extends('v_layouts.index')
 
         <div class="konten">
         <div class="konten-head @if(Auth::user()->role != 'operator_yayasan') konten-head-sekolah @endif">

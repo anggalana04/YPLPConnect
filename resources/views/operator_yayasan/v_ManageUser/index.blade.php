@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/Operator Yayasan/User Manage/UserManage.css') }}">
 </head>
 <body>
-    @extends('operator_yayasan.v_layouts.index')
+    @extends('v_layouts.index')
 
     <div class="konten">
         <div class="body-konten">
@@ -71,7 +71,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
              <nav aria-label="Page navigation example">
                 <ul class="pagination" id="pagination">
                     <!-- Pagination buttons akan dibuat otomatis lewat JS -->

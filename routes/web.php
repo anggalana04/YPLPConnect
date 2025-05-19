@@ -39,10 +39,8 @@ Route::middleware('auth')->group(function () {
     #dokumen
     Route::get('/dokumen', [DokumenController::class, 'index'])->name('dokumen.index');
     Route::get('/dokumen/detail/{id}', function ($id) {
-    return view('operator_yayasan.v_dokumen.detail_dokumen', compact('id'));
-});
-
-
+        return view('operator_yayasan.v_dokumen.detail_dokumen', compact('id'));
+    });
 
     #data sekolah
 
@@ -56,7 +54,6 @@ Route::middleware('auth')->group(function () {
 
     // Route Users
     Route::get('/users', [RegisteredUserController::class, 'index'])->name('users.index');
-
 });
 
 
