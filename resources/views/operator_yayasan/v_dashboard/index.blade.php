@@ -48,19 +48,19 @@
         </div>
 
         <div class="card">
-            <span>Notifikasi Keuangan</span>
+            <span>Keuangan</span>
         </div>
 
         <div class="card">
-            <span>Notifikasi Pengaduan</span>
+            <span>Pengaduan</span>
         </div>
 
         <div class="card">
-            <span>Notifikasi Dokumen</span>
+            <span>Dokumen</span>
         </div>
 
         <div class="card">
-            <span>Notifikasi Pengajuan</span>
+            <span>Pengajuan</span>
         </div>
     @else
         <!-- Konten untuk operator sekolah -->
@@ -81,11 +81,11 @@
         </div>
 
         <div class="card">
-            <span>Notifikasi Keuangan</span>
+            <span>Keuangan</span>
         </div>
 
         <div class="card">
-            <span>Notifikasi Pengaduan</span>
+            <span>Pengaduan</span>
         </div>
     @endif
 </div>
