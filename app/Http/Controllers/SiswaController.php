@@ -12,7 +12,13 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        return view('operator_yayasan.v_data_siswa.index');
+        if (auth()->user()->role == 'operator_sekolah') {
+            $siswa = Siswa::where('npsn', auth()->user()->npsn)->paginate(10);
+            return view('operator_sekolah.v_data_siswa.index', compact('siswa'));
+        } else {
+            $siswa = Siswa::paginate(10); // <-- FIXED HERE
+            return view('operator_yayasan.v_data_siswa.index', compact('siswa'));
+        }
     }
 
     /**
@@ -23,7 +29,7 @@ class SiswaController extends Controller
         //
     }
 
-    /**
+/**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)

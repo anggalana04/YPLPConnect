@@ -43,7 +43,7 @@
             <span>Jumlah Siswa</span>
             <div class="detail-card">
                 <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Siswa.svg') }}" alt="">
-                <p>xxx</p>
+                <p>{{$jumlahSiswa}}</p>
             </div>
         </div>
 

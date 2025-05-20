@@ -8,6 +8,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Models\Siswa;
+use App\Models\Guru;
 
 
 // Route::get('/dashboard', function () {
@@ -20,7 +22,16 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
-        return view('operator_yayasan.v_dashboard.index');
+        $user = auth()->user();
+        if ($user->role === 'operator_sekolah') {
+            $jumlahSiswa = Siswa::where('npsn', $user->npsn)->count();
+            $jumlahGuru = Guru::where('npsn', $user->npsn)->count();
+            return view('operator_sekolah.v_dashboard.index', compact('jumlahSiswa', 'jumlahGuru'));
+        } else {
+            $jumlahSiswa = Siswa::count();
+            $jumlahGuru = Guru::count();
+            return view('operator_yayasan.v_dashboard.index', compact('jumlahSiswa', 'jumlahGuru'));
+        }
     })->name('dashboard');
 
     #profile

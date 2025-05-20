@@ -10,7 +10,7 @@
     <title>Pengaduan</title>
 </head>
 <body>
-    @extends('operator_sekolah.v_layouts.index')
+    @extends('v_layouts.index')
 
     <div class="konten">
         <div class="body-konten">

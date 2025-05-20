@@ -1,4 +1,4 @@
-{{-- <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -33,7 +33,7 @@
                 <span>Jumlah Siswa</span>
                 <div class="detail-card">
                     <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Siswa.svg') }}" alt="">
-                    <p>xxx</p>
+                    <p>{{$jumlahSiswa}}</p>
                 </div>
             </div>
             <div class="card">
@@ -46,4 +46,4 @@
 
     </div>
 </body>
-</html> --}}
+</html> 

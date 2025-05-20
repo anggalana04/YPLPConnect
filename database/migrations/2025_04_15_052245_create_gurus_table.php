@@ -11,8 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gurus', function (Blueprint $table) {
-            $table->id();
+        Schema::create('guru', function (Blueprint $table) {
+            $table->char('nuptk', 16)->primary();
+            $table->char('npsn', 8);
+            $table->foreign('npsn')->references('npsn')->on('sekolah')->onDelete('cascade');
+            $table->char('npa', 16)->unique()->nullable();
+            $table->string('nama', 100);
+            $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->string('tempat_lahir', 100);
+            $table->date('tanggal_lahir');
+            $table->string('alamat', 255);
+            $table->string('no_hp', 15)->nullable();
+            $table->enum('status', ['Aktif', 'Nonaktif'])->default('Aktif');
             $table->timestamps();
         });
     }
@@ -22,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gurus');
+        Schema::dropIfExists('guru');
     }
 };
