@@ -35,7 +35,7 @@
             <span>Jumlah Guru</span>
             <div class="detail-card">
                 <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Guru.svg') }}" alt="">
-                <p>xxx</p>
+                <p>{{$jumlahGuru}}</p>
             </div>
         </div>
 

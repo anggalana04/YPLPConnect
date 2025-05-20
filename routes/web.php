@@ -25,11 +25,11 @@ Route::middleware('auth')->group(function () {
         $user = auth()->user();
         if ($user->role === 'operator_sekolah') {
             $jumlahSiswa = Siswa::where('npsn', $user->npsn)->count();
-            $jumlahGuru = Guru::where('npsn', $user->npsn)->count();
+            $jumlahGuru = Guru::where('npsn', $user->npsn)->count(); // Only count guru for this sekolah
             return view('operator_sekolah.v_dashboard.index', compact('jumlahSiswa', 'jumlahGuru'));
         } else {
             $jumlahSiswa = Siswa::count();
-            $jumlahGuru = Guru::count();
+            $jumlahGuru = Guru::count(); // All guru
             return view('operator_yayasan.v_dashboard.index', compact('jumlahSiswa', 'jumlahGuru'));
         }
     })->name('dashboard');
@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
 
     #keuangan
     Route::get('keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
+    Route::post('keuangan/upload/{id?}', [KeuanganController::class, 'upload'])->name('keuangan.upload');
 
     #dokumen
     Route::get('/dokumen', [DokumenController::class, 'index'])->name('dokumen.index');

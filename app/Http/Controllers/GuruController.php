@@ -12,12 +12,19 @@ class GuruController extends Controller
      */
     public function index()
     {
+        if (Auth()->user()->role == 'operator_sekolah') {
+            $guru = Guru::where('npsn', auth()->user()->npsn)->paginate(10);
+            return view('operator_sekolah.v_data_guru.index', compact('guru'));
+        } else {
+            $guru = Guru::paginate(10); // <-- FIXED HERE
+            return view('operator_yayasan.v_data_guru.index', compact('guru'));
+        }
         return view('operator_yayasan.v_data_guru.index');
     }
 
     /**
      * Show the form for creating a new resource.
-     */
+    */
     public function create()
     {
         //

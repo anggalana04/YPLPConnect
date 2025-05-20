@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Guru;
 use App\Models\Sekolah;
 use Illuminate\Database\Seeder;
 
@@ -33,6 +34,12 @@ class DatabaseSeeder extends Seeder
                 $user->npsn = null;
             }
             $user->save();
+        });
+
+        // Create guru, pastikan npsn valid
+        Guru::factory(20)->make()->each(function ($guru) use ($npsnList) {
+            $guru->npsn = $npsnList[array_rand($npsnList)];
+            $guru->save();
         });
 
         // Seed siswa for each sekolah

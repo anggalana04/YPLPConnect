@@ -1,144 +1,143 @@
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+@extends('v_layouts.index')
 
-    <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('css/data_keuangan/DataKeuangan.css') }}">
-    <title>Data Keuangan</title>
-</head>
-<body>
-    @extends('operator_yayasan.v_layouts.index')
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/data_keuangan/DataKeuangan.css') }}">
+@endpush
 
-    <div class="konten">
-        <div class="box-konten">
-            <div class="head-box-konten">
-                <h1>Data Keungan</h1>
+@section('content')
+<div class="konten">
+    <div class="box-konten">
+        <div class="head-box-konten">
+            <div class="teks-head-box-konten">
+                <h1>Data Keuangan</h1>
                 <p>Lihat dan kelola data keuangan sekolah anda</p>
             </div>
+        </div>
 
-            <div class="option-box-konten">
-                <div class="kategori">
-                            <select id="kategori" name="kategori">
-                                <option value="">Pilih Tahun</option>
-                                <option value="tahun">2000</option>
-                                <option value="tahun">2001</option>
-                                <option value="tahun">2002</option>
-                            </select>
-                </div>
-    
-                <div class="download">
-                    <button>Download Recap</button>
-                </div>
+        <div class="option-box-konten">
+            <div class="kategori">
+                <form id="filter-form" method="GET" action="{{ route('keuangan.index') }}">
+                    <select id="kategori" name="tahun" onchange="this.form.submit()">
+                        <option value="">Pilih Tahun</option>
+                        @foreach ($tahunList as $tahun)
+                            <option value="{{ $tahun }}" {{ $tahun == $tahunDipilih ? 'selected' : '' }}>{{ $tahun }}</option>
+                        @endforeach
+                    </select>
+                </form>
             </div>
-<div class="bulan-wrapper">
-    <div class="bulan-list">
-        @php
-    $dataBulan = [
-        ['nama' => 'Januari', 'status' => 'hijau', 'detail' => 'Detail data Januari di sini...'],
-        ['nama' => 'Februari', 'status' => 'merah', 'detail' => 'Detail data Februari di sini...'],
-        ['nama' => 'Maret', 'status' => 'merah', 'detail' => 'Detail data Maret di sini...'],
-        ['nama' => 'April', 'status' => 'merah', 'detail' => 'Detail data April di sini...'],
-        ['nama' => 'Mei', 'status' => 'merah', 'detail' => 'Detail data Mei di sini...'],
-        ['nama' => 'Juni', 'status' => 'merah', 'detail' => 'Detail data Juni di sini...'],
-        ['nama' => 'Juli', 'status' => 'merah', 'detail' => 'Detail data Juli di sini...'],
-        ['nama' => 'Agustus', 'status' => 'merah', 'detail' => 'Detail data Agustus di sini...'],
-        ['nama' => 'September', 'status' => 'merah', 'detail' => 'Detail data September di sini...'],
-        ['nama' => 'Oktober', 'status' => 'merah', 'detail' => 'Detail data Oktober di sini...'],
-        ['nama' => 'November', 'status' => 'merah', 'detail' => 'Detail data November di sini...'],
-        ['nama' => 'Desember', 'status' => 'merah', 'detail' => 'Detail data Desember di sini...'],
-    ];
-@endphp
-
-@foreach ($dataBulan as $bulan)
-    <div class="bulan-item {{ $loop->iteration % 2 == 0 ? 'genap' : '' }}">
-        <img src="{{ asset('image/icon-Data_Keuangan/icon-Plus.svg') }}" alt="" class="icon-plus toggle-icon">
-        <span class="nama">{{ $bulan['nama'] }}</span>
-
-        <button class="status status-{{ $bulan['status'] }}">
-            <img src="{{ asset('image/icon-Data_Keuangan/icon-download.svg') }}" alt="Download Icon">
-        </button>
-    </div>
-
-    <div class="detail-collapsible">
-        <div class="detail-content">
-            <div class="detail-teks">
-                <p><strong>Detail:</strong> Rp. 2000 x Jumlah Siswa</p>
-                <p><strong>Total:</strong></p>
-            </div>
-            <div class="upload-button-container" style="display: flex; gap: 10px;">
-                <label for="uploadBukti{{ $loop->iteration }}" class="upload-bukti-button">Upload Bukti</label>
-                <input type="file" id="uploadBukti{{ $loop->iteration }}" class="upload-input" style="display: none;">
-                
-                <button class="bayar-button">Bayar</button>
+            <div class="download">
+                <button class="download-btn" type="button">Download Recap</button>
             </div>
         </div>
-    </div>
-@endforeach
 
+        <div class="bulan-wrapper">
+            <div class="bulan-list">
+                @php
+                    $daftarBulan = [
+                        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                    ];
+                    $statusColor = [
+                        'Menunggu' => 'kuning',
+                        'Disetujui' => 'hijau',
+                        'Ditolak'   => 'merah'
+                    ];
+                @endphp
+
+                @foreach ($daftarBulan as $bulan)
+                    @php
+                        $data = $keuangan->firstWhere('bulan', $bulan);
+                        $status = $data->status ?? 'Menunggu';
+                        $color = $statusColor[$status] ?? 'kuning';
+                    @endphp
+                    <div class="bulan-item {{ $loop->iteration % 2 == 0 ? 'genap' : '' }}">
+                        <img src="{{ asset('image/icon-Data_Keuangan/icon-Plus.svg') }}" alt="Toggle Icon" class="icon-plus toggle-icon">
+                        <span class="nama">{{ $bulan }}</span>
+                        <button class="status status-{{ $color }}" type="button">
+                            <img src="{{ asset('image/icon-Data_Keuangan/icon-download.svg') }}" alt="Download Icon">
+                        </button>
+                    </div>
+                    <div class="detail-collapsible" style="max-height:0;overflow:hidden;transition:max-height 0.3s;">
+                        <div class="detail-content">
+                            <div class="detail-teks">
+                                @if ($data)
+                                    <p><strong>Detail:</strong> Rp {{ number_format($data->jumlah_spp, 2, ',', '.') }} x Jumlah Siswa</p>
+                                    <p><strong>Total:</strong> Rp {{ number_format($data->jumlah_spp, 2, ',', '.') }}</p>
+                                    @if ($data->catatan)
+                                        <p><strong>Catatan:</strong> {{ $data->catatan }}</p>
+                                    @endif
+                                @else
+                                    <p>Belum ada data keuangan bulan ini.</p>
+                                @endif
+                            </div>
+                            <div class="upload-button-container">
+                                <form action="{{ $data ? route('keuangan.upload', $data->id) : route('keuangan.upload', ['bulan' => $bulan, 'tahun' => $tahunDipilih]) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <label for="uploadBukti{{ $bulan }}" class="upload-bukti-button">Upload Bukti</label>
+                                    <input type="file" id="uploadBukti{{ $bulan }}" name="bukti" class="upload-input" accept="image/*,application/pdf">
+                                    <button type="submit" class="upload-submit" style="display:none;">Submit</button>
+                                </form>
+                                <button class="bayar-button" data-bulan="{{ $bulan }}">Bayar</button>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
     </div>
 </div>
-        </div>
-    </div>
 
-    <!-- Popup Rekening -->
-<div id="popupRekening" class="popup-rekening">
+<!-- Popup Rekening -->
+<div id="popupRekening" class="popup-rekening" style="display:none;">
     <div class="popup-content">
         <h3>No Rekening</h3>
         <p>Bank ABC - 1234567890 a.n. Yayasan Pendidikan Contoh</p>
         <button onclick="tutupPopup()">Tutup</button>
     </div>
 </div>
+@endsection
 
-</body>
-
+@push('scripts')
 <script>
+document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.toggle-icon').forEach(icon => {
-    icon.addEventListener('click', function(e) {
-        e.stopPropagation();  // supaya klik icon gak bubble ke parent
-
-        const bulanItem = this.parentElement;           // div.bulan-item
-        const detail = bulanItem.nextElementSibling;    // div.detail-collapsible
-
-        if (!detail || !detail.classList.contains('detail-collapsible')) return;
-
-        const isOpen = detail.style.maxHeight && detail.style.maxHeight !== '0px';
-
-        if (isOpen) {
-            detail.style.maxHeight = '0px';
-            this.src = "{{ asset('image/icon-Data_Keuangan/icon-Plus.svg') }}";
-        } else {
-            detail.style.maxHeight = detail.scrollHeight + 'px';
-            this.src = "{{ asset('image/icon-Data_Keuangan/icon-Minus.svg') }}";
-        }
-    });
-});
-</script>
-
-<script>
-    function tampilkanPopup() {
-        document.getElementById('popupRekening').style.display = 'flex';
-    }
-
-    function tutupPopup() {
-        document.getElementById('popupRekening').style.display = 'none';
-    }
-
-    // Tambahkan listener ke semua tombol "Bayar"
-    document.addEventListener('DOMContentLoaded', function () {
-        const bayarButtons = document.querySelectorAll('.bayar-button');
-        bayarButtons.forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
-                e.stopPropagation(); // Mencegah toggle collapse
-                tampilkanPopup();
-            });
+        icon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const bulanItem = this.parentElement;
+            const detail = bulanItem.nextElementSibling;
+            if (!detail || !detail.classList.contains('detail-collapsible')) return;
+            const isOpen = detail.style.maxHeight && detail.style.maxHeight !== '0px';
+            if (isOpen) {
+                detail.style.maxHeight = '0px';
+                this.src = "{{ asset('image/icon-Data_Keuangan/icon-Plus.svg') }}";
+            } else {
+                detail.style.maxHeight = detail.scrollHeight + 'px';
+                this.src = "{{ asset('image/icon-Data_Keuangan/icon-Minus.svg') }}";
+            }
         });
     });
+
+    document.querySelectorAll('.bayar-button').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            tampilkanPopup();
+        });
+    });
+
+    document.querySelectorAll('.upload-input').forEach(input => {
+        input.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                this.closest('form').querySelector('.upload-submit').style.display = 'inline-block';
+            }
+        });
+    });
+});
+
+function tampilkanPopup() {
+    document.getElementById('popupRekening').style.display = 'flex';
+}
+function tutupPopup() {
+    document.getElementById('popupRekening').style.display = 'none';
+}
 </script>
-
-
-
-
-</html> --}}
+@endpush

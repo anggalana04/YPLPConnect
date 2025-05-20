@@ -10,8 +10,10 @@
     <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/v_layouts/v_layouts.css') }}">
     <title>Document</title>
+    @stack('styles')
 </head>
 <body>
+    @yield('content')
     {{-- SIDEBAR START --}}
 <div class="sidebar">
         <div class="head-sidebar">
@@ -93,6 +95,7 @@
 </div>
 
     {{-- SIDEBAR END --}}
+    @stack('scripts')
 </body>
 
 <script>
