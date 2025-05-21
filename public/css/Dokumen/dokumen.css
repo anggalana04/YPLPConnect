@@ -132,7 +132,7 @@ th:last-child {
     padding: 12px 15px;
     border-bottom: 1px solid #e9ecef;
     color: black;
-    cursor: pointer;
+    cursor: pointer; 
 }
 
 .clickable-row:hover {

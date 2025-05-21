@@ -4,22 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        if (auth()->user()->role == 'operator_sekolah') {
-            $siswa = Siswa::where('npsn', auth()->user()->npsn)->paginate(10);
-            return view('operator_sekolah.v_data_siswa.index', compact('siswa'));
-        } else {
-            $siswa = Siswa::paginate(10); // <-- FIXED HERE
-            return view('operator_yayasan.v_data_siswa.index', compact('siswa'));
-        }
+public function index()
+{
+    if (Auth::user()->role == 'operator_sekolah') {
+        $siswa = Siswa::where('npsn', Auth::user()->npsn)->get();
+        return view('operator_sekolah.v_data_siswa.index', compact('siswa'));
+    } else {
+        $siswa = Siswa::all();
+        return view('operator_yayasan.v_data_siswa.index', compact('siswa'));
     }
+}
+
+
 
     /**
      * Show the form for creating a new resource.

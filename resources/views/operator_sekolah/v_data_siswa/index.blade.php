@@ -71,10 +71,9 @@
         </div>
 
         <nav aria-label="Page navigation example">
-            <ul class="pagination" id="pagination">
-                {{ $siswa->links() }}
-            </ul>
+            <ul class="pagination" id="pagination"></ul>
         </nav>
+
     </div>
 </div>
 </body>

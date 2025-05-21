@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Guru;
+use App\Models\Siswa;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\SiswaController;
@@ -8,8 +11,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Models\Siswa;
-use App\Models\Guru;
 
 
 // Route::get('/dashboard', function () {
@@ -20,12 +21,19 @@ use App\Models\Guru;
 //     return view('operator_yayasan.v_dashboard.index');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+Route::get('/', function () {
+        return view('Landing_Page.index');
+    })->name('landing-page');
+    
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        $user = auth()->user();
-        if ($user->role === 'operator_sekolah') {
-            $jumlahSiswa = Siswa::where('npsn', $user->npsn)->count();
-            $jumlahGuru = Guru::where('npsn', $user->npsn)->count(); // Only count guru for this sekolah
+    
+    
+    
+    Route::get('/dashboard', function () {
+        if (Auth::user()->role === 'operator_sekolah') {
+            $jumlahSiswa = Siswa::where('npsn', Auth::user()->npsn)->count();
+            $jumlahGuru = Guru::where('npsn', Auth::user()->npsn)->count(); // Only count guru for this sekolah
             return view('operator_sekolah.v_dashboard.index', compact('jumlahSiswa', 'jumlahGuru'));
         } else {
             $jumlahSiswa = Siswa::count();

@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
 
         // Seed siswa for each sekolah
         foreach ($npsnList as $npsn) {
-            \App\Models\Siswa::factory(20)->create([
+            \App\Models\Siswa::factory(50)->create([
                 'npsn' => $npsn,
             ]);
         }
