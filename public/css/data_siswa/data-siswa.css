@@ -8,11 +8,13 @@ body {
     background: #f8f9fa;
 }
 
-
-
 .konten {
-    margin-left: 260px; /* Same as sidebar width */
-    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Pusatkan vertikal */
+    align-items: center; /* Pusatkan horizontal (opsional) */
+    margin-left: 270px; /* Same as sidebar width */
+    align-items: center;
     margin-right: 20px;
     transition: margin-left 0.2s;
     min-height: 100vh;
@@ -26,7 +28,7 @@ body {
 .box-konten{
     background-color: #F0F0F0;
     border-radius: 40px;
-    height: 87dvh;
+    height: 89dvh;
     padding: 20px;
 }
 
@@ -139,9 +141,10 @@ th:last-child {
 }
 
 .table-konten td {
-    padding: 5px;
+    padding: 8px;
     border-bottom: 1px solid #e9ecef;
     color: black;
+    font-size: 12px;
 }
 
 /* CSS TABLE */

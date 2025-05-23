@@ -9,7 +9,7 @@
 
     <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/v_layouts/v_layouts.css') }}">
-    <title>Document</title>
+    <title>---</title>
     @stack('styles')
 </head>
 <body>

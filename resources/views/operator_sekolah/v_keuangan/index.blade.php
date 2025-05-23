@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div class="option-box-konten">
+        <div class="option-box-konten {{ Auth::user()->role === 'operator_sekolah' ? 'gap-operator-sekolah' : 'gap-default' }}">
             <div class="kategori">
                 <form id="filter-form" method="GET" action="{{ route('keuangan.index') }}">
                     <select id="kategori" name="tahun" onchange="this.form.submit()">

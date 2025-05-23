@@ -65,7 +65,9 @@
                                 <td>{{ $d['role'] }}</td>
                                 <td>{{ $d['sekolah'] }}</td>
                                 <td>{{ $d['alamat'] }}</td>
-                                <td>{{ $d['hp'] }}</td>
+                                <td>{{ $d['hp'] }}
+                                     <img src="{{ asset('image/icon-User_Manage/icon-3_titik.svg') }}" alt="">
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

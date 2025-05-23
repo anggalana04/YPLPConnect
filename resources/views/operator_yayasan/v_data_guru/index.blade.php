@@ -70,13 +70,8 @@
                 </table>
             </div>
             {{-- Laravel pagination --}}
-            <div style="margin-top: 1rem;">
-                {{ $guru->links() }}
-            </div>
             <nav aria-label="Page navigation example">
-                <ul class="pagination" id="pagination">
-                    <!-- Pagination buttons akan dibuat otomatis lewat JS -->
-                </ul>
+                <ul class="pagination" id="pagination"></ul>
             </nav>
         </div>
     </div>

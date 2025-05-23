@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon" />
     <link rel="stylesheet" href="{{ asset('css/Dokumen/detail_dokumen.css') }}" />
     <title>Detail Dokumen</title>
 </head>
@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-             <label for="">Status</label>
+            <label for="">Status</label>
 
             <div class="bulat">
                 <div class="bulat1"></div>

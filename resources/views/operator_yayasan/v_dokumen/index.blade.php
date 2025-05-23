@@ -85,9 +85,7 @@
 
             <!-- Pagination -->
             <nav aria-label="Page navigation example">
-                <ul class="pagination" id="pagination">
-                    <!-- Pagination akan diisi oleh JS -->
-                </ul>
+                <ul class="pagination" id="pagination"></ul>
             </nav>
 
         </div>

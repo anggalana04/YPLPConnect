@@ -100,6 +100,7 @@ body {
     border-radius: 20px;
     margin-top: 20px;
     padding: 15px;
+    overflow-y: auto;
 }
 
 .table-konten {
@@ -107,6 +108,7 @@ body {
     border-collapse: separate;
     border-spacing: 0;
     font-size: 12px;
+    
 }
 
 .table-konten th {
@@ -115,6 +117,7 @@ body {
     font-weight: 600;
     color: black;
     padding: 10px;
+
 }
 
 th:first-child {
@@ -132,7 +135,7 @@ th:last-child {
     padding: 12px 15px;
     border-bottom: 1px solid #e9ecef;
     color: black;
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 .clickable-row:hover {

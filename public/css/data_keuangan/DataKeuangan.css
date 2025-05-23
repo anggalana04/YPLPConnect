@@ -40,7 +40,14 @@ body {
     display: flex;
     align-items: center;
     right: 10px;
+}
+
+.option-box-konten.gap-operator-sekolah {
     gap: 111vh;
+}
+
+.option-box-konten.gap-default {
+    gap: 85vh;
 }
 
 .download button{
@@ -169,15 +176,20 @@ body {
     line-height: 1.4; /* Atur tinggi baris agar tetap terbaca tapi tidak terlalu renggang */
 }
 
+.upload-input {
+    display: none;
+}
+
+
 .upload-button-container {
     position: absolute;
     display: flex;
-    gap: 50px;
+    gap: 15px;
     bottom: 10px;
     right: 20px;
 }
 
-.upload-button-container .upload-bukti-button {
+.upload-button-container .upload-bukti-button{
     border: none;
     background-color: yellow;
     border-radius: 20px;
@@ -195,6 +207,27 @@ body {
     padding: 8px 16px;
     cursor: pointer;
 }
+
+.upload-button-container .cek-bukti-button{
+    border: none;
+    background-color: yellow;
+    border-radius: 20px;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.sudah-bayar-button {
+    background-color: #00FF22; /* warna hijau */
+    color: black;
+    font-weight: 500;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+
 /* CSS TAHUN */
 
 /* CSS POPUP */

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Guru;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GuruController extends Controller
 {
@@ -12,11 +13,11 @@ class GuruController extends Controller
      */
     public function index()
     {
-        if (Auth()->user()->role == 'operator_sekolah') {
-            $guru = Guru::where('npsn', auth()->user()->npsn)->paginate(10);
+        if (Auth::user()->role == 'operator_sekolah') {
+            $guru = Guru::where('npsn', Auth::user()->npsn)->get();
             return view('operator_sekolah.v_data_guru.index', compact('guru'));
         } else {
-            $guru = Guru::paginate(10); // <-- FIXED HERE
+            $guru = Guru::all(); // <-- FIXED HERE
             return view('operator_yayasan.v_data_guru.index', compact('guru'));
         }
         return view('operator_yayasan.v_data_guru.index');

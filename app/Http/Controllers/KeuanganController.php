@@ -14,7 +14,7 @@ class KeuanganController extends Controller
      */
     public function index(Request $request)
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $tahunDipilih = $request->input('tahun', date('Y'));
         $npsnDipilih = $request->input('npsn');
 
@@ -47,7 +47,7 @@ class KeuanganController extends Controller
      */
     public function upload(Request $request, $id = null)
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $bulan = $request->input('bulan');
         $tahun = $request->input('tahun', date('Y'));
 

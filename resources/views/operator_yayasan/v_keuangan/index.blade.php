@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="option-box-konten">
+        <div class="option-box-konten {{ Auth::user()->role === 'operator_sekolah' ? 'gap-operator-sekolah' : 'gap-default' }}">
             <div class="kategori">
                 <form id="filter-form" method="GET" action="{{ route('keuangan.index') }}">
                     @if(isset($sekolahList) && count($sekolahList))
@@ -88,15 +88,18 @@
                                     <p>Belum ada data keuangan bulan ini.</p>
                                 @endif
                             </div>
-                            <div class="upload-button-container">
-                                @if ($data && (auth()->user()->role === 'operator_sekolah'))
-                                <form action="{{ route('keuangan.upload', $data->id) }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <label for="uploadBukti{{ $bulan }}" class="upload-bukti-button">Upload Bukti</label>
-                                    <input type="file" id="uploadBukti{{ $bulan }}" name="bukti" class="upload-input" accept="image/*,application/pdf">
-                                    <button type="submit" class="upload-submit" style="display:none;">Submit</button>
-                                </form>
-                                <button class="bayar-button" data-bulan="{{ $bulan }}">Bayar</button>
+                            <div class="upload-button-container ">
+                                @if (Auth::user()->role === 'operator_sekolah')
+                                    <form action="{{ route('keuangan.upload', $data->id) }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <label for="uploadBukti{{ $bulan }}" class="upload-bukti-button">Upload Bukti</label>
+                                        <input type="file" id="uploadBukti{{ $bulan }}" name="bukti" class="upload-input" accept="image/*,application/pdf">
+                                        <button type="submit" class="upload-submit" style="display:none;">Submit</button>
+                                    </form>
+                                    <button class="bayar-button" data-bulan="{{ $bulan }}">Bayar</button>
+                                @elseif ( Auth::user()->role === 'operator_yayasan')
+                                    <button class="cek-bukti-button" data-bulan="{{ $bulan }}">Cek Bukti</button>
+                                    <button class="sudah-bayar-button" data-bulan="{{ $bulan }}">Sudah Bayar</button>
                                 @endif
                             </div>
                         </div>

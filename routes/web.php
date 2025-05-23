@@ -49,8 +49,7 @@ Route::middleware('auth')->group(function () {
 
     #pengaduan
     Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
-    Route::get('pengaduan/1', [PengaduanController::class, 'show'])->name('pengaduan.detail');
-
+    Route::get('/pengaduan/detail/{id}', [PengaduanController::class, 'show'])->name('pengaduan.detail');
 
     #keuangan
     Route::get('keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
