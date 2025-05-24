@@ -23,66 +23,38 @@
 
             <label for="">Status</label>
 
-            <div class="bulat">
-                <div class="bulat1"></div>
-                <div class="bulat2"></div>
-                <div class="bulat3"></div>
+            <div class="box-status-step">
+                <div class="status-step">
+                    <img src="{{ asset('image/icon-status&detail_dokumen/icon-email-status.svg') }}" alt="" />
+                    <span>Terkirim</span>
+                </div>
+                <div class="status-step">
+                    <img src="{{ asset('image/icon-status&detail_dokumen/icon-diterima.svg') }}" alt="" />
+                    <span>Diterima & Dilihat</span>
+                </div>
+                <div class="status-step">
+                    <img src="{{ asset('image/icon-status&detail_dokumen/icon-proses.svg') }}" alt="" />
+                    <span>Diproses</span>
+                </div>
+                <div class="status-step">
+                    <img src="{{ asset('image/icon-status&detail_dokumen/icon-selesai.svg') }}" alt="" />
+                    <span>Selesai</span>
+                </div>
             </div>
 
-            <div class="table-box">
-                <table class="table-konten">
-                    <thead id="table-header">
-                        <tr>
-                            <th>No</th>
-                            <th>ID Pengajuan</th>
-                            <th>NPA PGRI</th>
-                            <th>Nama</th>
-                            <th>Jenis SK</th>
-                            <th>Alamat Kerja</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $data = [
-                            ['PGJ001', '1234567890', 'Ahmad Fauzi', 'Pengangkatan', 'SMAN 1 Jakarta'],
-                            ['PGJ002', '9876543210', 'Siti Rahma', 'Perpanjangan', 'SDN 05 Bandung'],
-                            ['PGJ003', '1122334455', 'Rudi Hartono', 'Pensiun', 'SMP 3 Surabaya'],
-                            ['PGJ004', '2233445566', 'Dewi Lestari', 'Mutasi', 'SMA 2 Yogyakarta'],
-                            ['PGJ005', '3344556677', 'Budi Santoso', 'Kenaikan Pangkat', 'SDN 10 Semarang'],
-                            ['PGJ006', '4455667788', 'Nina Marlina', 'Pengangkatan', 'SMPN 1 Malang'],
-                            ['PGJ007', '5566778899', 'Arif Setiawan', 'Pensiun', 'SMAN 5 Medan'],
-                            ['PGJ008', '6677889900', 'Fitri Amalia', 'Perpanjangan', 'SDN 15 Palembang'],
-                            ['PGJ009', '7788990011', 'Agus Salim', 'Mutasi', 'SMA 4 Bandung'],
-                            ['PGJ010', '8899001122', 'Lina Kurnia', 'Kenaikan Pangkat', 'SMPN 2 Bogor'],
-                        ];
-                        ?>
-
-                        <?php foreach ($data as $index => $row): ?>
-                            <tr>
-                                <td><?= $index + 1 ?></td>
-                                <td><?= $row[0] ?></td>
-                                <td><?= $row[1] ?></td>
-                                <td><?= $row[2] ?></td>
-                                <td><?= $row[3] ?></td>
-                                <td><?= $row[4] ?></td>
-                                <td>
-                                    <a href="{{ asset('file/sk/' . $row[0] . '.pdf') }}" class="btn-download" download>Download</a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+            <div class="ket-detail">
+                <p for="">No : </p>
+                <p for="">ID Pengajuan : </p>
+                <p for="">NPA PGRI : </p>
+                <p for="">Nama : </p>
+                <p for="">Jenis SK : </p>
+                <p for="">Alamat Kerja : </p>
             </div>
 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination" id="pagination">
-                    <!-- Pagination buttons akan dibuat otomatis lewat JS -->
-                </ul>
-            </nav>
+            <div class="download">
+                <a href="" class="btn-download" download>Download</a>
+            </div>
         </div>
     </div>
 </body>
-
-<script src="{{ asset('JavaScript/Pagination.js') }}"></script>
 </html>

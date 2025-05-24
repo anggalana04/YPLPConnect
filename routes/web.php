@@ -64,6 +64,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dokumen/detail/{id}', function ($id) {
         return view('operator_yayasan.v_dokumen.detail_dokumen', compact('id'));
     });
+    Route::get('/detail_dokumen/{id}', [DokumenController::class, 'show']);
+
 
     #data sekolah
 

@@ -75,55 +75,6 @@ body {
 /* CSS BULAT */
 
 
-/* CSS TABLE */
-.table-box {
-    width: 100%;
-    background-color: white;
-    height: 44.5dvh;
-    border-radius: 20px;
-    margin-top: 10px;
-    padding: 15px;
-    overflow-y: auto;
-
-}
-
-.table-konten {
-    width: 100%;
-    border-collapse: separate; /* WAJIB agar border-radius bisa bekerja */
-    border-spacing: 0;
-    font-size: 12px;
-}
-
-
-.table-konten th {
-    background-color: #F0F0F0;   
-    text-align: left;
-    font-weight: 600;
-    color: black;
-    padding: 10px;
-   
-}
-
-/* Radius hanya pada sudut-sudut */
-th:first-child {
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
-
-th:last-child {
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  margin-bottom: 10px;
-}
-
-.table-konten td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #e9ecef;
-    color: black;
-}
-/* CSS TABLE */
-
-
 /* CSS PAGINATION */
 .pagination {
     display: flex;
@@ -165,14 +116,63 @@ th:last-child {
 
 /* CSS PAGINATION */
 
+/* CSS PENGADUAN BAR */
+.box-status-step{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-top: 10px;
+}
+
+.status-step{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-step img{
+    width: 45px !important;
+}
+
+.status-step span{
+    font-size: 14px;
+    text-align: center;
+}
+
+/* CSS PENGADUAN BAR */
+
+/* CSS KET-DETAIL */
+.ket-detail{
+    margin-top: 40px;
+}
+
+.ket-detail p{
+   font-size: 13px;
+    gap: 20px;
+    font-weight: 500;
+}
+/* CSS KET-DETAIL */
+
 /* CSS DOWNLOAD */
+.download{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-right: 2%;
+}
+
 .btn-download {
     background-color: yellow;
     color: black;
     padding: 6px 12px;
-    border-radius: 6px;
+    border-radius: 20px;
+    border: 1px rgb(165, 165, 16) solid;
     text-decoration: none;
     font-size: 12px;
+    right: 10px;
+    bottom: 0px;
+    font-weight: 600;
 }
 
 .btn-download:hover {
