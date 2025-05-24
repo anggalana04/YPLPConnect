@@ -42,34 +42,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                            $data = [
-                                ['id' => 1, 'judul' => 'Keluhan tentang pelayanan customer service', 'kode' => 'PID-2023-001', 'tanggal' => '10/05/2023', 'status' => 'Diproses'],
-                                ['id' => 2, 'judul' => 'Laporan masalah teknis aplikasi', 'kode' => 'PID-2023-002', 'tanggal' => '11/05/2023', 'status' => 'Selesai'],
-                                ['id' => 3, 'judul' => 'Permintaan fitur baru pada aplikasi', 'kode' => 'PID-2023-003', 'tanggal' => '12/05/2023', 'status' => 'Diproses'],
-                                ['id' => 4, 'judul' => 'Keluhan akses login', 'kode' => 'PID-2023-004', 'tanggal' => '13/05/2023', 'status' => 'Selesai'],
-                                ['id' => 5, 'judul' => 'Laporan bug halaman dashboard', 'kode' => 'PID-2023-005', 'tanggal' => '14/05/2023', 'status' => 'Diproses'],
-                                ['id' => 6, 'judul' => 'Permintaan update tampilan UI', 'kode' => 'PID-2023-006', 'tanggal' => '15/05/2023', 'status' => 'Selesai'],
-                                ['id' => 7, 'judul' => 'Masalah notifikasi email', 'kode' => 'PID-2023-007', 'tanggal' => '16/05/2023', 'status' => 'Diproses'],
-                                ['id' => 8, 'judul' => 'Keluhan performa aplikasi', 'kode' => 'PID-2023-008', 'tanggal' => '17/05/2023', 'status' => 'Selesai'],
-                                ['id' => 9, 'judul' => 'Permintaan backup data rutin', 'kode' => 'PID-2023-009', 'tanggal' => '18/05/2023', 'status' => 'Diproses'],
-                                ['id' => 10, 'judul' => 'Laporan error pada modul pembayaran', 'kode' => 'PID-2023-010', 'tanggal' => '19/05/2023', 'status' => 'Selesai'],
-                            ];
-                        @endphp
-
-                        @foreach ($data as $row)
-                            <tr class="clickable-row" data-id="{{ $row['id'] }}">
-                                <td>{{ $row['id'] }}</td>
-                                <td>{{ $row['judul'] }}</td>
-                                <td>{{ $row['kode'] }}</td>
-                                <td>{{ $row['tanggal'] }}</td>
+                        @forelse ($data as $index => $row)
+                            <tr class="clickable-row" data-id="{{ $row->id }}">
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $row->judul }}</td>
+                               <td>{{ $row->id }}</td>
+                                <td>{{ $row->created_at->format('d/m/Y') }}</td>
                                 <td>
-                                    <span class="status {{ strtolower($row['status']) }}">
-                                        {{ $row['status'] }}
+                                    <span class="status {{ strtolower($row->status) }}">
+                                        {{ ucfirst($row->status) }}
                                     </span>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center">Belum ada pengaduan.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -114,9 +103,9 @@
                     <label for="kategori">Kategori Masalah</label>
                     <select id="kategori" name="kategori" required>
                         <option value="">Pilih Kategori</option>
-                        <option value="kendala">Kendala Teknis</option>
-                        <option value="pelayanan">Pelayanan</option>
-                        <option value="lainnya">Lainnya</option>
+                        <option value="Kendala Teknis">Kendala Teknis</option>
+                        <option value="Pelayanan">Pelayanan</option>
+                        <option value="Lainnya">Lainnya</option>
                     </select>
                 </div>
 

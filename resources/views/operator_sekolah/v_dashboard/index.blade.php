@@ -57,31 +57,61 @@
             <div class="card">
                 <h1>Pengaduan</h1>
                 <div class="status-head">
-                    <span>Judul Pengaduan:</span>
+                    <span class="head toggle-status" style="cursor: default; display: flex; align-items: center; width: 100%;">
+                        <div class="judul-pengaduan">
+                            Judul Pengaduan: {{ $pengaduan->judul }}
+                        </div>
+                        <img id="toggle-detail-btn" src="{{ asset('image/icon-row/row.svg') }}" class="arrow-icon" alt="Toggle Arrow" style="cursor: pointer;" />
+                    </span>
+                    
                     <div class="detail-status">
-                        <span>Status Pengaduan</span>
+                        <span class="head-detail">Status Pengaduan</span>
+
+                        @php
+                            $statusSteps = ['terkirim', 'diterima', 'diproses', 'selesai'];
+                            $currentIndex = array_search($pengaduan->status, $statusSteps);
+                        @endphp
+
                         <div class="box-status-step">
-                            <div class="status-step">
-                                <img src="{{ asset('image/icon-status&detail_dokumen/icon-email-status.svg') }}" alt="">
-                                <span>Terkirim</span>
-                            </div>
-                            <div class="status-step">
-                                <img src="{{ asset('image/icon-status&detail_dokumen/icon-diterima.svg') }}" alt="">
-                                <span>Diterima & Dilihat</span>
-                            </div>
-                            <div class="status-step">
-                                <img src="{{ asset('image/icon-status&detail_dokumen/icon-proses.svg') }}" alt="">
-                                <span>Diproses</span>
-                            </div>
-                            <div class="status-step">
-                                <img src="{{ asset('image/icon-status&detail_dokumen/icon-selesai.svg') }}" alt="">
-                                <span>selesai</span>
-                            </div>
+                            @foreach ($statusSteps as $index => $step)
+                                <div class="status-step {{ $index <= $currentIndex ? 'active' : '' }}">
+                                    <img src="{{ asset('image/icon-status&detail_dokumen/icon-' . $step . '.svg') }}" alt="{{ $step }}" />
+                                    <span>
+                                        {{ $step == 'diterima' ? 'Diterima & Dilihat' : ucfirst($step) }}
+                                    </span>
+                                </div>
+
+                                @if ($index < count($statusSteps) - 1)
+                                    <div class="status-line {{ $index < $currentIndex ? 'active' : '' }}"></div>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
+
                 </div>
             </div>
 
     </div>
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleBtn = document.querySelector('.toggle-status');
+        const detailStatus = document.querySelector('.detail-status');
+        const arrowIcon = document.querySelector('.arrow-icon');
+
+        toggleBtn.addEventListener('click', function () {
+            detailStatus.classList.toggle('show');
+            arrowIcon.classList.toggle('rotate');
+        });
+    });
+</script>
+
+<script>
+    document.getElementById('judul-pengaduan').addEventListener('click', function() {
+    this.classList.toggle('truncate-text');
+});
+
+</script>
+
 </html> 
