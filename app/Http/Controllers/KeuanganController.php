@@ -88,5 +88,7 @@ class KeuanganController extends Controller
         return back()->with('success', 'Bukti berhasil diupload.');
     }
 
+    
+
     // Tambahkan method lain jika diperlukan (show, edit, update, destroy)
 }

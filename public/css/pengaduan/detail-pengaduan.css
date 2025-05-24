@@ -35,26 +35,6 @@ body {
 }
 /* CSS KONTEN */
 
-/* CSS BULAT */
-.bulat{
-    background-color: #F0F0F0;
-    display: flex;
-    margin-top: 10px;
-    gap: 50px;
-}
-
-.bulat1, .bulat2, .bulat3, .bulat4{
-    background-color: #D9D9D9;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-}
-
-.ket-status{
-    margin-left: 20%;
-}
-/* CSS BULAT */
-
 /* CSS BOX-DETAIL */
 .table-box {
     width: 100%;
@@ -103,3 +83,33 @@ th:last-child {
 }
 
 /* CSS BOX-DETAIL */
+
+/* CSS PENGADUAN BAR */
+.box-status-step{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 10px;
+}
+
+.status-step{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-step img{
+    width: 45px !important;
+}
+
+.status-step span{
+    font-size: 14px;
+    text-align: center;
+}
+
+.ket-status{
+    margin-left: 20%;
+}
+
+/* CSS PENGADUAN BAR */

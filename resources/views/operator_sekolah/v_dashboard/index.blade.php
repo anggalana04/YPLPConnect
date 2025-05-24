@@ -23,26 +23,64 @@
         </div>
         <div class="konten-body">
             <div class="card">
-                <span>Jumlah Guru</span>
+                <h1>Jumlah Guru</h1>
                 <div class="detail-card">
                     <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Guru.svg') }}" alt="">
                     <p>xxx</p>
                 </div>
             </div>
             <div class="card">
-                <span>Jumlah Siswa</span>
+                <h1>Jumlah Siswa</h1>
                 <div class="detail-card">
                     <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Siswa.svg') }}" alt="">
                     <p>{{$jumlahSiswa}}</p>
                 </div>
             </div>
             <div class="card">
-                <span>Notifikasi Keuangan</span>
+                <h1>Keuangan</h1>
+                <div class="keuangan-bar">
+                    @php
+                        $bulanList = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                    @endphp
+
+                    @foreach ($bulanList as $bulan)
+                        @php
+                            $item = $keuangan->firstWhere('bulan', $bulan);
+                            $color = $item && $item->status == 'Sudah Bayar' ? 'green' : 'red';
+                        @endphp
+                        <div class="bar-item" title="{{ $bulan }}" style="background-color: {{ $color }}"></div>
+                    @endforeach
+                </div>
             </div>
+
             <div class="card">
-                <span>Notifikasi Pengaduan</span>
+                <h1>Pengaduan</h1>
+                <div class="status-head">
+                    <span>Judul Pengaduan:</span>
+                    <div class="detail-status">
+                        <span>Status Pengaduan</span>
+                        <div class="box-status-step">
+                            <div class="status-step">
+                                <img src="{{ asset('image/icon-status&detail_dokumen/icon-email-status.svg') }}" alt="">
+                                <span>Terkirim</span>
+                            </div>
+                            <div class="status-step">
+                                <img src="{{ asset('image/icon-status&detail_dokumen/icon-diterima.svg') }}" alt="">
+                                <span>Diterima & Dilihat</span>
+                            </div>
+                            <div class="status-step">
+                                <img src="{{ asset('image/icon-status&detail_dokumen/icon-proses.svg') }}" alt="">
+                                <span>Diproses</span>
+                            </div>
+                            <div class="status-step">
+                                <img src="{{ asset('image/icon-status&detail_dokumen/icon-selesai.svg') }}" alt="">
+                                <span>selesai</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
 
     </div>
 </body>

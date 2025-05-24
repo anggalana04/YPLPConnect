@@ -9,6 +9,7 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KeuanganController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
@@ -42,6 +43,8 @@ Route::middleware('auth')->group(function () {
         }
     })->name('dashboard');
 
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+
     #profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -54,6 +57,7 @@ Route::middleware('auth')->group(function () {
     #keuangan
     Route::get('keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
     Route::post('keuangan/upload/{id?}', [KeuanganController::class, 'upload'])->name('keuangan.upload');
+    
 
     #dokumen
     Route::get('/dokumen', [DokumenController::class, 'index'])->name('dokumen.index');

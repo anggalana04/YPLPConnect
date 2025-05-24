@@ -57,7 +57,7 @@
                             ];
                         @endphp
 
-                        @foreach($data as $row)
+                        @foreach ($data as $row)
                             <tr class="clickable-row" data-id="{{ $row['id'] }}">
                                 <td>{{ $row['id'] }}</td>
                                 <td>{{ $row['judul'] }}</td>
@@ -81,58 +81,67 @@
         </div>
     </div>
 
-    <!-- Modal Form Pengaduan (Disembunyikan awalnya) -->
-    <div class="modal-pengaduan" id="PopUpForm" style="display: none;">
-        <div class="form-box">
-            <div class="sub-head-box">
-                <input type="text" placeholder="Judul Pengajuan Masalah" />
+    <!-- Modal Form Pengaduan (disembunyikan awalnya) -->
+<div class="modal-pengaduan" id="PopUpForm" style="display: none;">
+    <form action="/pengaduan/submit" method="POST" enctype="multipart/form-data" class="form-box">
+        @csrf
+        <div class="sub-head-box">
+            <input 
+                type="text" 
+                name="judul" 
+                placeholder="Judul Pengajuan Masalah" 
+                required
+            />
+        </div>
+
+        <div class="sub-form-box">
+            <div class="isi-pengaduan">
+                <textarea
+                    id="deskripsi"
+                    name="deskripsi"
+                    rows="5"
+                    cols="50"
+                    placeholder="Tulis pengaduan Anda..."
+                    required
+                ></textarea>
+
+                <!-- Tempat preview gambar -->
+                <div id="preview"></div>
             </div>
 
-            <div class="sub-form-box">
-                <div class="isi-pengaduan">
-                    <textarea
-                        id="deskripsi"
-                        name="deskripsi"
-                        rows="4"
-                        cols="50"
-                        placeholder="Tulis pengaduan Anda..."
-                    ></textarea>
-
-                    <!-- Tempat preview gambar -->
-                    <div id="preview"></div>
+            <div class="button-pengaduan">
+                <div class="kategori">
+                    <label for="kategori">Kategori Masalah</label>
+                    <select id="kategori" name="kategori" required>
+                        <option value="">Pilih Kategori</option>
+                        <option value="kendala">Kendala Teknis</option>
+                        <option value="pelayanan">Pelayanan</option>
+                        <option value="lainnya">Lainnya</option>
+                    </select>
                 </div>
 
-                <div class="button-pengaduan">
-                    <div class="kategori">
-                        <label for="kategori">Kategori Masalah</label>
-                        <select id="kategori" name="kategori">
-                            <option value="">Pilih Kategori</option>
-                            <option value="kendala">Kendala Teknis</option>
-                            <option value="pelayanan">Pelayanan</option>
-                            <option value="lainnya">Lainnya</option>
-                        </select>
-                    </div>
+                <div class="all-button">
+                    <button type="button" class="batal" onclick="closePopUpForm()">Batal</button>
 
-                    <div class="all-button">
-                        <button class="batal" onclick="closePopUpForm()">Batal</button>
+                    <input
+                        type="file"
+                        id="buktiInput"
+                        name="bukti"
+                        accept="image/*"
+                        style="display: none"
+                        onchange="previewImage(event)"
+                    />
+                    <button type="button" class="bukti" onclick="document.getElementById('buktiInput').click()">
+                        Tambahkan Bukti
+                    </button>
 
-                        <input
-                            type="file"
-                            id="buktiInput"
-                            accept="image/*"
-                            style="display: none"
-                            onchange="previewImage(event)"
-                        />
-                        <button class="bukti" onclick="document.getElementById('buktiInput').click()">
-                            Tambahkan Bukti
-                        </button>
-
-                        <button class="kirim">Kirim</button>
-                    </div>
+                    <button type="submit" class="kirim">Kirim</button>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
+</div>
+
 
     <script src="{{ asset('JavaScript/Pagination.js') }}"></script>
     <script src="{{ asset('JavaScript/PopUpForm/PopUpform.js') }}"></script>
