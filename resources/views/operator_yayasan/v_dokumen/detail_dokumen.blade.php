@@ -17,44 +17,53 @@
             <div class="head-box-konten">
                 <div class="teks-head-box-konten">
                     <h1>Dokumen SK</h1>
-                    <p>Mengajukan dan melihat file Surat Keputusan</p>
                 </div>
             </div>
 
             <label for="">Status</label>
 
-            <div class="box-status-step">
-                <div class="status-step">
-                    <img src="{{ asset('image/icon-status&detail_dokumen/icon-email-status.svg') }}" alt="" />
-                    <span>Terkirim</span>
-                </div>
-                <div class="status-step">
-                    <img src="{{ asset('image/icon-status&detail_dokumen/icon-diterima.svg') }}" alt="" />
-                    <span>Diterima & Dilihat</span>
-                </div>
-                <div class="status-step">
-                    <img src="{{ asset('image/icon-status&detail_dokumen/icon-proses.svg') }}" alt="" />
-                    <span>Diproses</span>
-                </div>
-                <div class="status-step">
-                    <img src="{{ asset('image/icon-status&detail_dokumen/icon-selesai.svg') }}" alt="" />
-                    <span>Selesai</span>
+            @php
+                $statusSteps = ['terkirim', 'diterima', 'diproses', 'selesai'];
+                $currentIndex = array_search($dokumen->status, $statusSteps);
+            @endphp
+
+            <div class="status-container">
+                <div class="box-status-step">
+                    @foreach ($statusSteps as $index => $step)
+                        <div class="status-step {{ $index <= $currentIndex ? 'active' : '' }}">
+                            <img src="{{ asset('image/icon-status&detail_dokumen/icon-' . $step . '.svg') }}" alt="{{ $step }}" />
+                            <span>
+                                {{ $step == 'diterima' ? 'Diterima & Dilihat' : ucfirst($step) }}
+                            </span>
+                        </div>
+
+                        @if ($index < count($statusSteps) - 1)
+                            <div class="status-line {{ $index < $currentIndex ? 'active' : '' }}"></div>
+                        @endif
+                    @endforeach
                 </div>
             </div>
 
             <div class="ket-detail">
-                <p for="">No : </p>
-                <p for="">ID Pengajuan : </p>
-                <p for="">NPA PGRI : </p>
-                <p for="">Nama : </p>
-                <p for="">Jenis SK : </p>
-                <p for="">Alamat Kerja : </p>
+                <p id="no"></p>
+                <p><strong>ID Pengajuan : </strong>{{ $dokumen->id }}</p>
+                <p><strong>NPA PGRI : </strong>{{ $guru->nuptk }}</p>
+                <p><strong>Nama : </strong>{{ $dokumen->nama }}</p>
+                <p><strong>Jenis SK : </strong>{{ $dokumen->jenis_sk }}</p>
+                <p><strong>Alamat Kerja : </strong>{{ $dokumen->alamat_unit_kerja }}</p>
             </div>
 
             <div class="download">
-                <a href="" class="btn-download" download>Download</a>
+                <a href="{{ route('dokumen.download', $dokumen->id) }}" class="btn-download">Download</a>
             </div>
         </div>
     </div>
+
 </body>
+    <script>
+        document.querySelectorAll('.ket-detail #no').forEach((p, i) => {
+            p.innerHTML = '<strong>No :</strong> ' + (i + 1);
+        });
+
+    </script>
 </html>

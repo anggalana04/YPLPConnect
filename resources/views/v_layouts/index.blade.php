@@ -61,7 +61,7 @@
                 <SPan><a href="{{ route('pengaduan.index') }}">Pengaduan</a></SPan>
             </ul>
 
-            @if (Auth::user()->role == 'operator_yayasan')
+            @if (auth()->user()->role == 'operator_yayasan')
             <ul class="menu-item">
                 <img src="{{ asset('image/icon-sidebar/icon-ManageUser.svg') }}" alt="">
                 <SPan><a href="{{ route('users.index') }}">Users</a></SPan>

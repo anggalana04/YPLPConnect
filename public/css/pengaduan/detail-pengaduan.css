@@ -178,7 +178,6 @@ table th:last-child, table td:last-child {
     width: 40px;
     height: 3px;
     background-color: red;
-    border-radius: 2px;
 
     /* Tambahan agar garis tepat di tengah vertikal lingkaran */
     margin-top: -20px;

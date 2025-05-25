@@ -56,30 +56,21 @@
                     </thead>
                     <tbody>
                         @php
-                            $data = [
-                                ['PGJ001', '10123456', 'Ahmad Ramadhan', 'SK Pengangkatan', 'Disetujui'],
-                                ['PGJ002', '10123457', 'Siti Aminah', 'SK Pensiun', 'Diproses'],
-                                ['PGJ003', '10123458', 'Rizky Hidayat', 'SK Mutasi', 'Ditolak'],
-                                ['PGJ004', '10123459', 'Nur Aini', 'SK Kenaikan Pangkat', 'Disetujui'],
-                                ['PGJ005', '10123460', 'Bagas Pratama', 'SK Pengangkatan', 'Diproses'],
-                                ['PGJ006', '10123461', 'Lina Marlina', 'SK Pensiun', 'Disetujui'],
-                                ['PGJ007', '10123462', 'Andi Saputra', 'SK Mutasi', 'Diproses'],
-                                ['PGJ008', '10123463', 'Desi Rahmawati', 'SK Pengangkatan', 'Ditolak'],
-                                ['PGJ009', '10123464', 'Herman Wijaya', 'SK Kenaikan Pangkat', 'Disetujui'],
-                                ['PGJ010', '10123465', 'Rina Anggraini', 'SK Mutasi', 'Diproses'],
-                            ];
+                            // Ambil semua data dokumen dari database
+                            $data = \App\Models\Dokumen::all();
                         @endphp
 
                         @foreach ($data as $row)
-                            <tr class="clickable-row" data-id="{{ $row[0] }}">
-                                <td>{{ $row[0] }}</td>
-                                <td>{{ $row[1] }}</td>
-                                <td>{{ $row[2] }}</td>
-                                <td>{{ $row[3] }}</td>
-                                <td>{{ $row[4] }}</td>
+                            <tr class="clickable-row" data-id="{{ $row->id }}">
+                                <td>{{ $row->id }}</td>
+                                <td>{{ $row->nuptk }}</td>
+                                <td>{{ $row->nama }}</td>
+                                <td>{{ $row->jenis_sk }}</td>
+                                <td>{{ $row->status }}</td>
                             </tr>
                         @endforeach
                     </tbody>
+
                 </table>
             </div>
 
@@ -91,8 +82,9 @@
         </div>
     </div>
 
-    <!-- Modal Form Pengajuan SK -->
-    <div class="modal-pengaduan" id="PopUpForm" style="display:none;">
+<div class="modal-pengaduan" id="PopUpForm" style="display:none;">
+    <form method="POST" action="{{ route('dokumen.store') }}">
+        @csrf
         <div class="form-box">
             <div class="sub-head-box">
                 <h1>Form Pengajuan Surat Keputusan</h1>
@@ -102,38 +94,42 @@
                 <div class="border-form">
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input type="text" id="nama" name="nama" />
+                        <input type="text" id="nama" name="nama" required />
                     </div>
                     <div class="form-group">
                         <label for="npa">NPA PGRI</label>
-                        <input type="text" id="npa" name="npa" />
+                        <input type="text" id="npa" name="npa" required />
                     </div>
                     <div class="form-group">
                         <label for="ttl">Tempat, Tanggal Lahir</label>
-                        <input type="text" id="ttl" name="ttl" />
+                        <input type="text" id="ttl" name="ttl" placeholder="Jakarta, 1990-01-01" required />
                     </div>
                     <div class="form-group">
                         <label for="alamat">Alamat Unit Kerja</label>
-                        <input type="text" id="alamat" name="alamat" />
+                        <input type="text" id="alamat" name="alamat" required />
                     </div>
                     <div class="form-group">
                         <label for="kategori">Jenis SK</label>
-                        <select id="kategori" name="kategori">
-                            <option value=""></option>
-                            <option value="kelas1">SK Kepala Sekolah</option>
-                            <option value="kelas2">SK Guru</option>
+                        <select id="kategori" name="kategori" required>
+                            <option value="">-- Pilih Jenis SK --</option>
+                            <option value="SK Pengangkatan">SK Pengangkatan</option>
+                            <option value="SK Pensiun">SK Pensiun</option>
+                            <option value="SK Mutasi">SK Mutasi</option>
                         </select>
+
                     </div>
                 </div>
 
                 <!-- Tombol Aksi -->
                 <div class="all-button">
-                    <button class="batal">Batal</button>
-                    <button class="kirim">Kirim</button>
+                    <button type="button" class="batal">Batal</button>
+                    <button type="submit" class="kirim">Kirim</button>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
+</div>
+
 
     <!-- Script -->
     <script src="{{ asset('JavaScript/Pagination.js') }}"></script>

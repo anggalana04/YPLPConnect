@@ -18,18 +18,20 @@ function previewImage(event) {
             img.style.borderRadius = '8px';
             img.style.marginTop = '10px';
 
-            const closeBtn = document.createElement('span');
-            closeBtn.innerHTML = '&times;';
+            const closeBtn = document.createElement('img');
+            closeBtn.src = '/image/icon-X/icon-X.svg';  // Ganti dengan lokasi gambar tombol close kamu
             closeBtn.style.position = 'absolute';
             closeBtn.style.top = '0px';
             closeBtn.style.right = '0px';
-            closeBtn.style.color = 'white';
-            closeBtn.style.backgroundColor = 'grey';
-            closeBtn.style.borderRadius = '50%';
-            closeBtn.style.padding = '2px 7px';
+            closeBtn.style.width = '20px';
+            closeBtn.style.height = '20px';
             closeBtn.style.cursor = 'pointer';
-            closeBtn.style.fontWeight = 'bold';
+            closeBtn.style.borderRadius = '50%';  // Ini yang bikin jadi lingkaran
+            closeBtn.style.backgroundColor = 'white';
+            closeBtn.style.border = '1px solid black';
+            closeBtn.style.padding = '2px'
             closeBtn.style.transform = 'translateY(-50%)';
+
 
             closeBtn.onclick = function () {
                 preview.innerHTML = '';

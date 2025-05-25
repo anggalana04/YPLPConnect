@@ -62,11 +62,9 @@ Route::middleware('auth')->group(function () {
 
     #dokumen
     Route::get('/dokumen', [DokumenController::class, 'index'])->name('dokumen.index');
-    Route::get('/dokumen/detail/{id}', function ($id) {
-        return view('operator_yayasan.v_dokumen.detail_dokumen', compact('id'));
-    });
-    Route::get('/detail_dokumen/{id}', [DokumenController::class, 'show']);
-
+    Route::get('/dokumen/detail/{id_pengajuan}', [DokumenController::class, 'show'])->name('dokumen.show');
+    Route::post('/dokumen/store', [DokumenController::class, 'store'])->name('dokumen.store');
+    Route::get('/dokumen/download/{id}', [DokumenController::class, 'download'])->name('dokumen.download');
 
     #data sekolah
 

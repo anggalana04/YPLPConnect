@@ -22,11 +22,12 @@ class DashboardController extends Controller
 
         $jumlahSiswa = Siswa::where('npsn', $npsn)->count();
 
-        $pengaduan = Pengaduan::where('npsn', $npsn)
+        $pengaduans = Pengaduan::where('npsn', $npsn)
             ->latest()
-            ->first();
+            ->get(); // ubah dari first() menjadi get() agar semua data dikirim
 
-        return view('operator_sekolah.v_dashboard.index', compact('keuangan', 'jumlahSiswa', 'pengaduan'));
+
+        return view('operator_sekolah.v_dashboard.index', compact('keuangan', 'jumlahSiswa', 'pengaduans'));
     }
 
 }

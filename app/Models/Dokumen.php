@@ -1,5 +1,6 @@
 <?php
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -9,12 +10,12 @@ class Dokumen extends Model
     use HasFactory;
 
     protected $table = 'dokumen';
-    protected $primaryKey = 'id_pengajuan';
-    public $incrementing = false;
+    protected $primaryKey = 'id';  // primary key sekarang 'id'
+    public $incrementing = false;  // karena manual string, bukan auto increment
     protected $keyType = 'string';
 
     protected $fillable = [
-        'id_pengajuan',
+        'id',
         'nuptk',
         'nama',
         'tempat_lahir',
@@ -34,6 +35,7 @@ class Dokumen extends Model
         'verified_at' => 'datetime',
     ];
 
+    // relasi seperti semula, misal:
     public function guru()
     {
         return $this->belongsTo(Guru::class, 'nuptk', 'nuptk');
@@ -54,15 +56,23 @@ class Dokumen extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            if (empty($model->id_pengajuan)) {
+            if (empty($model->id)) {
                 $date = now()->format('dmy');
-                $prefix = "PG-{$date}-";
+                $prefix = "PJ{$date}";
+
                 $lastDoc = DB::table('dokumen')
-                    ->where('id_pengajuan', 'like', "{$prefix}%")
-                    ->orderBy('id_pengajuan', 'desc')
+                    ->where('id', 'like', "{$prefix}%")
+                    ->orderBy('id', 'desc')
                     ->first();
-                $number = $lastDoc ? (int) substr($lastDoc->id_pengajuan, -4) + 1 : 1;
-                $model->id_pengajuan = $prefix . str_pad($number, 4, '0', STR_PAD_LEFT);
+
+                if ($lastDoc) {
+                    $lastNumber = (int) substr($lastDoc->id, -4);
+                    $nextNumber = $lastNumber + 1;
+                } else {
+                    $nextNumber = 1;
+                }
+
+                $model->id = $prefix . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
             }
         });
     }
