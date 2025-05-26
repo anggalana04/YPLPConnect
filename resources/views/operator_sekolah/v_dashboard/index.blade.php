@@ -15,9 +15,9 @@
     <div class="konten">
         <div class="konten-head">
             <h1>Hallo...</h1>
-            <h2>Selamat datang! {{ Auth::user()->name }}</h2>
+            <h2>Selamat datang! {{  auth()->user()->name }}</h2>
 
-            @if (Auth::user()->role == 'operator_yayasan')
+            @if ( auth()->user()->role == 'operator_yayasan')
                 <h2>Kamu adalah operator yayasan!</h2>
             @endif
         </div>

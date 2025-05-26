@@ -14,7 +14,7 @@ class PengaduanController extends Controller
     public function index()
     {
         // Ambil semua data pengaduan dari database
-        $data = Pengaduan::orderBy('created_at', 'desc')->get();
+        $data = Pengaduan::orderBy('created_at', 'asc')->get();
 
         if (Auth::user()->role === 'operator_yayasan') {
             return view('operator_yayasan.v_pengaduan.index', compact('data'));
