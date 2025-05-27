@@ -73,14 +73,17 @@ body {
     background-color: #f0f0f0 !important;
     border: none !important;
     border-radius: 20px !important;
-    padding: 20px;
+    padding: 10px;
+    padding-top: 5px;
     box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
-    text-align: center;
     height: 30vh !important;
+    max-width: 50vh !important;
 }
 
-.card span{
+.card h1{
     font-size: 1.4rem;
+    font-weight: 400;
+    text-align: center;
 }
 /* CSS KONTEN-BODY*/
 
@@ -98,3 +101,162 @@ body {
     height: 75px;
 }
 /* CSS DALAM CARD */
+
+/* CSS KEUANGAN-BAR */
+.keuangan-bar {
+    display: flex;
+    margin-top: 10px;
+    border-bottom: 1px black solid;
+    padding-bottom: 10px;
+}
+
+.bar-item {
+    flex: 1;
+    height: 16px;
+   
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.keuangan-bar .bar-item:first-child {
+    border-top-left-radius: 10px;  /* atau sesuai kebutuhan */
+    border-bottom-left-radius: 10px;
+}
+
+.keuangan-bar .bar-item:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* CSS KEUANGAN-BAR */
+
+/* CSS PENGADUAN BAR */
+.head{
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.head-detail{
+    font-size: 12px;
+}
+
+.detail-status {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    
+}
+
+.detail-status.show {
+    max-height: 70px; /* sesuaikan cukup besar agar bisa menampung kontennya */
+}
+
+.head.toggle-status {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.judul-pengaduan {
+  white-space: nowrap;         /* mencegah teks pindah baris */
+  overflow: hidden;            /* sembunyikan bagian teks yang melebihi */
+  text-overflow: ellipsis;     /* tampilkan titik tiga (...) */
+  max-width: calc(100% - 30px); /* sisakan ruang untuk gambar */
+  padding-right: 5px;
+}
+
+.toggle-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    gap: 8px; /* Jarak antara teks dan ikon */
+}
+
+.arrow-icon {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.5s ease;
+    flex-shrink: 0;
+}
+
+.arrow-icon.rotate {
+    transform: rotate(180deg);
+}
+
+
+/* CSS DETAIL PENGADUAN */
+.box-status-step {
+    display: flex;
+    align-items: flex-start; /* ubah dari center ke flex-start agar garis lebih tinggi */
+    flex-wrap: nowrap;
+    position: relative;
+}
+
+/* Step item */
+.status-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid red;
+    border-radius: 50%;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 40px; /* beri ruang cukup untuk teks di bawah lingkaran */
+}
+
+.status-step.active {
+    border-color: limegreen;
+}
+
+.status-step img {
+    width: 35px !important;
+    height: 35px;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Ukuran khusus berdasarkan alt */
+.status-step img[alt="terkirim"] {
+    width: 30px !important;
+    height: 30px;
+}
+.status-step img[alt="diterima"] {
+    width: 25px !important;
+    height: 25px;
+}
+
+.status-step span {
+    font-size: 10px;
+    text-align: center;
+    position: absolute;
+    top: calc(100% + 8px); /* jarak teks di bawah lingkaran */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    width: max-content;
+    line-height: 1.2;
+}
+
+/* Garis antar step */
+.status-line {
+    width: 40px;
+    height: 3px;
+    background-color: red;
+    position: relative;
+    top: 20px; /* geser garis ke atas agar sejajar tengah lingkaran */
+
+}
+
+.status-line.active {
+    background-color: limegreen;
+}
+
+/* CSS PENGADUAN BAR */

@@ -9,9 +9,11 @@
 
     <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/v_layouts/v_layouts.css') }}">
-    <title>Document</title>
+    <title>---</title>
+    @stack('styles')
 </head>
 <body>
+    @yield('content')
     {{-- SIDEBAR START --}}
 <div class="sidebar">
         <div class="head-sidebar">
@@ -59,7 +61,7 @@
                 <SPan><a href="{{ route('pengaduan.index') }}">Pengaduan</a></SPan>
             </ul>
 
-            @if (Auth::user()->role == 'operator_yayasan')
+            @if (auth()->user()->role == 'operator_yayasan')
             <ul class="menu-item">
                 <img src="{{ asset('image/icon-sidebar/icon-ManageUser.svg') }}" alt="">
                 <SPan><a href="{{ route('users.index') }}">Users</a></SPan>
@@ -93,6 +95,7 @@
 </div>
 
     {{-- SIDEBAR END --}}
+    @stack('scripts')
 </body>
 
 <script>

@@ -17,6 +17,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'npsn', // <--- Ini perlu ditambahkan
         'email',
         'password',
         'role', // <--- Ini perlu ditambahkan
@@ -40,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [ // <-- ini diperbaiki, seharusnya properti, bukan method
         'email_verified_at' => 'datetime',
     ];
+
+    public function sekolah()
+    {
+        return $this->belongsTo(Sekolah::class, 'npsn', 'npsn');
+    }
 }

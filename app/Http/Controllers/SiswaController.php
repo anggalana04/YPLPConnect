@@ -11,14 +11,18 @@ class SiswaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        if (Auth::user()->role == 'operator_yayasan') {
-            return view('operator_yayasan.v_data_siswa.index');
-        } else {
-            return view('operator_sekolah.v_data_siswa.index');
-        };
+public function index()
+{
+    if (Auth::user()->role == 'operator_sekolah') {
+        $siswa = Siswa::where('npsn', Auth::user()->npsn)->get();
+        return view('operator_sekolah.v_data_siswa.index', compact('siswa'));
+    } else {
+        $siswa = Siswa::all();
+        return view('operator_yayasan.v_data_siswa.index', compact('siswa'));
     }
+}
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -28,7 +32,7 @@ class SiswaController extends Controller
         //
     }
 
-    /**
+/**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)

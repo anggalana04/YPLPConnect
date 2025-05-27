@@ -35,31 +35,11 @@ body {
 }
 /* CSS KONTEN */
 
-/* CSS BULAT */
-.bulat{
-    background-color: #F0F0F0;
-    display: flex;
-    margin-top: 10px;
-    gap: 50px;
-}
-
-.bulat1, .bulat2, .bulat3, .bulat4{
-    background-color: #D9D9D9;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-}
-
-.ket-status{
-    margin-left: 20%;
-}
-/* CSS BULAT */
-
 /* CSS BOX-DETAIL */
 .table-box {
     width: 100%;
     background-color: white;
-    height: 52vh;
+    height: 49vh;
     overflow-x: auto;
     border-radius: 20px;
     padding: 15px;
@@ -95,11 +75,123 @@ th:last-child {
   margin-bottom: 10px;
 }
 
+
 .table-detail td {
     padding: 12px 15px;
-    border-bottom: 1px solid #e9ecef;
     color: black;
-    text-align: center;
+    text-align: start;
+    font-size: 14px;
+    
 }
 
+/* untuk mengatus panjang pada TH dan TD */
+table th:first-child, table td:first-child {
+    width: 70%; /* Atur lebar kolom Deskripsi */
+}
+
+table th:last-child, table td:last-child {
+    width: 30%; /* Lebar kolom Bukti */
+    text-align: center;
+}
 /* CSS BOX-DETAIL */
+
+/* CSS PENGADUAN BAR */
+/* Kontainer utama kiri-kanan */
+.status-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* Progress bar horizontal */
+.box-status-step {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    position: relative;
+}
+
+/* Step item */
+.status-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid red;
+    border-radius: 50%;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    position: relative;
+    /* Tambahkan margin bottom untuk memberi jarak dengan span */
+    margin-bottom: 25px; /* Sesuaikan nilai ini sesuai kebutuhan */
+}
+
+.status-step.active {
+    border-color: limegreen;
+}
+
+.status-step img {
+    width: 45px !important;
+    height: 45px;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Ukuran khusus untuk icon terkirim */
+.status-step img[alt="terkirim"] {
+    width: 37px !important;
+    height: 37px;
+}
+
+/* Ukuran khusus untuk icon diterima */
+.status-step img[alt="diterima"] {
+    width: 30px !important;
+    height: 30px;
+}
+
+.status-step span {
+    font-size: 12px;
+    text-align: center;
+    /* Ganti margin-top dengan position absolute di bawah lingkaran */
+    position: absolute;
+    top: calc(100% + 10px); /* Jarak antara lingkaran dan teks */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    width: max-content;
+}
+
+/* Khusus untuk teks "Diterima & Dilihat" */
+.status-step span:contains("&") {
+    letter-spacing: -0.5px;
+}
+
+/* Garis antar step */
+.status-line {
+    width: 40px;
+    height: 3px;
+    background-color: red;
+
+    /* Tambahan agar garis tepat di tengah vertikal lingkaran */
+    margin-top: -20px;
+}
+
+
+.status-line.active {
+    background-color: limegreen;
+}
+
+/* Keterangan di kanan */
+.ket-status {
+    min-width: 200px;
+    font-size: 14px;
+}
+
+/* CSS PENGADUAN BAR */

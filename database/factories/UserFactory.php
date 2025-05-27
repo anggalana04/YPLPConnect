@@ -28,7 +28,8 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => Hash::make('password123'), // password default
-            'role' => $this->faker->randomElement(['operator_sekolah', 'operator_yayasan']),
+            'role' => $role = $this->faker->randomElement(['operator_sekolah', 'operator_yayasan']),
+            'npsn' => null, // will be set in seeder if needed
             'remember_token' => \Str::random(10),
         ];
     }

@@ -3,17 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory; // tambahkan ini
 
 class Guru extends Model
 {
-    // Specify the table name (optional if model name matches table name)
+    use HasFactory; // perbaiki penulisan dan kapitalisasi
+
+    // Table name
     protected $table = 'guru';
 
-    // Define the primary key
-    protected $primaryKey = 'NUPTK';
+    // Primary key
+    protected $primaryKey = 'nuptk';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
+    // Mass assignable attributes
     protected $fillable = [
-        'NUPTK',
+        'nuptk',
+        'npsn',
+        'npa',
         'nama',
         'jenis_kelamin',
         'tempat_lahir',
@@ -23,10 +31,9 @@ class Guru extends Model
         'status',
     ];
 
-    // Cast fields to specific types
-    protected $casts = [
-        'tanggal_lahir' => 'date', // Automatically convert to Carbon instance
-        'status' => 'string', // Ensure enum is treated as string
-        'jenis_kelamin' => 'string', // Ensure enum is treated as string
-    ];
+    // Guru belongs to a Sekolah
+    public function sekolah()
+    {
+        return $this->belongsTo(Sekolah::class, 'npsn', 'npsn');
+    }
 }

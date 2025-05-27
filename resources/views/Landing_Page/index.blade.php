@@ -77,6 +77,7 @@
         {{-- Statistik END --}}
     </div>
     <div class="foto-about">
+        
     </div>
 </div>
 {{-- ABOUT END --}}
@@ -116,7 +117,11 @@
 
                 </div>
             </div>
-            <div class="contact-box2"><img class="img-lokasi" src="{{ asset('image/Lokasi/lokasi.svg') }}" alt=""></div>
+            <div class="contact-box2">
+                <a href="https://maps.app.goo.gl/hsGvNZGSwaNMx4W66">
+                    <img class="img-lokasi" src="{{ asset('image/Lokasi/lokasi.svg') }}" alt="">
+                </a>
+            </div>
         </div>
     </div>
 {{-- CONTACT US END --}}

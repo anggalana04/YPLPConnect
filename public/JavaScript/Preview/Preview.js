@@ -3,45 +3,48 @@ function previewImage(event) {
     preview.innerHTML = ''; // Hapus pratinjau sebelumnya
 
     const file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/webp'];
+
+    if (file && allowedTypes.includes(file.type)) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            // Bungkus dalam div container
             const container = document.createElement('div');
             container.style.position = 'relative';
             container.style.display = 'inline-block';
 
-            // Gambar
             const img = document.createElement('img');
             img.src = e.target.result;
-            img.style.maxWidth = '60px';
+            img.style.maxWidth = '100%';
             img.style.borderRadius = '8px';
             img.style.marginTop = '10px';
 
-            // Tombol X
-            const closeBtn = document.createElement('span');
-            closeBtn.innerHTML = '&times;';
+            const closeBtn = document.createElement('img');
+            closeBtn.src = '/image/icon-X/icon-X.svg';  // Ganti dengan lokasi gambar tombol close kamu
             closeBtn.style.position = 'absolute';
             closeBtn.style.top = '0px';
             closeBtn.style.right = '0px';
-            closeBtn.style.color = 'white';
-            closeBtn.style.backgroundColor = 'grey';
-            closeBtn.style.borderRadius = '50%';
-            closeBtn.style.padding = '2px 7px';
+            closeBtn.style.width = '20px';
+            closeBtn.style.height = '20px';
             closeBtn.style.cursor = 'pointer';
-            closeBtn.style.fontWeight = 'bold';
+            closeBtn.style.borderRadius = '50%';  // Ini yang bikin jadi lingkaran
+            closeBtn.style.backgroundColor = 'white';
+            closeBtn.style.border = '1px solid black';
+            closeBtn.style.padding = '2px'
             closeBtn.style.transform = 'translateY(-50%)';
 
-            // Hapus gambar saat tombol X diklik
+
             closeBtn.onclick = function () {
-                preview.innerHTML = ''; // Hapus konten preview
-                document.getElementById('buktiInput').value = ''; // Reset input file
+                preview.innerHTML = '';
+                document.getElementById('buktiInput').value = '';
             };
 
             container.appendChild(img);
             container.appendChild(closeBtn);
             preview.appendChild(container);
-        }
+        };
         reader.readAsDataURL(file);
+    } else {
+        alert('Format file tidak didukung. Harap unggah file gambar seperti JPG, PNG, GIF, BMP, atau WEBP.');
+        event.target.value = ''; // Reset input jika format tidak valid
     }
 }

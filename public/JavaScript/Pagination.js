@@ -1,4 +1,4 @@
-const rowsPerPage = 5;
+const rowsPerPage = 10;
 const table = document.querySelector('.table-konten tbody');
 const rows = table.querySelectorAll('tr');
 const pagination = document.getElementById('pagination');
@@ -19,14 +19,13 @@ function displayRows(page) {
 function setupPagination() {
     pagination.innerHTML = '';
 
-    // Prev button
+    // Tombol Prev
     const prevLi = document.createElement('li');
     prevLi.className = 'page-item' + (currentPage === 1 ? ' disabled' : '');
     const prevLink = document.createElement('a');
     prevLink.className = 'page-link';
     prevLink.href = '#';
-    prevLink.setAttribute('aria-label', 'Previous');
-    prevLink.innerHTML = '<span aria-hidden="true">&laquo;</span>';
+    prevLink.innerHTML = '&laquo;';
     prevLink.addEventListener('click', (e) => {
         e.preventDefault();
         if (currentPage > 1) {
@@ -37,31 +36,62 @@ function setupPagination() {
     prevLi.appendChild(prevLink);
     pagination.appendChild(prevLi);
 
-    // Page number buttons
-    for (let i = 1; i <= totalPages; i++) {
+    const addPage = (page) => {
         const li = document.createElement('li');
-        li.className = 'page-item' + (i === currentPage ? ' active' : '');
+        li.className = 'page-item' + (page === currentPage ? ' active' : '');
         const a = document.createElement('a');
         a.className = 'page-link';
         a.href = '#';
-        a.textContent = i;
+        a.textContent = page;
         a.addEventListener('click', (e) => {
             e.preventDefault();
-            currentPage = i;
+            currentPage = page;
             updatePagination();
         });
         li.appendChild(a);
         pagination.appendChild(li);
+    };
+
+    const addDots = () => {
+        const li = document.createElement('li');
+        li.className = 'page-item disabled';
+        const span = document.createElement('span');
+        span.className = 'page-link';
+        span.textContent = '...';
+        li.appendChild(span);
+        pagination.appendChild(li);
+    };
+
+    // Tampilkan halaman 1
+    addPage(1);
+
+    // Tampilkan ... jika currentPage > 2
+    if (currentPage > 2) {
+        addDots();
     }
 
-    // Next button
+    // Tampilkan currentPage jika bukan halaman 1 atau terakhir
+    if (currentPage !== 1 && currentPage !== totalPages) {
+        addPage(currentPage);
+    }
+
+    // Tampilkan ... jika currentPage < totalPages - 1
+    if (currentPage < totalPages - 1) {
+        addDots();
+    }
+
+    // Tampilkan halaman terakhir jika totalPages > 1
+    if (totalPages > 1) {
+        addPage(totalPages);
+    }
+
+    // Tombol Next
     const nextLi = document.createElement('li');
     nextLi.className = 'page-item' + (currentPage === totalPages ? ' disabled' : '');
     const nextLink = document.createElement('a');
     nextLink.className = 'page-link';
     nextLink.href = '#';
-    nextLink.setAttribute('aria-label', 'Next');
-    nextLink.innerHTML = '<span aria-hidden="true">&raquo;</span>';
+    nextLink.innerHTML = '&raquo;';
     nextLink.addEventListener('click', (e) => {
         e.preventDefault();
         if (currentPage < totalPages) {
@@ -72,6 +102,7 @@ function setupPagination() {
     nextLi.appendChild(nextLink);
     pagination.appendChild(nextLi);
 }
+
 
 function updatePagination() {
     displayRows(currentPage);

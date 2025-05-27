@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('siswa', function (Blueprint $table) {
             $table->char('nisn', 10)->primary();
+            $table->char('npsn', 8); // Add this line
+            $table->foreign('npsn')->references('npsn')->on('sekolah')->onDelete('cascade'); // And this line
             $table->string('nama', 100);
-            $table->enum('jenis_kelamin', ["P", "L"]);
-            $table->string('tempat_lahir', 50);
+            $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->string('tempat_lahir', 100);
             $table->date('tanggal_lahir');
-            $table->string('alamat', 100);
-            $table->enum('status', ["aktif", "nonaktif"])->default("aktif");
+            $table->string('alamat', 255);
+            $table->enum('status', ['Aktif', 'Nonaktif'])->default('Aktif');
             $table->timestamps();
         });
     }
