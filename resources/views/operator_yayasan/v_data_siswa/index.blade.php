@@ -45,7 +45,7 @@
                 <table class="table-konten">
                     <thead id="table-header">
                         <tr>
-                            <th>NIS</th>
+                            <th>NISN</th>
                             <th>Nama Siswa</th>
                             <th>Jenis Kelamin</th>
                             <th>Tempat, Tanggal Lahir</th>

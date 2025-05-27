@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Guru;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GuruController extends Controller
 {
@@ -12,7 +13,11 @@ class GuruController extends Controller
      */
     public function index()
     {
-        return view('operator_yayasan.v_data_guru.index');
+        if (Auth::user()->role = 'operator_yayasan') {
+            return view('operator_yayasan.v_data_guru.index');
+        } else {
+            return view('operator_sekolah.v_data_guru.index');
+        }
     }
 
     /**
