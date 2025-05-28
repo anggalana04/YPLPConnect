@@ -10,24 +10,16 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     public function index()
-    {
-        $user = Auth::user();
-        $npsn = $user->npsn ?? null;
-        $tahun = date('Y');
-
-        $keuangan = Keuangan::where('npsn', $npsn)
-            ->where('tahun', $tahun)
-            ->select('bulan', 'jumlah_spp', 'status')
-            ->get();
-
-        $jumlahSiswa = Siswa::where('npsn', $npsn)->count();
-
-        $pengaduans = Pengaduan::where('npsn', $npsn)
-            ->latest()
-            ->get(); // ubah dari first() menjadi get() agar semua data dikirim
-
-
-        return view('operator_sekolah.v_dashboard.index', compact('keuangan', 'jumlahSiswa', 'pengaduans'));
+{
+    if (Auth::user()->role === 'operator_sekolah') {
+        $jumlahSiswa = \App\Models\Siswa::where('npsn', Auth::user()->npsn)->count();
+        $jumlahGuru = \App\Models\Guru::where('npsn', Auth::user()->npsn)->count();
+        return view('operator_sekolah.v_dashboard.index', compact('jumlahSiswa', 'jumlahGuru'));
+    } else {
+        $jumlahSiswa = \App\Models\Siswa::count();
+        $jumlahGuru = \App\Models\Guru::count();
+        return view('operator_yayasan.v_dashboard.index', compact('jumlahSiswa', 'jumlahGuru'));
     }
+}
 
 }

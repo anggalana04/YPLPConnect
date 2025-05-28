@@ -30,20 +30,14 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     
     
-    
-    Route::get('/dashboard', function () {
-        if (Auth::user()->role === 'operator_sekolah') {
-            $jumlahSiswa = Siswa::where('npsn', Auth::user()->npsn)->count();
-            $jumlahGuru = Guru::where('npsn', Auth::user()->npsn)->count(); // Only count guru for this sekolah
-            return view('operator_sekolah.v_dashboard.index', compact('jumlahSiswa', 'jumlahGuru'));
-        } else {
-            $jumlahSiswa = Siswa::count();
-            $jumlahGuru = Guru::count(); // All guru
-            return view('operator_yayasan.v_dashboard.index', compact('jumlahSiswa', 'jumlahGuru'));
-        }
-    })->name('dashboard');
-
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+Route::get('/dashboard', function () {
+    $jumlahSiswa = Siswa::count();
+    $jumlahGuru = Guru::count();
+    $keuangan = \App\Models\Keuangan::all();
+    $pengaduans = \App\Models\Pengaduan::all();
+    return view('operator_yayasan.v_dashboard.index', compact('jumlahSiswa', 'jumlahGuru', 'keuangan', 'pengaduans'));
+})->name('dashboard');
+  
 
     #profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
