@@ -2,10 +2,13 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
+use Faker\Factory as Faker;
+use App\Models\Sekolah;
 use App\Models\User;
 use App\Models\Guru;
-use App\Models\Sekolah;
-use Illuminate\Database\Seeder;
+use App\Models\Siswa;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,37 +17,37 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seed some sekolah
-        $sekolahs = collect([
-            ['npsn' => '10000001', 'nama' => 'SDN 1 Contoh', 'jenjang' => 'SD', 'alamat' => 'Jl. Mawar 1', 'email' => 'sdn1@example.com'],
-            ['npsn' => '10000002', 'nama' => 'SMPN 1 Contoh', 'jenjang' => 'SMP', 'alamat' => 'Jl. Melati 2', 'email' => 'smpn1@example.com'],
-        ]);
-        foreach ($sekolahs as $data) {
-            Sekolah::firstOrCreate(['npsn' => $data['npsn']], $data);
+        $faker = Faker::create();
+
+        // Buat 20 data sekolah random
+        for ($i = 1; $i <= 20; $i++) {
+            Sekolah::create([
+                'npsn'    => '100000' . str_pad($i, 2, '0', STR_PAD_LEFT),
+                'nama'    => 'Sekolah ' . $faker->company,
+                'jenjang' => $faker->randomElement(['SD', 'SMP', 'SMA', 'SMK']),
+                'alamat'  => $faker->address,
+                'email'   => $faker->unique()->safeEmail,
+            ]);
         }
 
-        // Get all npsn for sekolah
+        // Ambil semua NPSN yang sudah dibuat
         $npsnList = Sekolah::pluck('npsn')->toArray();
 
-        // Create users
+        // Buat 10 user
         User::factory(10)->make()->each(function ($user) use ($npsnList) {
-            if ($user->role === 'operator_sekolah') {
-                $user->npsn = $npsnList[array_rand($npsnList)];
-            } else {
-                $user->npsn = null;
-            }
+            $user->npsn = $user->role === 'operator_sekolah' ? $npsnList[array_rand($npsnList)] : null;
             $user->save();
         });
 
-        // Create guru, pastikan npsn valid
+        // Buat 20 guru
         Guru::factory(20)->make()->each(function ($guru) use ($npsnList) {
             $guru->npsn = $npsnList[array_rand($npsnList)];
             $guru->save();
         });
 
-        // Seed siswa for each sekolah
+        // Buat 50 siswa per sekolah
         foreach ($npsnList as $npsn) {
-            \App\Models\Siswa::factory(50)->create([
+            Siswa::factory(50)->create([
                 'npsn' => $npsn,
             ]);
         }

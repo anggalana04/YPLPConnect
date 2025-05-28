@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Siswa;
+use App\Models\Sekolah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,10 +13,18 @@ class SiswaController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
+    public function listSekolah() {
+        $sekolah = Sekolah::all(); // Ambil semua data sekolah dari DB
+        return view('operator_yayasan.v_list-sekolah.index', compact('sekolah'));
+    }
+
+
+    public function index($npsn = null)
     {
         if (Auth::user()->role == 'operator_sekolah') {
             $siswa = Siswa::where('npsn', Auth::user()->npsn)->get();
+        } elseif ($npsn) {
+            $siswa = Siswa::where('npsn', $npsn)->get();
         } else {
             $siswa = Siswa::all();
         }

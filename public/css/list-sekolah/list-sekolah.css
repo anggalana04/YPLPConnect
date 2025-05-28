@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    font-family: 'Montserrat' !important;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #f8f9fa;
+}
+
+.konten {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Pusatkan vertikal */
+    align-items: center; /* Pusatkan horizontal (opsional) */
+    margin-left: 270px; /* Same as sidebar width */
+    align-items: center;
+    margin-right: 20px;
+    transition: margin-left 0.2s;
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+    width: calc(90%-260px - 20px); /* 100% minus sidebar and right margin */
+}
+
+/* CSS BOX-KONTEN */
+.box-konten{
+    background-color: #F0F0F0;
+    border-radius: 40px;
+    height: 89dvh;
+    padding: 20px;
+}
+
+.head-box-konten{
+    display: flex;
+    align-items: center;
+    gap: 74dvh;
+}
+
+.head-box-konten button{
+    height: 40px;
+    border: none;
+    background-color: yellow;
+    border-radius: 40px;
+    font-size: 14px ;
+    padding: 10px;
+    font-weight: 500;
+}
+
+.teks-head-box-konten h1{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.teks-head-box-konten p{
+    font-size: 1rem;
+}
+/* CSS BOX-KONTEN */
+
+/* CSS KATEGORI & SEARCH */
+.option-head-box{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.kategori select {
+    padding: 9px;
+    border-radius: 20px;
+    border: 1px black solid;
+    outline: none;
+    background-color: #F0F0F0;
+    cursor: pointer;   
+}
+
+.search-container {
+  position: relative;
+  max-width: 200px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 15px 8px 40px;
+  border: none;
+  border-radius: 40px;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+/* CSS KATEGORI & SEARCH */
+
+
+/* CSS TABLE */
+.table-box {
+    width: 100%;
+    background-color: white;
+    height: 48dvh;
+    overflow-x: auto;
+    border-radius: 20px;
+    margin-top: 20px;
+    padding: 15px;
+
+}
+
+.table-konten {
+    width: 100%;
+    border-collapse: separate; /* WAJIB agar border-radius bisa bekerja */
+    border-spacing: 0;
+    font-size: 12px;
+}
+
+
+.table-konten th {
+    background-color: #F0F0F0;   
+    text-align: left;
+    font-weight: 600;
+    color: black;
+    padding: 10px;
+   
+}
+
+/* Radius hanya pada sudut-sudut */
+th:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+th:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.table-konten td {
+    padding: 8px;
+    border-bottom: 1px solid #e9ecef;
+    color: black;
+    font-size: 12px;
+}
+
+/* CSS TABLE */
+
+/* CSS PAGINATION */
+.pagination {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+    justify-content: flex-end;
+    margin-top: 8px;
+    gap: 2px;
+}
+
+.page-item {
+    margin: 0 1px;
+}
+
+.page-item.disabled .page-link {
+    pointer-events: none;
+    color: #bdbdbd;
+    background: #f3f3f3;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    border: none;
+}
+
+.page-link {
+    display: block;
+    padding: 3px 8px;
+    font-size: 13px;
+    color: #007bff;
+    text-decoration: none;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    background: #fff;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+    min-width: 28px;
+    text-align: center;
+}
+
+.page-link:hover:not(.disabled):not(.active) {
+    background-color: #e9ecef;
+    color: #0056b3;
+}
+/* END CSS PAGINATION */
+
+.clickable-row {
+    cursor: pointer;
+}
+
+.clickable-row:hover {
+    background-color: #f0f0f0;
+}
+
+
+/* Responsive: Stack sidebar on top for small screens */
+@media (max-width: 900px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        box-shadow: none;
+    }
+    .konten {
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 20px;
+    }
+}

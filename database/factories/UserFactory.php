@@ -30,7 +30,7 @@ class UserFactory extends Factory
             'password' => Hash::make('password123'), // password default
             'role' => $role = $this->faker->randomElement(['operator_sekolah', 'operator_yayasan']),
             'npsn' => null, // will be set in seeder if needed
-            'remember_token' => \Str::random(10),
+            'remember_token' => Str::random(10),
         ];
     }
 

@@ -62,9 +62,11 @@ Route::get('/dashboard', function () {
 
     #data sekolah
 
-    #data siswa
-    Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
 
+    #data siswa
+    Route::get('/siswa/sekolah', [SiswaController::class, 'ListSekolah'])->name('siswa.sekolah');
+    Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
+    Route::get('/siswa/{npsn}', [SiswaController::class, 'index'])->name('siswa.by-sekolah');
 
     #data guru
     Route::get('guru', [GuruController::class, 'index'])->name('guru.index');

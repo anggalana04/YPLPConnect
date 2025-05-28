@@ -51,7 +51,7 @@ body {
 }
 
 .konten-head-sekolah{
-    width: 125vh;
+    width: 100%;
 }
 
 /* CSS konten-body*/
@@ -69,13 +69,31 @@ body {
     height: auto;
 }
 
-.konten-body-sekolah {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    background-color: #f9f9f9;
-    border-radius: 20px;
-    width: 125dvh;
+.konten-body-yayasan {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 kolom */
+    grid-template-rows: repeat(3, auto);  /* 3 baris */
+    grid-template-areas:
+        "card1 card2"
+        "card3 card4"
+        "card5 card5";
+    gap: 30px;
+    max-width: 700px;
+    margin: 30px auto;
 }
+
+.konten-body-sekolah {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 kolom */
+    grid-template-rows: repeat(2, auto);  /* 2 baris */
+    grid-template-areas:
+        "card1 card2"
+        "card3 card4";
+    gap: 20px;
+    max-width: 100%;
+    margin: 30px auto;
+}
+
 
 .card {
     background-color: #f0f0f0 !important;

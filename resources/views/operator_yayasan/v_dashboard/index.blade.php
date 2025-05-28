@@ -28,10 +28,10 @@
     @endif
 </div>
 
-<div class="konten-body @if(auth()->user()->role != 'operator_yayasan') konten-body-sekolah @endif">
+<div class="konten-body @if(auth()->user()->role == 'operator_yayasan') konten-body-yayasan @else konten-body-sekolah @endif">
     @if(auth()->user()->role == 'operator_yayasan')
         <!-- Konten untuk operator yayasan -->
-        <div class="card">
+        <div class="card card-1">
             <h1>Jumlah Guru</h1>
             <div class="detail-card">
                 <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Guru.svg') }}" alt="">
@@ -39,28 +39,24 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card card-2">
             <h1>Jumlah Siswa</h1>
             <div class="detail-card">
                 <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Siswa.svg') }}" alt="">
                 <p>{{$jumlahSiswa}}</p>
             </div>
         </div>
-
-        <div class="card">
-            <h1>Keuangan</h1>
-        </div>
-
-        <div class="card">
+        
+        <div class="card card-3">
             <h1>Pengaduan</h1>
         </div>
-
-        <div class="card">
+        
+        <div class="card card-4">
             <h1>Dokumen</h1>
         </div>
-
-        <div class="card">
-            <h1>Pengajuan</h1>
+        
+        <div class="card card-keuangan">
+            <h1>Keuangan</h1>
         </div>
     @else
         <!-- Konten untuk operator sekolah -->

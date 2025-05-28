@@ -41,7 +41,7 @@
             <!-- PISAHKAN dropdown dari menu utama -->
             <div class="collapse" id="laporanCollapse">
                 <ul class="nav flex-column">
-                    <li><a class="dropdown-item" href="{{ route('siswa.index') }}">Siswa</a></li>
+                    <li><a class="dropdown-item" href="{{ route('siswa.sekolah') }}">Siswa</a></li>
                     <li><a class="dropdown-item" href="{{ route('guru.index') }}">Guru</a></li>
                 </ul>
             </div>

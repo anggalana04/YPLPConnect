@@ -17,11 +17,15 @@ class DokumenController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'operator_sekolah') {
-            // Jika ingin data difilter berdasarkan sekolah:
-            $dokumen = Dokumen::where('npsn', Auth::user()->npsn)->get();
+            $npsn = Auth::user()->npsn;
+
+            $dokumen = Dokumen::whereHas('guru', function($query) use ($npsn) {
+                $query->where('npsn', $npsn);
+            })->get();
         } else {
             $dokumen = Dokumen::all();
         }
+
         return view('operator_yayasan.v_dokumen.index', compact('dokumen'));
     }
 
@@ -133,7 +137,9 @@ class DokumenController extends Controller
     $guru = Guru::where('nuptk', $dokumen->nuptk)->first();
 
     $pdf = Pdf::loadView('operator_yayasan.v_dokumen.Dokumen_PDF_Layouts', compact('dokumen', 'guru'));
-    return $pdf->download('Dokumen_SK_' . $dokumen->id . '.pdf');
+    // Tampilkan langsung di browser (inline)
+    return $pdf->stream('dokumen.pdf');
+    // return $pdf->download('Dokumen_SK_' . $dokumen->id . '.pdf');
 }
    
     
