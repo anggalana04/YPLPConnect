@@ -33,12 +33,12 @@ class KeuanganController extends Controller
             $sekolahList = Sekolah::pluck('nama', 'npsn');
         }
 
-        return view($user->role . '.v_keuangan.index', [
-            'keuangan' => $keuangan,
-            'tahunList' => $tahunList,
-            'tahunDipilih' => $tahunDipilih,
-            'sekolahList' => $sekolahList,
-            'npsnDipilih' => $npsnDipilih,
+        return view('operator_yayasan.v_keuangan.index', [
+        'keuangan' => $keuangan,
+        'tahunList' => $tahunList,
+        'tahunDipilih' => $tahunDipilih,
+        'sekolahList' => $sekolahList,
+        'npsnDipilih' => $npsnDipilih,
         ]);
     }
 

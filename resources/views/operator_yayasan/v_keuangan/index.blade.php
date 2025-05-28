@@ -90,14 +90,16 @@
                             </div>
                             <div class="upload-button-container ">
                                 @if (auth()->user()->role === 'operator_sekolah')
-                                    <form action="{{ route('keuangan.upload', $data->id) }}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{ route('keuangan.upload', $data->id ?? 0) }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <label for="uploadBukti{{ $bulan }}" class="upload-bukti-button">Upload Bukti</label>
                                         <input type="file" id="uploadBukti{{ $bulan }}" name="bukti" class="upload-input" accept="image/*,application/pdf">
                                         <button type="submit" class="upload-submit" style="display:none;">Submit</button>
                                     </form>
+
+                                    <!-- Button Bayar tetap tampil -->
                                     <button class="bayar-button" data-bulan="{{ $bulan }}">Bayar</button>
-                                @elseif ( auth()->user()->role === 'operator_yayasan')
+                                @elseif (auth()->user()->role === 'operator_yayasan')
                                     <button class="cek-bukti-button" data-bulan="{{ $bulan }}">Cek Bukti</button>
                                     <button class="sudah-bayar-button" data-bulan="{{ $bulan }}">Sudah Bayar</button>
                                 @endif

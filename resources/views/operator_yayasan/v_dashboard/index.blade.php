@@ -32,7 +32,7 @@
     @if(auth()->user()->role == 'operator_yayasan')
         <!-- Konten untuk operator yayasan -->
         <div class="card">
-            <span>Jumlah Guru</span>
+            <h1>Jumlah Guru</h1>
             <div class="detail-card">
                 <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Guru.svg') }}" alt="">
                 <p>{{$jumlahGuru}}</p>
@@ -40,7 +40,7 @@
         </div>
 
         <div class="card">
-            <span>Jumlah Siswa</span>
+            <h1>Jumlah Siswa</h1>
             <div class="detail-card">
                 <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Siswa.svg') }}" alt="">
                 <p>{{$jumlahSiswa}}</p>
@@ -48,24 +48,24 @@
         </div>
 
         <div class="card">
-            <span>Keuangan</span>
+            <h1>Keuangan</h1>
         </div>
 
         <div class="card">
-            <span>Pengaduan</span>
+            <h1>Pengaduan</h1>
         </div>
 
         <div class="card">
-            <span>Dokumen</span>
+            <h1>Dokumen</h1>
         </div>
 
         <div class="card">
-            <span>Pengajuan</span>
+            <h1>Pengajuan</h1>
         </div>
     @else
         <!-- Konten untuk operator sekolah -->
         <div class="card">
-            <span>Jumlah Guru</span>
+            <h1>Jumlah Guru</h1>
             <div class="detail-card">
                 <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Guru.svg') }}" alt="">
                 <p>yyy</p>
@@ -73,10 +73,10 @@
         </div>
 
         <div class="card">
-            <span>Jumlah Siswa</span>
+            <h1>Jumlah Siswa</h1>
             <div class="detail-card">
                 <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Siswa.svg') }}" alt="">
-                <p>yyy</p>
+                <p>{{$jumlahSiswa}}</p>
             </div>
         </div>
 
@@ -104,7 +104,7 @@
                 <h1>Pengaduan</h1>
 
                 @if ($pengaduans->isEmpty())
-                    <p style="padding: 10px;">Tidak ada pengaduan ditemukan.</p>
+                    <p class="No-data-pengaduan">Tidak ada pengaduan ditemukan.</p>
                 @else
                     @foreach ($pengaduans as $pengaduan)
                         <div class="status-head">

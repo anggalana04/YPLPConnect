@@ -11,16 +11,15 @@ class GuruController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         if (Auth::user()->role == 'operator_sekolah') {
             $guru = Guru::where('npsn', Auth::user()->npsn)->get();
-            return view('operator_sekolah.v_data_guru.index', compact('guru'));
         } else {
-            $guru = Guru::all(); // <-- FIXED HERE
-            return view('operator_yayasan.v_data_guru.index', compact('guru'));
+            $guru = Guru::all();
         }
-        return view('operator_yayasan.v_data_guru.index');
+        return view('operator_yayasan.v_data_guru.index', compact('guru'));
     }
 
     /**

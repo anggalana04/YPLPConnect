@@ -80,19 +80,14 @@ body {
 .card {
     background-color: #f0f0f0 !important;
     border-radius: 20px !important;
-    padding: 20px;
+    padding: 10px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
     text-align: center;
     min-height: 150px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 10px;
 }
 
-.card span{
-    font-size: 1.4rem;
-}
 
 /* CSS DALAM CARD */
 .detail-card{
@@ -111,7 +106,7 @@ body {
 /* ==== CSS YANG DITAMBAHKAN DARI OPERATOR SEKOLAH ==== */
 
 .card h1{
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 400;
     text-align: center;
 }
@@ -119,14 +114,14 @@ body {
 /* CSS KEUANGAN-BAR */
 .keuangan-bar {
     display: flex;
-    margin-top: 10px;
+    margin-top: 0px;
     border-bottom: 1px black solid;
     padding-bottom: 10px;
 }
 
 .bar-item {
     flex: 1;
-    height: 16px;
+    height: 12px;
     transition: background-color 0.3s ease;
     cursor: pointer;
 }
@@ -196,6 +191,17 @@ body {
 }
 
 /* CSS DETAIL PENGADUAN */
+.No-data-pengaduan {
+    margin-bottom: 25px;
+    text-align: center;
+    color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* gunakan 100% tinggi parent */
+}
+
+
 .box-status-step {
     display: flex;
     align-items: flex-start;

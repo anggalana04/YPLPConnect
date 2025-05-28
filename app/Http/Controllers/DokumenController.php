@@ -16,7 +16,13 @@ class DokumenController extends Controller
      */
     public function index()
     {
-        return view('operator_yayasan.v_dokumen.index');
+        if (Auth::user()->role == 'operator_sekolah') {
+            // Jika ingin data difilter berdasarkan sekolah:
+            $dokumen = Dokumen::where('npsn', Auth::user()->npsn)->get();
+        } else {
+            $dokumen = Dokumen::all();
+        }
+        return view('operator_yayasan.v_dokumen.index', compact('dokumen'));
     }
 
     /**

@@ -11,18 +11,15 @@ class PengaduanController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        // Ambil semua data pengaduan dari database
-        $data = Pengaduan::orderBy('created_at', 'asc')->get();
-
-        if (Auth::user()->role === 'operator_yayasan') {
-            return view('operator_yayasan.v_pengaduan.index', compact('data'));
-        } elseif (Auth::user()->role === 'operator_sekolah') {
-            return view('operator_sekolah.v_pengaduan.index', compact('data'));
+        if (Auth::user()->role == 'operator_sekolah') {
+            $data = Pengaduan::where('npsn', Auth::user()->npsn)->get();
         } else {
-            return redirect('/'); // Jika role tidak sesuai, arahkan ke halaman utama
+            $data = Pengaduan::all();
         }
+        return view('operator_yayasan.v_pengaduan.index', compact('data'));
     }
 
     /**
