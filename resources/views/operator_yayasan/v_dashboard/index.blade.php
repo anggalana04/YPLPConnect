@@ -28,7 +28,7 @@
     @endif
 </div>
 
-<div class="konten-body @if(Auth::user()->role != 'operator_yayasan') konten-body-sekolah @endif">
+<div class="konten-body @if(auth()->user()->role != 'operator_yayasan') konten-body-sekolah @endif">
     @if(Auth::user()->role == 'operator_yayasan')
         <!-- Konten untuk operator yayasan -->
         <div class="card">
