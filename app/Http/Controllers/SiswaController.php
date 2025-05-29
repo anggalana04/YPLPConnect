@@ -18,6 +18,19 @@ class SiswaController extends Controller
         return view('operator_yayasan.v_list-sekolah.index', compact('sekolah'));
     }
 
+    public function redirectToSiswa()
+    {
+        if (Auth::user()->role === 'operator_yayasan') {
+            // Tampilkan list sekolah
+            $sekolah = Sekolah::all();
+            return view('operator_yayasan.v_list-sekolah.index', compact('sekolah'));
+        } else {
+            // Tampilkan data siswa sesuai npsn operator sekolah
+            $siswa = Siswa::where('npsn', Auth::user()->npsn)->get();
+            return view('operator_yayasan.v_data_siswa.index', compact('siswa'));
+        }
+    }
+
 
     public function index($npsn = null)
     {
@@ -78,4 +91,6 @@ class SiswaController extends Controller
     {
         //
     }
+
+    
 }

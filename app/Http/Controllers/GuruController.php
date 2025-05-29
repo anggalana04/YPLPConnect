@@ -69,4 +69,25 @@ class GuruController extends Controller
     {
         //
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('query');
+
+        if (Auth::user()->role == 'operator_sekolah') {
+            $gurus = Guru::where('npsn', Auth::user()->npsn)
+                ->where(function ($q) use ($query) {
+                    $q->where('nama', 'LIKE', "%{$query}%")
+                    ->orWhere('nuptk', 'LIKE', "%{$query}%");
+                })
+                ->get();
+        } else {
+            $gurus = Guru::where('nama', 'LIKE', "%{$query}%")
+                ->orWhere('nuptk', 'LIKE', "%{$query}%")
+                ->get();
+        }
+
+        return response()->json($gurus);
+    }
+
 }

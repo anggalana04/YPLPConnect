@@ -65,11 +65,13 @@ Route::get('/dashboard', function () {
 
     #data siswa
     Route::get('/siswa/sekolah', [SiswaController::class, 'ListSekolah'])->name('siswa.sekolah');
-    Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
+    Route::get('/siswa', [SiswaController::class, 'redirectToSiswa'])->name('siswa.index');
     Route::get('/siswa/{npsn}', [SiswaController::class, 'index'])->name('siswa.by-sekolah');
 
     #data guru
     Route::get('guru', [GuruController::class, 'index'])->name('guru.index');
+    Route::get('/search-guru', [GuruController::class, 'search'])->name('search.guru');
+
 
 
     // Route Users

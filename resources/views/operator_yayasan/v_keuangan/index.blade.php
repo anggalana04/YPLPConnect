@@ -1,18 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+@extends('v_layouts.index')
 
-    <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
-    @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/data_keuangan/DataKeuangan.css') }}">
-    @endpush
-    <title>Data Keuangan</title>
-</head>
-<body>
-    @extends('v_layouts.index')
+@section('title', 'Data Keuangan')
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/data_keuangan/DataKeuangan.css') }}">
+<link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
+@endpush
 
 @section('content')
 <div class="konten">
@@ -88,7 +81,7 @@
                                     <p>Belum ada data keuangan bulan ini.</p>
                                 @endif
                             </div>
-                            <div class="upload-button-container ">
+                            <div class="upload-button-container">
                                 @if (auth()->user()->role === 'operator_sekolah')
                                     <form action="{{ route('keuangan.upload', $data->id ?? 0) }}" method="POST" enctype="multipart/form-data">
                                         @csrf
@@ -96,8 +89,6 @@
                                         <input type="file" id="uploadBukti{{ $bulan }}" name="bukti" class="upload-input" accept="image/*,application/pdf">
                                         <button type="submit" class="upload-submit" style="display:none;">Submit</button>
                                     </form>
-
-                                    <!-- Button Bayar tetap tampil -->
                                     <button class="bayar-button" data-bulan="{{ $bulan }}">Bayar</button>
                                 @elseif (auth()->user()->role === 'operator_yayasan')
                                     <button class="cek-bukti-button" data-bulan="{{ $bulan }}">Cek Bukti</button>
@@ -166,5 +157,3 @@ function tutupPopup() {
 }
 </script>
 @endpush
-</body>
-</html>

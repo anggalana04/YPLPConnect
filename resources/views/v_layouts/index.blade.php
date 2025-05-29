@@ -9,7 +9,8 @@
 
     <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/v_layouts/v_layouts.css') }}">
-    <title>---</title>
+    <title>@yield('title') - YPLP PGRI</title>
+
     @stack('styles')
 </head>
 <body>
@@ -41,7 +42,7 @@
             <!-- PISAHKAN dropdown dari menu utama -->
             <div class="collapse" id="laporanCollapse">
                 <ul class="nav flex-column">
-                    <li><a class="dropdown-item" href="{{ route('siswa.sekolah') }}">Siswa</a></li>
+                    <li><a class="dropdown-item" href="{{ route('siswa.index') }}">Siswa</a></li>
                     <li><a class="dropdown-item" href="{{ route('guru.index') }}">Guru</a></li>
                 </ul>
             </div>

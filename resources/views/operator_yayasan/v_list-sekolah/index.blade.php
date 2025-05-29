@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Data Siswa</title>
-
-    <link rel="shortcut icon" href="image/logoYPLP/logo.svg" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('css/list-sekolah/list-sekolah.css') }}">
-</head>
-<body>
-
 @extends('v_layouts.index')
+
+@section('title', 'List Sekolah')
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/list-sekolah/list-sekolah.css') }}">
+@endpush
+
+@section('content')
 <div class="konten">
     <div class="box-konten">
         <div class="head-box-konten">
@@ -35,7 +30,7 @@
                     <option value="kelas1">TK</option>
                     <option value="kelas2">SD</option>
                     <option value="kelas3">SMP</option>
-                    <option value="kelas3">SMA</option>
+                    <option value="kelas4">SMA</option>
                 </select>
             </div>
         </div>
@@ -70,9 +65,10 @@
         </nav>
     </div>
 </div>
+@endsection
 
+@push('scripts')
 <script src="{{ asset('JavaScript/Pagination.js') }}"></script>
-</body>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const rows = document.querySelectorAll(".clickable-row");
@@ -83,4 +79,4 @@
         });
     });
 </script>
-</html>
+@endpush

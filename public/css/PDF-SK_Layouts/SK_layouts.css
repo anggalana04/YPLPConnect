@@ -1,0 +1,179 @@
+body {
+  font-family: 'Times New Roman', serif;
+  padding: 10px;
+  background: #fff;
+  font-size: 12px;
+}
+
+.header {
+  text-align: center;
+}
+
+.header img {
+  display: block;
+  margin: 0 auto;
+  height: 100px;
+}
+
+.judul,
+.nomor,
+.subjudul {
+  font-weight: bold;
+  text-align: center;
+  font-size: 14px;
+}
+
+.nomor{
+    margin-bottom: 5px;
+}
+
+.judul {
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.subjudul{
+    margin-bottom: 30px;
+}
+
+.section1 {
+  margin-top: 10px;
+  font-weight: normal;
+}
+
+.section {
+  margin-bottom: 6px;
+  text-align: justify;
+}
+
+.label{
+    font-weight: bold;
+}
+
+.horizontal-paragraph {
+  display: flex;
+  align-items: flex-start;
+  text-align: justify;
+}
+
+.horizontal-paragraph .content {
+  display: inline;
+}
+
+.content .span-text-indent {
+  padding-left: 95.5px;
+  text-indent: -95.5px;
+}
+
+.memutuskan {
+  text-align: center;
+  font-size: 14px;
+}
+
+.decision-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.decision-table td {
+  vertical-align: top;
+}
+
+.main-item {
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.sub-item {
+  white-space: nowrap;
+}
+
+.colon-menimbang{
+    width: 10px;
+    padding-left: 20px;
+    font-weight: normal !important;
+}
+.colon-mengingat{
+    width: 10px;
+    padding-left: 27px;
+    font-weight: normal !important;
+}
+.colon-memperhatikan{
+    width: 10px;
+    padding-left: 1px;
+    font-weight: normal !important;
+}
+
+.colon {
+  width: 10px;
+}
+
+.effective-date {
+  margin-top: 1em;
+  text-align: justify;
+  margin-left: 126px;
+}
+
+.menetapkan-row {
+  display: table;
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+
+.menetapkan-col {
+  display: table-cell;
+  width: 100px;
+  vertical-align: top;
+  font-weight: bold;
+}
+
+.colon-point{
+    width: 12px;
+    padding-left: 17px;
+}
+.colon-point-4{
+    width: 7px;
+    padding-left: 17px;
+}
+
+.paragraf-col {
+  display: table-cell;
+  text-align: justify;
+  margin-left: 137px;
+}
+
+
+
+/* Tata letak untuk bagian akhir (tembusan dan ttd) */
+.table-akhiran {
+  width: 100%;
+  margin-top: 50px;
+  border-collapse: collapse;
+
+}
+
+.table-akhiran td {
+  vertical-align: top;
+  padding: 5px;
+}
+
+/* Kolom tembusan di kiri */
+.tembusan {
+  text-align: left;
+  font-size: 12px;
+}
+
+/* Kolom tanda tangan di kanan */
+.ttd {
+  text-align: right;
+  font-size: 12px;
+}
+
+ .ttd p {
+  margin: 2px 0; /* atau 0 jika ingin benar-benar rapat */
+}
+
+.ketua-yayasan{
+    margin-top: 50px;
+}
+

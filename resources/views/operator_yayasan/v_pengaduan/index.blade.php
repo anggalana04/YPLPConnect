@@ -1,75 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+@extends('v_layouts.index')
 
-    <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon" />
-    <link rel="stylesheet" href="{{ asset('css/pengaduan/pengaduan.css') }}" />
-    <title>Pengaduan</title>
-</head>
-<body>
-    @extends('v_layouts.index')
+@section('title', 'Pengaduan')
 
-    <div class="konten">
-        <div class="body-konten">
-            <div class="head-body-konten">
-                <div class="teks-body">
-                    <h1>PENGADUAN</h1>
-                    <p>Ajukan pengaduan jika sekolah anda mengalami masalah</p>
-                </div>
-                <button onclick="openPopUpForm()">Ajukan Pengaduan</button>
+@push('styles')
+<link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon" />
+<link rel="stylesheet" href="{{ asset('css/pengaduan/pengaduan.css') }}" />
+@endpush
+
+@section('content')
+<div class="konten">
+    <div class="body-konten">
+        <div class="head-body-konten">
+            <div class="teks-body">
+                <h1>PENGADUAN</h1>
+                <p>Ajukan pengaduan jika sekolah anda mengalami masalah</p>
             </div>
-
-            <div class="search-container">
-                <div class="search-icon">
-                    <img src="{{ asset('image/search/search.svg') }}" alt="" />
-                </div>
-                <input type="text" placeholder="Cari Pengaduan..." class="search-input" />
-            </div>
-
-            <div class="table-box">
-                <table class="table-konten">
-                    <thead>
-                        <tr>
-                            <th>NO</th>
-                            <th>Deskripsi Pengaduan</th>
-                            <th>ID Pengaduan</th>
-                            <th>Tanggal Pengaduan</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                   <tbody>
-                        @forelse ($data as $index => $row)
-                            <tr class="clickable-row" data-id="{{ $row->id }}">
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $row->judul }}</td>
-                               <td>{{ $row->id }}</td>
-                                <td>{{ $row->created_at->format('d/m/Y') }}</td>
-                                <td>
-                                    <span class="status {{ strtolower($row->status) }}">
-                                        {{ ucfirst($row->status) }}
-                                    </span>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-center">Belum ada pengaduan.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Pagination -->
-            <nav aria-label="Page navigation example">
-                <ul class="pagination" id="pagination"></ul>
-            </nav>
+            <button onclick="openPopUpForm()">Ajukan Pengaduan</button>
         </div>
-    </div>
 
-    <!-- Modal Form Pengaduan (disembunyikan awalnya) -->
+        <div class="search-container">
+            <div class="search-icon">
+                <img src="{{ asset('image/search/search.svg') }}" alt="" />
+            </div>
+            <input type="text" placeholder="Cari Pengaduan..." class="search-input" />
+        </div>
+
+        <div class="table-box">
+            <table class="table-konten">
+                <thead>
+                    <tr>
+                        <th>NO</th>
+                        <th>Deskripsi Pengaduan</th>
+                        <th>ID Pengaduan</th>
+                        <th>Tanggal Pengaduan</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+               <tbody>
+                    @forelse ($data as $index => $row)
+                        <tr class="clickable-row" data-id="{{ $row->id }}">
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $row->judul }}</td>
+                           <td>{{ $row->id }}</td>
+                            <td>{{ $row->created_at->format('d/m/Y') }}</td>
+                            <td>
+                                <span class="status {{ strtolower($row->status) }}">
+                                    {{ ucfirst($row->status) }}
+                                </span>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center">Belum ada pengaduan.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" id="pagination"></ul>
+        </nav>
+    </div>
+</div>
+
+<!-- Modal Form Pengaduan (disembunyikan awalnya) -->
 <div class="modal-pengaduan" id="PopUpForm" style="display: none;">
     <form action="/pengaduan/submit" method="POST" enctype="multipart/form-data" class="form-box">
         @csrf
@@ -129,10 +125,11 @@
         </div>
     </form>
 </div>
-</body>
+@endsection
 
-    <script src="{{ asset('JavaScript/Pagination.js') }}"></script>
-    <script src="{{ asset('JavaScript/PopUpForm/PopUpform.js') }}"></script>
-    <script src="{{ asset('JavaScript/Preview/Preview.js') }}"></script>
-    <script src="{{ asset('JavaScript/JS_Data_pengaduan/data_pengaduan.js') }}"></script>
-</html>
+@push('scripts')
+<script src="{{ asset('JavaScript/Pagination.js') }}"></script>
+<script src="{{ asset('JavaScript/PopUpForm/PopUpform.js') }}"></script>
+<script src="{{ asset('JavaScript/Preview/Preview.js') }}"></script>
+<script src="{{ asset('JavaScript/JS_Data_pengaduan/data_pengaduan.js') }}"></script>
+@endpush

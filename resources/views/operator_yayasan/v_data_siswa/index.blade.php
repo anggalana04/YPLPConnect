@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+@extends('v_layouts.index')
 
-    <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('css/data_siswa/data-siswa.css') }}">
-    <title>Data Siswa</title>
-</head>
-<body>
-    @extends('v_layouts.index')
+@section('title', 'Data Siswa')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/data_siswa/data-siswa.css') }}">
+<link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
+@endpush
+
+@section('content')
 <div class="konten">
     <div class="box-konten">
         <div class="head-box-konten">
@@ -25,7 +21,7 @@
         <div class="option-head-box">
             <div class="search-container">
                 <div class="search-icon">
-                    <img src="{{asset('image/search/search.svg') }}" alt="">
+                    <img src="{{ asset('image/search/search.svg') }}" alt="Search Icon">
                 </div>
                 <input type="text" placeholder="Cari Siswa" class="search-input">
             </div>
@@ -52,7 +48,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($siswa as $item)
+                    @forelse ($siswa as $item)
                         <tr>
                             <td>{{ $item->nisn }}</td>
                             <td>{{ $item->nama }}</td>
@@ -75,6 +71,8 @@
         </nav>
     </div>
 </div>
-</body>
+@endsection
+
+@push('scripts')
 <script src="{{ asset('JavaScript/Pagination.js') }}"></script>
-</html>
+@endpush

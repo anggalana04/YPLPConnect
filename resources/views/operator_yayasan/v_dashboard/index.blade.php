@@ -1,91 +1,77 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+@extends('v_layouts.index')
 
-        <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
-        <link rel="stylesheet" href="{{ asset('css/Operator Yayasan/dashboard_yayasan.css') }}">
-        <title>Dashboard</title>
-    </head>
-    <body>
-        @extends('v_layouts.index')
+@section('title', 'Dashboard')
 
-        <div class="konten">
-        <div class="konten-head @if(auth()->user()->role != 'operator_yayasan') konten-head-sekolah @endif">
-    @if(auth()->user()->role == 'operator_yayasan')
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/Operator Yayasan/dashboard_yayasan.css') }}">
+<link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
+@endpush
+
+@section('content')
+<div class="konten">
+    <div class="konten-head @if(auth()->user()->role != 'operator_yayasan') konten-head-sekolah @endif">
         <h1>Hallo...</h1>
         <div class="welcome">
-            <h2>Selamat datang! {{ auth()->user()->name }}, </h2>
-            <h2>Kamu adalah operator yayasan!</h2>
+            <h2>Selamat datang! {{ auth()->user()->name }}{{ auth()->user()->role == 'operator_yayasan' ? ', Kamu adalah operator yayasan!' : '' }}</h2>
         </div>
-    @else
-        <h1>Hallo...</h1>
-        <div class="welcome">
-            <h2>Selamat datang! {{ auth()->user()->name }}</h2>
-        </div>
-    @endif
-</div>
+    </div>
 
-<div class="konten-body @if(auth()->user()->role == 'operator_yayasan') konten-body-yayasan @else konten-body-sekolah @endif">
-    @if(auth()->user()->role == 'operator_yayasan')
-        <!-- Konten untuk operator yayasan -->
-        <div class="card card-1">
-            <h1>Jumlah Guru</h1>
-            <div class="detail-card">
-                <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Guru.svg') }}" alt="">
-                <p>{{$jumlahGuru}}</p>
-            </div>
-        </div>
+    <div class="konten-body @if(auth()->user()->role == 'operator_yayasan') konten-body-yayasan @else konten-body-sekolah @endif">
 
-        <div class="card card-2">
-            <h1>Jumlah Siswa</h1>
-            <div class="detail-card">
-                <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Siswa.svg') }}" alt="">
-                <p>{{$jumlahSiswa}}</p>
+        @if(auth()->user()->role == 'operator_yayasan')
+            <!-- Konten untuk operator yayasan -->
+            <div class="card card-1">
+                <h1>Jumlah Guru</h1>
+                <div class="detail-card">
+                    <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Guru.svg') }}" alt="">
+                    <p>{{ $jumlahGuru }}</p>
+                </div>
             </div>
-        </div>
-        
-        <div class="card card-3">
-            <h1>Pengaduan</h1>
-        </div>
-        
-        <div class="card card-4">
-            <h1>Dokumen</h1>
-        </div>
-        
-        <div class="card card-keuangan">
-            <h1>Keuangan</h1>
-        </div>
-    @else
-        <!-- Konten untuk operator sekolah -->
-        <div class="card">
-            <h1>Jumlah Guru</h1>
-            <div class="detail-card">
-                <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Guru.svg') }}" alt="">
-                <p>yyy</p>
-            </div>
-        </div>
 
-        <div class="card">
-            <h1>Jumlah Siswa</h1>
-            <div class="detail-card">
-                <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Siswa.svg') }}" alt="">
-                <p>{{$jumlahSiswa}}</p>
+            <div class="card card-2">
+                <h1>Jumlah Siswa</h1>
+                <div class="detail-card">
+                    <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Siswa.svg') }}" alt="">
+                    <p>{{ $jumlahSiswa }}</p>
+                </div>
             </div>
-        </div>
 
-        <div class="card">
+            <div class="card card-3">
+                <h1>Pengaduan</h1>
+            </div>
+
+            <div class="card card-4">
+                <h1>Dokumen</h1>
+            </div>
+
+            <div class="card card-keuangan">
+                <h1>Keuangan</h1>
+            </div>
+        @else
+            <!-- Konten untuk operator sekolah -->
+            <div class="card">
+                <h1>Jumlah Guru</h1>
+                <div class="detail-card">
+                    <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Guru.svg') }}" alt="">
+                    <p>yyy</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h1>Jumlah Siswa</h1>
+                <div class="detail-card">
+                    <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Siswa.svg') }}" alt="">
+                    <p>{{ $jumlahSiswa }}</p>
+                </div>
+            </div>
+
+            <div class="card">
                 <h1>Keuangan</h1>
                 <div class="keuangan-bar">
                     @php
-                        $bulanList = [
-                            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-                            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-                        ];
+                        $bulanList = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                                      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                     @endphp
-
                     @foreach ($bulanList as $bulan)
                         @php
                             $item = $keuangan->firstWhere('bulan', $bulan);
@@ -96,27 +82,18 @@
                 </div>
             </div>
 
-        <div class="card">
+            <div class="card">
                 <h1>Pengaduan</h1>
-
                 @if ($pengaduans->isEmpty())
                     <p class="No-data-pengaduan">Tidak ada pengaduan ditemukan.</p>
                 @else
                     @foreach ($pengaduans as $pengaduan)
                         <div class="status-head">
-                            <span
-                                class="head toggle-status"
-                                style="cursor: default; display: flex; align-items: center; width: 100%;"
-                            >
+                            <span class="head toggle-status" style="display: flex; align-items: center; width: 100%;">
                                 <div class="judul-pengaduan">
                                     Judul Pengaduan: {{ $pengaduan->judul }}
                                 </div>
-                                <img
-                                    src="{{ asset('image/icon-row/row.svg') }}"
-                                    class="arrow-icon"
-                                    alt="Toggle Arrow"
-                                    style="cursor: pointer;"
-                                />
+                                <img src="{{ asset('image/icon-row/row.svg') }}" class="arrow-icon" alt="Toggle Arrow" style="cursor: pointer;" />
                             </span>
 
                             <div class="detail-status">
@@ -130,15 +107,9 @@
                                 <div class="box-status-step">
                                     @foreach ($statusSteps as $index => $step)
                                         <div class="status-step {{ $index <= $currentIndex ? 'active' : '' }}">
-                                            <img
-                                                src="{{ asset('image/icon-status&detail_dokumen/icon-' . $step . '.svg') }}"
-                                                alt="{{ $step }}"
-                                            />
-                                            <span>
-                                                {{ $step == 'diterima' ? 'Diterima & Dilihat' : ucfirst($step) }}
-                                            </span>
+                                            <img src="{{ asset('image/icon-status&detail_dokumen/icon-' . $step . '.svg') }}" alt="{{ $step }}">
+                                            <span>{{ $step == 'diterima' ? 'Diterima & Dilihat' : ucfirst($step) }}</span>
                                         </div>
-
                                         @if ($index < count($statusSteps) - 1)
                                             <div class="status-line {{ $index < $currentIndex ? 'active' : '' }}"></div>
                                         @endif
@@ -149,10 +120,7 @@
                     @endforeach
                 @endif
             </div>
-    @endif
+        @endif
+    </div>
 </div>
-
-
-        </div>
-    </body>
-    </html>
+@endsection
