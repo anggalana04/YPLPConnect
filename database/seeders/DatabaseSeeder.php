@@ -2,13 +2,14 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
-use Faker\Factory as Faker;
-use App\Models\Sekolah;
-use App\Models\User;
 use App\Models\Guru;
+use App\Models\User;
 use App\Models\Siswa;
+use App\Models\Sekolah;
+use App\Models\Pengaduan;
+use Faker\Factory as Faker;
+use Illuminate\Support\Str;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -35,19 +36,31 @@ class DatabaseSeeder extends Seeder
 
         // Buat 10 user
         User::factory(10)->make()->each(function ($user) use ($npsnList) {
-            $user->npsn = $user->role === 'operator_sekolah' ? $npsnList[array_rand($npsnList)] : null;
+            $user->npsn = $user->role === 'operator_sekolah'
+                ? $npsnList[array_rand($npsnList)]
+                : null;
             $user->save();
         });
 
-        // Buat 20 guru
-        Guru::factory(20)->make()->each(function ($guru) use ($npsnList) {
+        // Buat 3000 guru dengan tahun acak 2019-2024
+        Guru::factory(100)->make()->each(function ($guru) use ($npsnList) {
+            $tahunSekarang = date('Y');
+            $tahun = $tahunSekarang - rand(0, 5);
+
             $guru->npsn = $npsnList[array_rand($npsnList)];
+            $guru->created_at = $tahun . '-01-01';
+            $guru->updated_at = now();
             $guru->save();
         });
 
         // Buat 50 siswa per sekolah
         foreach ($npsnList as $npsn) {
             Siswa::factory(50)->create([
+                'npsn' => $npsn,
+            ]);
+
+            // Buat 20 pengaduan per sekolah
+            Pengaduan::factory(15)->create([
                 'npsn' => $npsn,
             ]);
         }

@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pengaduan extends Model
 {
+    use HasFactory; // Tambahkan ini
+    
     protected $table = 'pengaduan';
     protected $primaryKey = 'id';
     public $incrementing = false;

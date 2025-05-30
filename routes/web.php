@@ -29,16 +29,51 @@ Route::get('/', function () {
     
 Route::middleware('auth')->group(function () {
     
-    
-Route::get('/dashboard', function () {
-    $jumlahSiswa = Siswa::count();
-    $jumlahGuru = Guru::count();
-    $keuangan = \App\Models\Keuangan::all();
-    $pengaduans = \App\Models\Pengaduan::all();
-    return view('operator_yayasan.v_dashboard.index', compact('jumlahSiswa', 'jumlahGuru', 'keuangan', 'pengaduans'));
-})->name('dashboard');
-  
+    Route::get('/dashboard', function () {
+        if (Auth::user()->role === 'operator_sekolah') {
+            $npsn = Auth::user()->npsn;
+            $jumlahSiswa = Siswa::where('npsn', $npsn)->count();
+            $jumlahGuru = Guru::where('npsn', $npsn)->count();
+            $keuangan = \App\Models\Keuangan::where('npsn', $npsn)->get();
+            $pengaduans = \App\Models\Pengaduan::where('npsn', $npsn)->get();
 
+            $tahunSekarang = date('Y');
+            $tahunList = [];
+            for ($i = 5; $i >= 0; $i--) {
+                $tahunList[] = (string)($tahunSekarang - $i);
+            }
+            $jumlahGuruPerTahun = [];
+            $jumlahSiswaPerTahun = [];
+            foreach ($tahunList as $tahun) {
+                $jumlahGuruPerTahun[] = Guru::where('npsn', $npsn)->whereYear('created_at', $tahun)->count();
+                $jumlahSiswaPerTahun[] = Siswa::where('npsn', $npsn)->whereYear('created_at', $tahun)->count();
+            }
+        } else {
+            $jumlahSiswa = Siswa::count();
+            $jumlahGuru = Guru::count();
+            $keuangan = \App\Models\Keuangan::all();
+            $pengaduans = \App\Models\Pengaduan::all();
+
+            $tahunSekarang = date('Y');
+            $tahunList = [];
+            for ($i = 5; $i >= 0; $i--) {
+                $tahunList[] = (string)($tahunSekarang - $i);
+            }
+            $jumlahGuruPerTahun = [];
+            $jumlahSiswaPerTahun = [];
+            foreach ($tahunList as $tahun) {
+                $jumlahGuruPerTahun[] = Guru::whereYear('created_at', $tahun)->count();
+                $jumlahSiswaPerTahun[] = Siswa::whereYear('created_at', $tahun)->count();
+            }
+        }
+
+        return view('operator_yayasan.v_dashboard.index', compact(
+            'jumlahSiswa', 'jumlahGuru', 'keuangan', 'pengaduans',
+            'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList'
+        ));
+    })->name('dashboard');
+
+    
     #profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -53,7 +88,6 @@ Route::get('/dashboard', function () {
     Route::get('keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
     Route::post('keuangan/upload/{id?}', [KeuanganController::class, 'upload'])->name('keuangan.upload');
     
-
     #dokumen
     Route::get('/dokumen', [DokumenController::class, 'index'])->name('dokumen.index');
     Route::get('/dokumen/detail/{id_pengajuan}', [DokumenController::class, 'show'])->name('dokumen.show');

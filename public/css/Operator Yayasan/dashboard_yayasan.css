@@ -92,8 +92,8 @@ body {
     gap: 20px;
     max-width: 100%;
     margin: 30px auto;
-}
 
+}
 
 .card {
     background-color: #f0f0f0 !important;
@@ -106,29 +106,49 @@ body {
     flex-direction: column;
 }
 
+.card-sekolah{
+    /* height: 193px; */
+    padding: 20px;
+}
+
 
 /* CSS DALAM CARD */
 .detail-card{
     display: flex;
-    align-items: center;
+    align-items: start;
     gap: 10px;
     font-size: 3rem;
-    margin-top: 10px;
+    margin-top: 0px;
 }
 
 .detail-card img{
-    width: 75px;
-    height: 75px;
+    width: 40px;
+    height: 40px;
 }
 
-/* ==== CSS YANG DITAMBAHKAN DARI OPERATOR SEKOLAH ==== */
+.jumlah-data{
+    font-size: 30px;
+}
+
+.head-guru,
+.head-siswa {
+    text-align: left !important;
+}
+
+/* CHART GURU */
+canvas#chartGuru {
+    width: 100% !important;
+    height: 300px !important;
+}
+
+
+
 
 .card h1{
     font-size: 1.2rem;
     font-weight: 400;
     text-align: center;
 }
-
 /* CSS KEUANGAN-BAR */
 .keuangan-bar {
     display: flex;
@@ -160,8 +180,12 @@ body {
     font-weight: 500;
 }
 
-.head-detail{
+/* Tambahkan di file dashboard_yayasan.css */
+.head-detail {
+    display: block;
+    text-align: left;
     font-size: 12px;
+
 }
 
 .detail-status {
@@ -171,7 +195,7 @@ body {
 }
 
 .detail-status.show {
-    max-height: 70px;
+    max-height: 90px;
 }
 
 .head.toggle-status {
@@ -209,6 +233,13 @@ body {
 }
 
 /* CSS DETAIL PENGADUAN */
+/* Tambahkan di dashboard_yayasan.css */
+.pengaduan-scroll {
+    max-height: 600px; /* atur sesuai kebutuhan agar kira-kira 10 item terlihat */
+    overflow-y: auto;
+    padding-right: 8px; /* agar scroll bar tidak menutupi konten */
+}
+
 .No-data-pengaduan {
     margin-bottom: 25px;
     text-align: center;
@@ -225,6 +256,8 @@ body {
     align-items: flex-start;
     flex-wrap: nowrap;
     position: relative;
+    margin-top: 5px;
+    
 }
 
 .status-step {
