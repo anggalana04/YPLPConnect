@@ -35,9 +35,32 @@ class GuruController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nuptk' => 'required|string|max:20|unique:guru,nuptk',
+            'ttl' => 'required|string',
+            'no_hp' => 'required|string|max:20',
+            'alamat' => 'required|string',
+            'jenis_kelamin' => 'required|in:L,P',
+        ]);
 
+        // Pisahkan tempat dan tanggal lahir
+        [$tempat_lahir, $tanggal_lahir] = explode(',', $request->ttl);
+
+        Guru::create([
+            'nama' => $request->nama,
+            'nuptk' => $request->nuptk,
+            'tempat_lahir' => trim($tempat_lahir),
+            'tanggal_lahir' => trim($tanggal_lahir),
+            'no_hp' => $request->no_hp,
+            'alamat' => $request->alamat,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'npsn' => Auth::user()->npsn, // ✅ ini penting
+            'status' => 'Aktif', // default atau bisa dari form
+        ]);
+
+        return redirect()->route('guru.index')->with('success', 'Data guru berhasil ditambahkan.');
+    }
     /**
      * Display the specified resource.
      */

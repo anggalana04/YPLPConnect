@@ -3,14 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Keuangan extends Model
 {
+    use HasFactory;
     // Table name
     protected $table = 'keuangan';
+    protected $keyType = 'string';
+    public $incrementing = false;
+
 
     // Mass assignable attributes
     protected $fillable = [
+        'id',
         'npsn',
         'tahun',
         'bulan',

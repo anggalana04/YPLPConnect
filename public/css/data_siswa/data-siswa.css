@@ -24,7 +24,7 @@ body {
 .box-konten{
     background-color: #F0F0F0;
     border-radius: 40px;
-    height: 89dvh;
+    height: 91dvh;
     padding: 20px;
 }
 
@@ -34,7 +34,12 @@ body {
     gap: 74dvh;
 }
 
-.head-box-konten button{
+
+.option-button{
+    margin-top: 30px;
+}
+.option-button button{
+    display: block;
     height: 40px;
     border: none;
     background-color: yellow;
@@ -42,6 +47,11 @@ body {
     font-size: 14px ;
     padding: 10px;
     font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.option-button .tambah-siswa{
+    background-color: lime;
 }
 
 .teks-head-box-konten h1{
@@ -59,7 +69,7 @@ body {
     display: flex;
     align-items: center;
     gap: 30px;
-    margin-top: 30px;
+
 }
 
 .kategori select {
@@ -193,6 +203,142 @@ th:last-child {
     color: #0056b3;
 }
 /* END CSS PAGINATION */
+
+/* CSS FORM */
+.modal-pengaduan {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-pengaduan .form-box {
+    background-color: #F0F0F0;
+    padding: 20px;
+    border-radius: 40px;
+    width: 100vh;
+    height: 85vh;
+    max-width: 90%;
+}
+
+.sub-head-box h1 {
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+    padding: 10px;
+    width: 100%;
+    background-color: white;
+}
+
+.sub-head-box h1:first-child {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+/* CSS HEAD FORM BOX */
+
+/* CSS form ajukan SK */
+.border-form{
+    border: 2px black solid;
+    padding: 10px;
+}
+
+.sub-form-box {
+    background-color: white;
+    height: 70vh;
+    padding: 20px;
+    
+}
+
+.sub-form-box:last-child {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.form-group {
+    display: flex;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.form-group label {
+    width: 150px;
+}
+
+.form-group input,
+.form-group select {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    background-color: #D9D9D9;
+    outline: none;
+}
+
+.form-group select {
+    appearance: none;
+    background: url('data:image/svg+xml;utf8,<svg fill="black" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+    background-color: white;
+    border: 1px black solid;
+    background-size: 12px;
+    padding-right: 30px;
+}
+
+.kategori {
+    display: flex;
+    flex-direction: column;
+}
+
+.kategori label {
+    font-weight: 400;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.kategori select {
+    padding: 5px;
+    border-radius: 20px;
+    border: 1px black solid;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* CSS form ajukan SK */
+
+/* CSS BUTTON */
+.all-button{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.all-button button{
+    border: none;
+    border-radius: 20px;
+    font-weight: 300;
+    padding: 5px;
+    width: 70px;
+}
+
+.batal{
+    background-color: red;
+}
+
+.kirim{
+    background-color: #88CFA5;
+}
+
+/* CSS BUTTON */
+
+/* CSS FORM */
+
 
 /* Responsive: Stack sidebar on top for small screens */
 @media (max-width: 900px) {

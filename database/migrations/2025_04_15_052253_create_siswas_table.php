@@ -16,6 +16,7 @@ return new class extends Migration
             $table->char('npsn', 8); // Add this line
             $table->foreign('npsn')->references('npsn')->on('sekolah')->onDelete('cascade'); // And this line
             $table->string('nama', 100);
+            $table->string('kelas', 15);
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('tempat_lahir', 100);
             $table->date('tanggal_lahir');

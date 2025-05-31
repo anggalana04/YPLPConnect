@@ -72,8 +72,8 @@
                         <div class="detail-content">
                             <div class="detail-teks">
                                 @if ($data)
-                                    <p><strong>Detail:</strong> Rp {{ number_format($data->jumlah_spp, 2, ',', '.') }} x Jumlah Siswa</p>
-                                    <p><strong>Total:</strong> Rp {{ number_format($data->jumlah_spp, 2, ',', '.') }}</p>
+                                    <p><strong>Detail:</strong> Rp 2.000 x {{ $jumlahSiswa }} Siswa</p>
+                                    <p><strong>Total:</strong> Rp {{ number_format(2000 * $jumlahSiswa, 2, ',', '.') }}</p>
                                     @if ($data->catatan)
                                         <p><strong>Catatan:</strong> {{ $data->catatan }}</p>
                                     @endif

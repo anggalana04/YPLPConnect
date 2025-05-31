@@ -132,4 +132,62 @@
 <script src="{{ asset('JavaScript/PopUpForm/PopUpform.js') }}"></script>
 <script src="{{ asset('JavaScript/Preview/Preview.js') }}"></script>
 <script src="{{ asset('JavaScript/JS_Data_pengaduan/data_pengaduan.js') }}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.querySelector('.search-input');
+    const tableBody = document.querySelector('.table-konten tbody');
+
+    searchInput.addEventListener('keyup', function () {
+        const keyword = searchInput.value.trim();
+
+        fetch(`/pengaduan/search?q=${encodeURIComponent(keyword)}`)
+            .then(response => response.json())
+            .then(data => {
+                tableBody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="text-center">Data tidak ditemukan.</td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                data.forEach((item, index) => {
+                    const row = document.createElement('tr');
+                    row.classList.add('clickable-row');
+                    row.setAttribute('data-id', item.id);
+
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${item.judul}</td>
+                        <td>${item.id}</td>
+                        <td>${new Date(item.created_at).toLocaleDateString('id-ID')}</td>
+                        <td>
+                            <span class="status ${item.status.toLowerCase()}">
+                                ${item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                            </span>
+                        </td>
+                    `;
+
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Terjadi kesalahan saat mengambil data:', error);
+            });
+    });
+
+    // Optional: klik baris untuk redirect detail
+    document.addEventListener('click', function (e) {
+        if (e.target.closest('.clickable-row')) {
+            const id = e.target.closest('.clickable-row').dataset.id;
+            window.location.href = `/pengaduan/${id}`;
+        }
+    });
+});
+
+</script>
 @endpush

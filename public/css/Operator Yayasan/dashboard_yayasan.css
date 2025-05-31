@@ -150,29 +150,74 @@ canvas#chartGuru {
     text-align: center;
 }
 /* CSS KEUANGAN-BAR */
+
+.keuangan-bar-container {
+    height: 15px;
+    width: 100%;
+    background: linear-gradient(to right, limegreen, orange, red);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    position: relative;
+}
+
 .keuangan-bar {
+    height: 100%;
+    background-color: rgba(255,255,255,0.4);
+    width: 0;
+    transition: width 1s ease-in-out;
+}
+
+.select-tahun {
+    float: left;
+    margin-bottom: 10px;
+    padding: 4px 8px;
+    font-size: 14px;
+    height: 32px; /* Mengatur tinggi dropdown */
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* Untuk memperpendek tampilan opsi saat dropdown dibuka (tidak semua browser mendukung sepenuhnya) */
+.select-tahun option {
+    padding: 4px;
+    font-size: 14px;
+    height: 15px;
+}
+
+.keuangan-scroll {
+    max-height: 130px; /* tampilkan kira-kira 4 item */
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.keuangan-item {
     display: flex;
-    margin-top: 0px;
-    border-bottom: 1px black solid;
-    padding-bottom: 10px;
+    align-items: center;
+    justify-content: space-between;
+    font-family: sans-serif;
+    margin-bottom: 10px;
+    gap: 10px;
 }
 
-.bar-item {
-    flex: 1;
-    height: 12px;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
+.keuangan-item span:first-child {
+    flex: 1; /* Bulan */
+    text-align: left;
 }
 
-.keuangan-bar .bar-item:first-child {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+.keuangan-item span:nth-child(2) {
+    flex: 3.5; /* Rp */
+    text-align: center;
+    font-family: monospace;
 }
 
-.keuangan-bar .bar-item:last-child {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+.status-dot {
+    width: 50px;
+    height: 15px;
+    border-radius: 10px;
+    flex-shrink: 0;
 }
+
 
 /* CSS PENGADUAN BAR */
 .head{
@@ -235,7 +280,7 @@ canvas#chartGuru {
 /* CSS DETAIL PENGADUAN */
 /* Tambahkan di dashboard_yayasan.css */
 .pengaduan-scroll {
-    max-height: 600px; /* atur sesuai kebutuhan agar kira-kira 10 item terlihat */
+    max-height: 200px; /* atur sesuai kebutuhan agar kira-kira 10 item terlihat */
     overflow-y: auto;
     padding-right: 8px; /* agar scroll bar tidak menutupi konten */
 }

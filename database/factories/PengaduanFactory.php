@@ -1,23 +1,21 @@
 <?php
-
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class PengaduanFactory extends Factory
 {
     public function definition(): array
     {
         static $urut = 1;
-        $tanggal = date('dmy'); // contoh: 310525 (31 Mei 2025)
-        $id = 'PD' . $tanggal . str_pad($urut++, 4, '0', STR_PAD_LEFT); // 0001, 0002, dst
+        $tanggal = date('dmy');
+        $id = 'PD' . $tanggal . str_pad($urut++, 4, '0', STR_PAD_LEFT);
 
         return [
             'id'           => $id,
-            'npsn'         => '10000001', // nanti bisa di-overwrite di seeder
-            'judul'        => $this->faker->sentence,
-            'deskripsi'    => $this->faker->paragraph,
+            'npsn'         => '10000001',
+            'judul'        => $this->faker->sentence,       // ✅ otomatis pakai id_ID
+            'deskripsi'    => $this->faker->paragraph,      // ✅ otomatis pakai id_ID
             'kategori'     => $this->faker->randomElement(['Kendala Teknis','Pelayanan', 'Lainnya']),
             'bukti_path'   => null,
             'status'       => $this->faker->randomElement(['Menunggu', 'Diproses', 'Selesai']),

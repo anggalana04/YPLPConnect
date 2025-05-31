@@ -14,6 +14,7 @@ class SiswaFactory extends Factory
             'nisn' => $this->faker->unique()->numerify('##########'),
             'npsn' => null, // will be set in seeder
             'nama' => $this->faker->name(),
+            'kelas'=> strtoupper($this->faker->bothify('?#?#')), // contoh: "7A", "9C", "XI2", dll
             'jenis_kelamin' => $this->faker->randomElement(['L', 'P']),
             'tempat_lahir' => $this->faker->city(),
             'tanggal_lahir' => $this->faker->date('Y-m-d', '-6 years'),

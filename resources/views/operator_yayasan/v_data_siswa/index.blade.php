@@ -15,7 +15,10 @@
                 <h1>Data Siswa</h1>
                 <p>Lihat Dan Kelola Data Siswa Sekolah Anda</p>
             </div>
-            <button>Upload Data Siswa</button>
+            <div class="option-button">
+                <button class="upload-siswa">Upload Data Siswa</button>
+                <button onclick="openPopUpForm()" class="tambah-siswa">Tambah Data Siswa</button>
+            </div>
         </div>
 
         <div class="option-head-box">
@@ -71,8 +74,66 @@
         </nav>
     </div>
 </div>
+
+<div class="modal-pengaduan" id="PopUpForm" style="display:none;">
+    <form method="POST" action="{{ route('siswa.store') }}">
+        @csrf
+        <div class="form-box">
+            <div class="sub-head-box">
+                <h1>Form Pengajuan Surat Keputusan</h1>
+            </div>
+
+            <div class="sub-form-box">
+                <div class="border-form">
+                    <div class="form-group">
+                        <label for="nama">Nama</label>
+                        <input type="text" id="nama" name="nama" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="npa">NIS</label>
+                        <input type="text" id="nisn" name="nisn" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="ttl">Tempat, Tanggal Lahir</label>
+                        <input type="text" id="ttl" name="ttl" placeholder="Jakarta, 1990-01-01" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="ttl">Kelas</label>
+                        <input type="text" id="kelas" name="kelas" placeholder="" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="alamat">Alamat</label>
+                        <input type="text" id="alamat" name="alamat" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="jenis_kelamin">Jenis Kelamin</label>
+                        <select id="jenis_kelamin" name="jenis_kelamin" required>
+                            <option value="L">Laki-laki</option>
+                            <option value="P">Perempuan</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tombol Aksi -->
+                <div class="all-button">
+                    <button type="button" class="batal">Batal</button>
+                    <button type="submit" class="kirim">Kirim</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 @endsection
 
 @push('scripts')
+<script src="{{ asset('JavaScript/PopUpForm/PopUpform.js') }}"></script>
 <script src="{{ asset('JavaScript/Pagination.js') }}"></script>
+<script>
+document.querySelectorAll('.batal').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        document.getElementById('PopUpForm').style.display = 'none';
+    });
+});
+</script>
 @endpush

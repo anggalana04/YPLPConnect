@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Keuangan;
+use Carbon\Carbon;
 use App\Models\Sekolah;
+use App\Models\Keuangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,11 +18,13 @@ class KeuanganController extends Controller
         $user = Auth::user();
         $tahunDipilih = $request->input('tahun', date('Y'));
         $npsnDipilih = $request->input('npsn');
+        $jumlahSiswa = 0;
 
         $query = Keuangan::query();
 
         if ($user->role === 'operator_sekolah') {
             $query->where('npsn', $user->npsn);
+            $jumlahSiswa = \App\Models\Siswa::where('npsn', $user->npsn)->count();
         } elseif ($user->role === 'operator_yayasan' && $npsnDipilih) {
             $query->where('npsn', $npsnDipilih);
         }
@@ -39,6 +42,7 @@ class KeuanganController extends Controller
         'tahunDipilih' => $tahunDipilih,
         'sekolahList' => $sekolahList,
         'npsnDipilih' => $npsnDipilih,
+         'jumlahSiswa' => $jumlahSiswa,
         ]);
     }
 
@@ -88,7 +92,6 @@ class KeuanganController extends Controller
         return back()->with('success', 'Bukti berhasil diupload.');
     }
 
-    
 
     // Tambahkan method lain jika diperlukan (show, edit, update, destroy)
 }
