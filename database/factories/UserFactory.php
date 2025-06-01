@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
+use Str as Enter;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -30,7 +31,7 @@ class UserFactory extends Factory
             'password' => Hash::make('password123'), // password default
             'role' => $role = $this->faker->randomElement(['operator_sekolah', 'operator_yayasan']),
             'npsn' => null, // will be set in seeder if needed
-            'remember_token' => \Str::random(10),
+            'remember_token' => Str::random(10),
         ];
     }
 
