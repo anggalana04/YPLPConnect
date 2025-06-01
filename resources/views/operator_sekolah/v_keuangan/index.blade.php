@@ -1,4 +1,4 @@
-@extends('v_layouts.index')
+{{-- @extends('v_layouts.index')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/data_keuangan/DataKeuangan.css') }}">
@@ -9,7 +9,7 @@
     <div class="box-konten">
         <div class="head-box-konten">
             <div class="teks-head-box-konten">
-                <h1>Data Keuangan</h1>
+                <h1>Data </h1>
                 <p>Lihat dan kelola data keuangan sekolah anda</p>
             </div>
         </div>
@@ -140,4 +140,4 @@ function tutupPopup() {
     document.getElementById('popupRekening').style.display = 'none';
 }
 </script>
-@endpush
+@endpush --}}

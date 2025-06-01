@@ -1,86 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+@extends('v_layouts.index')
 
-    <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon" />
-    <link rel="stylesheet" href="{{ asset('css/Dokumen/dokumen.css') }}" />
-    <title>Dokumen</title>
-</head>
-<body>
-    @extends('v_layouts.index')
+@section('title', 'Dokumen SK')
 
-    <div class="konten">
-        <div class="box-konten">
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/Dokumen/dokumen.css') }}" />
+<link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon" />
+@endpush
 
-            <!-- Header Konten -->
-            <div class="head-box-konten">
-                <div class="teks-head-box-konten">
-                    <h1>Dokumen SK</h1>
-                    <p>Mengajukan dan melihat file Surat Keputusan</p>
-                </div>
-                <button onclick="openPopUpForm()">Mengajukan SK</button>
+@section('content')
+<div class="konten">
+    <div class="box-konten">
+
+        <!-- Header Konten -->
+        <div class="head-box-konten">
+            <div class="teks-head-box-konten">
+                <h1>Dokumen SK</h1>
+                <p>Mengajukan dan melihat file Surat Keputusan</p>
             </div>
-
-            <!-- Search & Filter -->
-            <div class="option-head-box">
-                <div class="search-container">
-                    <div class="search-icon">
-                        <img src="{{ asset('image/search/search.svg') }}" alt="" />
-                    </div>
-                    <input type="text" placeholder="Cari Siswa" class="search-input" />
-                </div>
-
-                <div class="kategori">
-                    <select id="kategori" name="kategori">
-                        <option value="">Kategori SK</option>
-                        <option value="kelas1">SK Kepala Sekolah</option>
-                        <option value="kelas2">SK Guru</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Tabel Data -->
-            <div class="table-box">
-                <table class="table-konten">
-                    <thead id="table-header">
-                        <tr>
-                            <th>ID Pengajuan</th>
-                            <th>NPA PGRI</th>
-                            <th>Nama</th>
-                            <th>Jenis SK</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            // Ambil semua data dokumen dari database
-                            $data = \App\Models\Dokumen::all();
-                        @endphp
-
-                        @foreach ($data as $row)
-                            <tr class="clickable-row" data-id="{{ $row->id }}">
-                                <td>{{ $row->id }}</td>
-                                <td>{{ $row->nuptk }}</td>
-                                <td>{{ $row->nama }}</td>
-                                <td>{{ $row->jenis_sk }}</td>
-                                <td>{{ $row->status }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-
-                </table>
-            </div>
-
-            <!-- Pagination -->
-            <nav aria-label="Page navigation example">
-                <ul class="pagination" id="pagination"></ul>
-            </nav>
-
+            <button onclick="openPopUpForm()">Mengajukan SK</button>
         </div>
+
+        <!-- Search & Filter -->
+        <div class="option-head-box">
+            <div class="search-container">
+                <div class="search-icon">
+                    <img src="{{ asset('image/search/search.svg') }}" alt="" />
+                </div>
+                <input type="text" id="search-input" placeholder="Cari Dokumen" class="search-input" />
+            </div>
+
+            <div class="kategori">
+                <select id="kategori-select" name="kategori">
+                    <option value="">Kategori SK</option>
+                    <option value="SK Pengangkatan">SK Pengangkatan</option>
+                    <option value="SK Pensiun">SK Pensiun</option>
+                    <option value="SK Mutasi">SK Mutasi</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Tabel Data -->
+        <div class="table-box">
+            <table class="table-konten">
+                <thead id="table-header">
+                    <tr>
+                        <th>ID Pengajuan</th>
+                        <th>NPA PGRI</th>
+                        <th>Nama</th>
+                        <th>Jenis SK</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="dokumen-body">
+                    @foreach ($dokumen as $row)
+                        <tr class="clickable-row" data-id="{{ $row->id }}">
+                            <td>{{ $row->id }}</td>
+                            <td>{{ $row->nuptk }}</td>
+                            <td>{{ $row->nama }}</td>
+                            <td>{{ $row->jenis_sk }}</td>
+                            <td>{{ $row->status }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" id="pagination"></ul>
+        </nav>
     </div>
+</div>
 
 <div class="modal-pengaduan" id="PopUpForm" style="display:none;">
     <form method="POST" action="{{ route('dokumen.store') }}">
@@ -116,7 +107,6 @@
                             <option value="SK Pensiun">SK Pensiun</option>
                             <option value="SK Mutasi">SK Mutasi</option>
                         </select>
-
                     </div>
                 </div>
 
@@ -129,29 +119,55 @@
         </div>
     </form>
 </div>
+@endsection
 
+@push('scripts')
+<script src="{{ asset('JavaScript/Pagination.js') }}"></script>
+<script src="{{ asset('JavaScript/PopUpForm/PopUpform.js') }}"></script>
 
-    <!-- Script -->
-    <script src="{{ asset('JavaScript/Pagination.js') }}"></script>
-    <script src="{{ asset('JavaScript/PopUpForm/PopUpform.js') }}"></script>
+<script>
+    // Tombol batal untuk menutup popup
+    const batalButton = document.querySelector('.batal');
+    const popup = document.querySelector('.modal-pengaduan');
 
-    <script>
-        // Tombol batal untuk menutup popup
-        const batalButton = document.querySelector('.batal');
-        const popup = document.querySelector('.modal-pengaduan');
+    batalButton.addEventListener('click', function () {
+        popup.style.display = 'none';
+    });
 
-        batalButton.addEventListener('click', function () {
-            popup.style.display = 'none';
+    // Membuat setiap baris tabel bisa diklik untuk menuju detail
+    document.querySelectorAll('tr[data-id]').forEach(row => {
+        row.style.cursor = 'pointer';
+        row.addEventListener('click', function () {
+            const id = this.getAttribute('data-id');
+            window.location.href = `/dokumen/detail/${id}`;
         });
+    });
+</script>
 
-        // Membuat setiap baris tabel bisa diklik untuk menuju detail
-        document.querySelectorAll('tr[data-id]').forEach(row => {
-            row.style.cursor = 'pointer';
-            row.addEventListener('click', function () {
-                const id = this.getAttribute('data-id');
-                window.location.href = `/dokumen/detail/${id}`;
+{{-- SCRIPT AJAX --}}
+<script>
+    function fetchDokumen() {
+        const query = document.getElementById('search-input').value;
+        const kategori = document.getElementById('kategori-select').value;
+
+        fetch(`/dokumen/ajax/search?q=${query}&kategori=${kategori}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('dokumen-body').innerHTML = data.html;
+
+                // Re-assign event untuk baris yang baru
+                document.querySelectorAll('tr[data-id]').forEach(row => {
+                    row.style.cursor = 'pointer';
+                    row.addEventListener('click', function () {
+                        const id = this.getAttribute('data-id');
+                        window.location.href = `/dokumen/detail/${id}`;
+                    });
+                });
             });
-        });
-    </script>
-</body>
-</html>
+    }
+
+    document.getElementById('search-input').addEventListener('input', fetchDokumen);
+    document.getElementById('kategori-select').addEventListener('change', fetchDokumen);
+</script>
+
+@endpush

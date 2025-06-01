@@ -119,13 +119,19 @@ button .logo-login {
     padding-bottom: 5px;
     border: none;
     outline: none;
-
+    cursor: pointer;
     display: flex;
     /* Aktifkan flexbox */
     justify-content: center;
     /* Rata tengah horizontal */
     align-items: center;
     /* Rata tengah vertikal */
+}
+
+.login button:hover {
+    background-color: #F0F0F0;
+    transition: 0.3s;
+    /* Efek transisi saat hover */
 }
 
 

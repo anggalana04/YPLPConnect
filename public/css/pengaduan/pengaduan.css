@@ -254,7 +254,7 @@ th:last-child {
     margin-top: 5px;
     width: 100%;
     height: 28vh;
-
+    border: none;
     outline: none;
     resize: none;
 }

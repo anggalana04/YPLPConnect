@@ -14,10 +14,30 @@ class DokumenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('operator_yayasan.v_dokumen.index');
+        $query = Dokumen::query();
+
+        if (Auth::user()->role === 'operator_sekolah') {
+            $npsn = Auth::user()->npsn;
+            $query->whereHas('guru', function ($q) use ($npsn) {
+                $q->where('npsn', $npsn);
+            });
+        }
+
+        if ($request->filled('q')) {
+            $query->where('nama', 'like', '%' . $request->q . '%');
+        }
+
+        if ($request->filled('kategori')) {
+            $query->where('jenis_sk', $request->kategori);
+        }
+
+        $dokumen = $query->latest()->get();
+
+        return view('operator_yayasan.v_dokumen.index', compact('dokumen'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -127,8 +147,40 @@ class DokumenController extends Controller
     $guru = Guru::where('nuptk', $dokumen->nuptk)->first();
 
     $pdf = Pdf::loadView('operator_yayasan.v_dokumen.Dokumen_PDF_Layouts', compact('dokumen', 'guru'));
-    return $pdf->download('Dokumen_SK_' . $dokumen->id . '.pdf');
+    // Tampilkan langsung di browser (inline)
+    return $pdf->stream('dokumen.pdf');
+    // return $pdf->download('Dokumen_SK_' . $dokumen->id . '.pdf');
 }
+
+public function ajaxSearch(Request $request)
+{
+    $query = Dokumen::query();
+
+    if ($request->filled('q')) {
+        $query->where('nama', 'like', '%' . $request->q . '%');
+    }
+
+    if ($request->filled('kategori')) {
+        $query->where('jenis_sk', $request->kategori);
+    }
+
+    $dokumen = $query->latest()->get();
+
+    $html = '';
+    foreach ($dokumen as $row) {
+        $html .= '
+        <tr class="clickable-row" data-id="' . $row->id . '">
+            <td>' . $row->id . '</td>
+            <td>' . $row->nuptk . '</td>
+            <td>' . $row->nama . '</td>
+            <td>' . $row->jenis_sk . '</td>
+            <td>' . $row->status . '</td>
+        </tr>';
+    }
+
+    return response()->json(['html' => $html]);
+}
+
    
     
 }

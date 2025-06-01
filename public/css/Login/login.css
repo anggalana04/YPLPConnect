@@ -78,6 +78,7 @@ body {
     font-weight: lighter;
     cursor: pointer;
     transition: background-color 0.3s;
+    
 }
 
 .login-box button:hover {

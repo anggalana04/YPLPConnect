@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -16,7 +16,7 @@
         <div class="body-konten">
             <div class="head-body-konten">
                 <div class="teks-body">
-                    <h1>PENGADUAN</h1>
+                    <h1>PENGADUANnnnnnnnn</h1>
                     <p>Ajukan pengaduan jika sekolah anda mengalami masalah</p>
                 </div>
 
@@ -137,4 +137,4 @@
     <script src="{{ asset('JavaScript/Preview/Preview.js') }}"></script>
     <script src="{{ asset('JavaScript/JS_Data_pengaduan/data_pengaduan.js') }}"></script>
 </body>
-</html>
+</html> --}}

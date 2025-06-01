@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+@extends('v_layouts.index')
 
-    <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('css/data_siswa/data-siswa.css') }}">
-    <title>Data Siswa</title>
-</head>
-<body>
-    @extends('v_layouts.index')
+@section('title', 'Data Siswa')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/data_siswa/data-siswa.css') }}">
+<link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
+@endpush
+
+@section('content')
 <div class="konten">
     <div class="box-konten">
         <div class="head-box-konten">
@@ -19,13 +15,16 @@
                 <h1>Data Siswa</h1>
                 <p>Lihat Dan Kelola Data Siswa Sekolah Anda</p>
             </div>
-            <button>Upload Data Siswa</button>
+            <div class="option-button">
+                <button class="upload-siswa">Upload Data Siswa</button>
+                <button onclick="openPopUpForm()" class="tambah-siswa">Tambah Data Siswa</button>
+            </div>
         </div>
 
         <div class="option-head-box">
             <div class="search-container">
                 <div class="search-icon">
-                    <img src="{{asset('image/search/search.svg') }}" alt="">
+                    <img src="{{ asset('image/search/search.svg') }}" alt="Search Icon">
                 </div>
                 <input type="text" placeholder="Cari Siswa" class="search-input">
             </div>
@@ -52,7 +51,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($siswa as $item)
+                    @forelse ($siswa as $item)
                         <tr>
                             <td>{{ $item->nisn }}</td>
                             <td>{{ $item->nama }}</td>
@@ -75,6 +74,66 @@
         </nav>
     </div>
 </div>
-</body>
+
+<div class="modal-pengaduan" id="PopUpForm" style="display:none;">
+    <form method="POST" action="{{ route('siswa.store') }}">
+        @csrf
+        <div class="form-box">
+            <div class="sub-head-box">
+                <h1>Form Pengajuan Surat Keputusan</h1>
+            </div>
+
+            <div class="sub-form-box">
+                <div class="border-form">
+                    <div class="form-group">
+                        <label for="nama">Nama</label>
+                        <input type="text" id="nama" name="nama" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="npa">NIS</label>
+                        <input type="text" id="nisn" name="nisn" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="ttl">Tempat, Tanggal Lahir</label>
+                        <input type="text" id="ttl" name="ttl" placeholder="Jakarta, 1990-01-01" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="ttl">Kelas</label>
+                        <input type="text" id="kelas" name="kelas" placeholder="" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="alamat">Alamat</label>
+                        <input type="text" id="alamat" name="alamat" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="jenis_kelamin">Jenis Kelamin</label>
+                        <select id="jenis_kelamin" name="jenis_kelamin" required>
+                            <option value="L">Laki-laki</option>
+                            <option value="P">Perempuan</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tombol Aksi -->
+                <div class="all-button">
+                    <button type="button" class="batal">Batal</button>
+                    <button type="submit" class="kirim">Kirim</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@endsection
+
+@push('scripts')
+<script src="{{ asset('JavaScript/PopUpForm/PopUpform.js') }}"></script>
 <script src="{{ asset('JavaScript/Pagination.js') }}"></script>
-</html>
+<script>
+document.querySelectorAll('.batal').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        document.getElementById('PopUpForm').style.display = 'none';
+    });
+});
+</script>
+@endpush

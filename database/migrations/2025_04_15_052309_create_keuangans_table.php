@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('keuangan', function (Blueprint $table) {
-            $table->id();
+            $table->string('id')->primary();
             $table->char('npsn', 8);
             $table->foreign('npsn')->references('npsn')->on('sekolah')->onDelete('cascade');
             $table->year('tahun')->index();

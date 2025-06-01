@@ -45,6 +45,7 @@ body{
     margin-top: 10px;
     background-color: white;
     height: 67vh;
+    border: none;
 }
 
 .isi-pengaduan textarea{

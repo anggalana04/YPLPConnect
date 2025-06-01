@@ -9,7 +9,8 @@
 
     <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/v_layouts/v_layouts.css') }}">
-    <title>---</title>
+    <title>@yield('title') - YPLP PGRI</title>
+
     @stack('styles')
 </head>
 <body>

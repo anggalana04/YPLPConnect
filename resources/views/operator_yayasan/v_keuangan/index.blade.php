@@ -1,18 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+@extends('v_layouts.index')
 
-    <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
-    @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/data_keuangan/DataKeuangan.css') }}">
-    @endpush
-    <title>Data Keuangan</title>
-</head>
-<body>
-    @extends('v_layouts.index')
+@section('title', 'Data Keuangan')
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/data_keuangan/DataKeuangan.css') }}">
+<link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
+@endpush
 
 @section('content')
 <div class="konten">
@@ -79,8 +72,8 @@
                         <div class="detail-content">
                             <div class="detail-teks">
                                 @if ($data)
-                                    <p><strong>Detail:</strong> Rp {{ number_format($data->jumlah_spp, 2, ',', '.') }} x Jumlah Siswa</p>
-                                    <p><strong>Total:</strong> Rp {{ number_format($data->jumlah_spp, 2, ',', '.') }}</p>
+                                    <p><strong>Detail:</strong> Rp 2.000 x {{ $jumlahSiswa }} Siswa</p>
+                                    <p><strong>Total:</strong> Rp {{ number_format(2000 * $jumlahSiswa, 2, ',', '.') }}</p>
                                     @if ($data->catatan)
                                         <p><strong>Catatan:</strong> {{ $data->catatan }}</p>
                                     @endif
@@ -88,16 +81,16 @@
                                     <p>Belum ada data keuangan bulan ini.</p>
                                 @endif
                             </div>
-                            <div class="upload-button-container ">
-                                @if (Auth::user()->role === 'operator_sekolah')
-                                    <form action="{{ route('keuangan.upload', $data->id) }}" method="POST" enctype="multipart/form-data">
+                            <div class="upload-button-container">
+                                @if (auth()->user()->role === 'operator_sekolah')
+                                    <form action="{{ route('keuangan.upload', $data->id ?? 0) }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <label for="uploadBukti{{ $bulan }}" class="upload-bukti-button">Upload Bukti</label>
                                         <input type="file" id="uploadBukti{{ $bulan }}" name="bukti" class="upload-input" accept="image/*,application/pdf">
                                         <button type="submit" class="upload-submit" style="display:none;">Submit</button>
                                     </form>
                                     <button class="bayar-button" data-bulan="{{ $bulan }}">Bayar</button>
-                                @elseif ( Auth::user()->role === 'operator_yayasan')
+                                @elseif (auth()->user()->role === 'operator_yayasan')
                                     <button class="cek-bukti-button" data-bulan="{{ $bulan }}">Cek Bukti</button>
                                     <button class="sudah-bayar-button" data-bulan="{{ $bulan }}">Sudah Bayar</button>
                                 @endif
@@ -164,5 +157,3 @@ function tutupPopup() {
 }
 </script>
 @endpush
-</body>
-</html>
