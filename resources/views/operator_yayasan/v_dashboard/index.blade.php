@@ -25,32 +25,86 @@
 
         @if(auth()->user()->role == 'operator_yayasan')
             {{-- Konten untuk operator yayasan --}}
-            <div class="card card-1">
+            <div class="card card-yayasan">
                 <h1 class="head-guru">Jumlah Guru</h1>
                 <div class="detail-card">
                     <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Guru.svg') }}" alt="">
-                    <p>{{ $jumlahGuru }}</p>
+                    <p class="jumlah-data">{{ array_sum($jumlahGuruPerTahun) }}</p>
                 </div>
+                <canvas id="chartGuru" style="height: 300px;"></canvas>
             </div>
 
-            <div class="card card-2">
-                <h1 class="head-siswa">Jumlah Siswa</h1>
+            <div class="card card-yayasan">
+                <h1 class="head-guru">Jumlah Siswa</h1>
                 <div class="detail-card">
                     <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Siswa.svg') }}" alt="">
-                    <p>{{ $jumlahSiswa }}</p>
+                    <p class="jumlah-data">{{ array_sum($jumlahSiswaPerTahun) }}</p>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chartSiswa" style="height: 300px"></canvas>
                 </div>
             </div>
 
-            <div class="card card-3">
+            <div class="card card-yayasan">
                 <h1>Pengaduan</h1>
+
+                @if ($pengaduans->isEmpty())
+                    <p class="No-data-pengaduan">Tidak ada pengaduan ditemukan.</p>
+                @else
+                    <div class="pengaduan-scroll">
+                        @foreach ($pengaduans as $pengaduan)
+                            <div class="status-head">
+                                <span class="head toggle-status" style="display: flex; align-items: center; width: 100%;">
+                                    <div class="judul-pengaduan">
+                                        Judul Pengaduan: {{ $pengaduan->judul }}
+                                    </div>
+                                    <img src="{{ asset('image/icon-row/row.svg') }}" class="arrow-icon" alt="Toggle Arrow" style="cursor: pointer;" />
+                                </span>
+                                <div class="detail-status">
+                                    <span class="head-detail">Status Pengaduan</span>
+                                    @php
+                                        $statusSteps = ['terkirim', 'diterima', 'diproses', 'selesai'];
+                                        $currentIndex = array_search($pengaduan->status, $statusSteps);
+                                    @endphp
+                                    <div class="box-status-step">
+                                        @foreach ($statusSteps as $index => $step)
+                                            <div class="status-step {{ $index <= $currentIndex ? 'active' : '' }}">
+                                                <img src="{{ asset('image/icon-status&detail_dokumen/icon-' . $step . '.svg') }}" alt="{{ $step }}">
+                                                <span>{{ $step == 'diterima' ? 'Diterima & Dilihat' : ucfirst($step) }}</span>
+                                            </div>
+                                            @if ($index < count($statusSteps) - 1)
+                                                <div class="status-line {{ $index < $currentIndex ? 'active' : '' }}"></div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
 
             <div class="card card-4">
                 <h1>Dokumen</h1>
             </div>
 
-            <div class="card card-keuangan">
-                <h1>Keuangan</h1>
+            <div class="card card-yayasan card-full-width" style="grid-area: card5; height: 300px; overflow: hidden; position: relative;">
+                <h1 class="head-keuangan">Keuangan Yayasan</h1>
+
+                <div class="header-bar-yayasan">
+                    <h1 class="head-keuangan">Rp.xxxxxx</h1>
+                    <select id="kategori" name="tahun" class="select-tahun-yayasan">
+                        <option value="">-- Pilih Tahun --</option>
+                        @foreach ($tahunList as $tahun)
+                            <option value="{{ $tahun }}" {{ $tahun == $tahunDipilih ? 'selected' : '' }}>
+                                {{ $tahun }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div style="height: 300px; overflow-x: auto;">
+                    <canvas id="chartKeuangan" style="max-height: 100%;"></canvas>
+                </div>
             </div>
 
         @else
@@ -93,8 +147,6 @@
                         @endforeach
                     </select>
                 </form>
-                
-                {{-- <hr> --}}
 
                 @php
                     $bulanList = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -178,6 +230,7 @@
 <script>
     window.guruData = @json($jumlahGuruPerTahun);
     window.siswaData = @json($jumlahSiswaPerTahun);
+    window.keuanganData = @json($keuanganPerTahun); // <- tambahkan ini
     window.tahunList = @json($tahunList);
 </script>
 

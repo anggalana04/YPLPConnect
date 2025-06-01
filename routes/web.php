@@ -23,6 +23,11 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function (Request $request) {
         $tahunDipilih = $request->get('tahun') ?? date('Y');
+            $bulanList = [
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
+
 
         if (Auth::user()->role === 'operator_sekolah') {
             $npsn = Auth::user()->npsn;
@@ -46,7 +51,20 @@ Route::middleware('auth')->group(function () {
         } else {
             $jumlahSiswa = Siswa::count();
             $jumlahGuru = Guru::count();
-            $keuangan = \App\Models\Keuangan::where('tahun', $tahunDipilih)->get();
+            $keuangan = collect();
+            $keuanganPerTahun = [];
+
+            $tahunSekarang = date('Y');
+            $tahunList = [];
+            for ($i = 5; $i >= 0; $i--) {
+                $tahunList[] = (string)($tahunSekarang - $i);
+            }
+
+            $keuanganPerTahun = [];
+            foreach ($tahunList as $tahun) {
+                $keuanganPerTahun[] = Keuangan::where('tahun', $tahun)->sum('jumlah_spp');
+            }
+
             $pengaduans = \App\Models\Pengaduan::all();
 
             $tahunSekarang = date('Y');
@@ -71,7 +89,7 @@ Route::middleware('auth')->group(function () {
 
         return view('operator_yayasan.v_dashboard.index', compact(
             'jumlahSiswa', 'jumlahGuru', 'keuangan', 'pengaduans',
-            'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList', 'tahunDipilih'
+            'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList', 'tahunDipilih','bulanList', 'keuanganPerTahun'
         ));
     })->name('dashboard');
 
@@ -110,6 +128,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dokumen', [DokumenController::class, 'index'])->name('dokumen.index');
     Route::get('/dokumen/detail/{id_pengajuan}', [DokumenController::class, 'show'])->name('dokumen.show');
     Route::post('/dokumen/store', [DokumenController::class, 'store'])->name('dokumen.store');
+    Route::get('/dokumen/ajax/search', [DokumenController::class, 'ajaxSearch'])->name('dokumen.ajax.search');
     Route::get('/dokumen/download/{id}', [DokumenController::class, 'download'])->name('dokumen.download');
 
     // Data siswa routes

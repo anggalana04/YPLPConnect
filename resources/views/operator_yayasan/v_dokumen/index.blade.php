@@ -26,14 +26,15 @@
                 <div class="search-icon">
                     <img src="{{ asset('image/search/search.svg') }}" alt="" />
                 </div>
-                <input type="text" placeholder="Cari Siswa" class="search-input" />
+                <input type="text" id="search-input" placeholder="Cari Dokumen" class="search-input" />
             </div>
 
             <div class="kategori">
-                <select id="kategori" name="kategori">
+                <select id="kategori-select" name="kategori">
                     <option value="">Kategori SK</option>
-                    <option value="kelas1">SK Kepala Sekolah</option>
-                    <option value="kelas2">SK Guru</option>
+                    <option value="SK Pengangkatan">SK Pengangkatan</option>
+                    <option value="SK Pensiun">SK Pensiun</option>
+                    <option value="SK Mutasi">SK Mutasi</option>
                 </select>
             </div>
         </div>
@@ -50,12 +51,8 @@
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @php
-                        $data = \App\Models\Dokumen::all();
-                    @endphp
-
-                    @foreach ($data as $row)
+                <tbody id="dokumen-body">
+                    @foreach ($dokumen as $row)
                         <tr class="clickable-row" data-id="{{ $row->id }}">
                             <td>{{ $row->id }}</td>
                             <td>{{ $row->nuptk }}</td>
@@ -67,6 +64,7 @@
                 </tbody>
             </table>
         </div>
+
 
         <!-- Pagination -->
         <nav aria-label="Page navigation example">
@@ -145,4 +143,31 @@
         });
     });
 </script>
+
+{{-- SCRIPT AJAX --}}
+<script>
+    function fetchDokumen() {
+        const query = document.getElementById('search-input').value;
+        const kategori = document.getElementById('kategori-select').value;
+
+        fetch(`/dokumen/ajax/search?q=${query}&kategori=${kategori}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('dokumen-body').innerHTML = data.html;
+
+                // Re-assign event untuk baris yang baru
+                document.querySelectorAll('tr[data-id]').forEach(row => {
+                    row.style.cursor = 'pointer';
+                    row.addEventListener('click', function () {
+                        const id = this.getAttribute('data-id');
+                        window.location.href = `/dokumen/detail/${id}`;
+                    });
+                });
+            });
+    }
+
+    document.getElementById('search-input').addEventListener('input', fetchDokumen);
+    document.getElementById('kategori-select').addEventListener('change', fetchDokumen);
+</script>
+
 @endpush

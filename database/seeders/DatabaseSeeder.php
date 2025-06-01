@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Guru;
 use App\Models\User;
 use App\Models\Siswa;
+use App\Models\Dokumen;
 use App\Models\Sekolah;
 use App\Models\Keuangan;
 use App\Models\Pengaduan;
@@ -58,7 +59,6 @@ class DatabaseSeeder extends Seeder
             'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
         ];
 
-        // Tahun sekarang
         $tahunSekarang = date('Y');
 
         // Buat siswa, pengaduan, dan keuangan per sekolah
@@ -77,7 +77,7 @@ class DatabaseSeeder extends Seeder
 
                 // Jika tahun adalah tahun sekarang, potong bulan sampai bulan saat ini saja
                 if ($tahun === (int) $tahunSekarang) {
-                    $bulanSekarang = Carbon::now()->month; // <= ini dipakai untuk slice
+                    $bulanSekarang = Carbon::now()->month;
                     $bulanLoop = array_slice($bulanList, 0, $bulanSekarang);
                 }
 
@@ -91,5 +91,28 @@ class DatabaseSeeder extends Seeder
                 }
             }
         }
+
+        // Buat 15 dokumen per sekolah
+foreach ($npsnList as $npsn) {
+    for ($i = 1; $i <= 15; $i++) {
+        $dokumen = new Dokumen([
+            'nuptk'             => Guru::inRandomOrder()->value('nuptk'), // ambil NUPTK valid dari tabel guru
+            'nama'              => $faker->name,
+            'tempat_lahir'      => $faker->city,
+            'tanggal_lahir'     => $faker->date('Y-m-d', '-25 years'),
+            'alamat_unit_kerja' => $faker->address,
+            'jenis_sk'          => $faker->randomElement(['SK Pengangkatan', 'SK Pensiun', 'SK Mutasi']),
+            'status'            => $faker->randomElement(['Menunggu', 'Disetujui', 'Ditolak']),
+            'file_path'         => 'dokumen/' . Str::random(10) . '.pdf',
+            'submitted_by'      => 1,
+            'verified_by'       => null,
+            'verified_at'       => null,
+            'catatan'           => $faker->sentence,
+        ]);
+
+        $dokumen->save();
+    }
+}
+
     }
 }

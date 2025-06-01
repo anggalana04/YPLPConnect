@@ -65,4 +65,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
     renderBarChart('chartGuru', window.guruData, ['#4facfe', '#00f2fe']);
     renderBarChart('chartSiswa', window.siswaData, ['#4facfe', '#00f2fe']);
+    renderBarChart('chartKeuangan', window.keuanganData, ['#43e97b', '#38f9d7']); // bar chart keuangan
 });
