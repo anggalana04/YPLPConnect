@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengaduanController;
+use App\Http\Controllers\ListSekolahController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
 // Route landing page
@@ -28,7 +29,7 @@ Route::middleware('auth')->group(function () {
         'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
     ];
 
-
+        $keuanganPerTahun = [];
         if (Auth::user()->role === 'operator_sekolah') {
             $npsn = Auth::user()->npsn;
             $jumlahSiswa = Siswa::where('npsn', $npsn)->count();
@@ -52,7 +53,6 @@ Route::middleware('auth')->group(function () {
             $jumlahSiswa = Siswa::count();
             $jumlahGuru = Guru::count();
             $keuangan = collect();
-            $keuanganPerTahun = [];
 
             $tahunSekarang = date('Y');
             $tahunList = [];
@@ -94,20 +94,21 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     // Route AJAX untuk data keuangan berdasarkan tahun
-    Route::get('/keuangan/by-tahun', function (Request $request) {
-        $tahun = $request->get('tahun') ?? date('Y');
+    Route::get('/keuangan/by-tahun', [KeuanganController::class, 'getByTahun'])->name('keuangan.byTahun');
+    // Route::get('/keuangan/by-tahun', function (Request $request) {
+    //     $tahun = $request->get('tahun') ?? date('Y');
 
-        if (Auth::user()->role === 'operator_sekolah') {
-            $npsn = Auth::user()->npsn;
-            $data = \App\Models\Keuangan::where('npsn', $npsn)
-                ->where('tahun', $tahun)
-                ->get();
-        } else {
-            $data = \App\Models\Keuangan::where('tahun', $tahun)->get();
-        }
+    //     if (Auth::user()->role === 'operator_sekolah') {
+    //         $npsn = Auth::user()->npsn;
+    //         $data = \App\Models\Keuangan::where('npsn', $npsn)
+    //             ->where('tahun', $tahun)
+    //             ->get();
+    //     } else {
+    //         $data = \App\Models\Keuangan::where('tahun', $tahun)->get();
+    //     }
 
-        return response()->json($data);
-    })->name('keuangan.byTahun');
+    //     return response()->json($data);
+    // })->name('keuangan.byTahun');
 
     // Profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -116,6 +117,7 @@ Route::middleware('auth')->group(function () {
 
     // Pengaduan routes
     Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
+    Route::get('/pengaduan/yayasan', [PengaduanController::class, 'yayasan'])->name('pengaduan.yayasan');
     Route::get('/pengaduan/detail/{id}', [PengaduanController::class, 'show'])->name('pengaduan.detail');
     Route::get('/pengaduan/search', [PengaduanController::class, 'search'])->name('pengaduan.search');
     Route::post('/pengaduan/submit', [PengaduanController::class, 'store'])->name('pengaduan.store');
@@ -123,19 +125,21 @@ Route::middleware('auth')->group(function () {
     // Keuangan routes
     Route::get('keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
     Route::post('keuangan/upload/{id?}', [KeuanganController::class, 'upload'])->name('keuangan.upload');
+    Route::get('/keuangan/yayasan', [KeuanganController::class, 'yayasan'])->name('keuangan.yayasan');
+
 
     // Dokumen routes
     Route::get('/dokumen', [DokumenController::class, 'index'])->name('dokumen.index');
     Route::get('/dokumen/detail/{id_pengajuan}', [DokumenController::class, 'show'])->name('dokumen.show');
     Route::post('/dokumen/store', [DokumenController::class, 'store'])->name('dokumen.store');
+    Route::get('/dokumen/yayasan', [DokumenController::class, 'yayasan'])->name('dokumen.yayasan');
     Route::get('/dokumen/ajax/search', [DokumenController::class, 'ajaxSearch'])->name('dokumen.ajax.search');
     Route::get('/dokumen/download/{id}', [DokumenController::class, 'download'])->name('dokumen.download');
 
     // Data siswa routes
-    Route::get('/siswa/sekolah', [SiswaController::class, 'ListSekolah'])->name('siswa.sekolah');
     Route::get('/siswa', [SiswaController::class, 'redirectToSiswa'])->name('siswa.index');
     Route::post('/siswa', [SiswaController::class, 'store'])->name('siswa.store');
-    Route::get('/siswa/by-sekolah/{npsn}', [SiswaController::class, 'index'])->name('siswa.by-sekolah');
+    // Route::get('/siswa/by-sekolah/{npsn}', [SiswaController::class, 'index'])->name('siswa.by-sekolah');
 
     // Data guru routes
     Route::get('guru', [GuruController::class, 'index'])->name('guru.index');
@@ -144,6 +148,9 @@ Route::middleware('auth')->group(function () {
 
     // Users route
     Route::get('/users', [RegisteredUserController::class, 'index'])->name('users.index');
+
+    // Route untuk menampilkan daftar sekolah khusus operator yayasan
+    Route::get('/sekolah', [ListSekolahController::class, 'index'])->name('sekolah.index');
 });
 
 require __DIR__ . '/auth.php';

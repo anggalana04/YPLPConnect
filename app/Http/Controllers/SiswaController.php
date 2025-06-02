@@ -13,11 +13,6 @@ class SiswaController extends Controller
      * Display a listing of the resource.
      */
 
-    public function listSekolah() {
-        $sekolah = Sekolah::all(); // Ambil semua data sekolah dari DB
-        return view('operator_yayasan.v_list-sekolah.index', compact('sekolah'));
-    }
-
     public function redirectToSiswa()
     {
         if (Auth::user()->role === 'operator_yayasan') {

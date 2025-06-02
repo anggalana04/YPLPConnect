@@ -17,7 +17,9 @@
             </div>
         </div>
 
-        <div class="option-box-konten {{ auth()->user()->role === 'operator_sekolah' ? 'gap-operator-sekolah' : 'gap-default' }}">
+        <div class="option-box-konten {{ auth()->user()->role === 'operator_sekolah' ? 'gap-operator-sekolah' : '' }}
+                                      {{ auth()->user()->role === 'operator_yayasan' ? 'gap-operator-yayasan' : '' }}
+                                     ">
             <div class="kategori">
                 <form id="filter-form" method="GET" action="{{ route('keuangan.index') }}">
                     @if(isset($sekolahList) && count($sekolahList))
@@ -37,7 +39,11 @@
                 </form>
             </div>
             <div class="download">
-                <button class="download-btn" type="button">Download Recap</button>
+                <button 
+                    class="download-btn {{ auth()->user()->role === 'operator_sekolah' ? 'download-sekolah' : '' }} {{ auth()->user()->role === 'operator_yayasan' ? 'download-yayasan' : '' }}" 
+                    type="button">
+                    Download Recap
+                </button>
             </div>
         </div>
 

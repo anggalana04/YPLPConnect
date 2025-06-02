@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use App\Models\Guru;
 use App\Models\Siswa;
 use App\Models\Keuangan;
 use App\Models\Pengaduan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Request;
 
 class DashboardController extends Controller
 {
@@ -20,7 +21,6 @@ class DashboardController extends Controller
             'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
         ];
 
-        // Ambil tahun distinct dari tabel keuangan (5 tahun terakhir atau semua tahun ada di database)
         $tahunList = Keuangan::select('tahun')
             ->distinct()
             ->orderBy('tahun', 'desc')
@@ -49,7 +49,14 @@ class DashboardController extends Controller
                 $jumlahSiswaPerTahun[] = Siswa::where('npsn', $npsn)->whereYear('created_at', $tahun)->count();
             }
 
-        } else {
+            return view('operator_yayasan.v_dashboard.index', compact(
+                'jumlahSiswa', 'jumlahGuru', 'keuangan', 'pengaduans',
+                'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList', 'tahunDipilih', 'bulanList'
+            ));
+        }
+
+        // Operator Yayasan
+        else {
             $jumlahSiswa = Siswa::count();
             $jumlahGuru = Guru::count();
 
@@ -58,7 +65,6 @@ class DashboardController extends Controller
                 $total = Keuangan::where('tahun', $tahun)->sum('jumlah_spp');
                 $keuanganPerTahun[] = $total;
             }
-
 
             $pengaduans = Pengaduan::all();
 
@@ -69,11 +75,30 @@ class DashboardController extends Controller
                 $jumlahGuruPerTahun[] = Guru::whereYear('created_at', $tahun)->count();
                 $jumlahSiswaPerTahun[] = Siswa::whereYear('created_at', $tahun)->count();
             }
-        }
 
-        return view('operator_yayasan.v_dashboard.index', compact(
-            'jumlahSiswa', 'jumlahGuru', 'keuangan', 'pengaduans',
-            'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList', 'tahunDipilih', 'bulanList', 'keuanganPerTahun'
-        ));
+            return view('operator_yayasan.v_dashboard.index', compact(
+                'jumlahSiswa', 'jumlahGuru', 'keuanganPerTahun', 'pengaduans',
+                'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList', 'tahunDipilih', 'bulanList'
+            ));
+        }
     }
+
+    // app/Http/Controllers/KeuanganController.php
+
+public function getByTahun(Request $request)
+{
+    $tahun = $request->get('tahun') ?? date('Y');
+
+    if (Auth::user()->role === 'operator_sekolah') {
+        $npsn = Auth::user()->npsn;
+        $data = \App\Models\Keuangan::where('npsn', $npsn)
+            ->where('tahun', $tahun)
+            ->get();
+    } else {
+        $data = \App\Models\Keuangan::where('tahun', $tahun)->get();
+    }
+
+    return response()->json($data);
+}
+
 }

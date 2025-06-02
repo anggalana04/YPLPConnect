@@ -181,6 +181,17 @@ public function ajaxSearch(Request $request)
     return response()->json(['html' => $html]);
 }
 
-   
+    // method yayasan yang belum ada
+    public function yayasan()
+    {
+        // contoh ambil dokumen khusus yayasan
+        // misalnya semua dokumen atau berdasarkan role
+        if (Auth::user()->role !== 'operator_yayasan') {
+            abort(403, 'Unauthorized');
+        }
+
+        $dokumen = Dokumen::all(); // sesuaikan query jika perlu
+        return view('operator_yayasan.v_dokumen.index', compact('dokumen'));
+    }
     
 }

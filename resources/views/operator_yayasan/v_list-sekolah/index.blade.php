@@ -48,13 +48,13 @@
                 </thead>
                 <tbody>
                     @foreach($sekolah as $s)
-                    <tr class="clickable-row" data-href="{{ route('siswa.by-sekolah', ['npsn' => $s->npsn]) }}">
-                        <td>{{ $s->npsn }}</td>
-                        <td>{{ $s->nama }}</td>
-                        <td>{{ $s->jenjang }}</td>
-                        <td>{{ $s->alamat }}</td>
-                        <td>{{ $s->email }}</td>
-                    </tr>
+                        <tr class="clickable-row" data-npsn="{{ $s->npsn }}">
+                            <td>{{ $s->npsn }}</td>
+                            <td>{{ $s->nama }}</td>
+                            <td>{{ $s->jenjang }}</td>
+                            <td>{{ $s->alamat }}</td>
+                            <td>{{ $s->email }}</td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -71,10 +71,16 @@
 <script src="{{ asset('JavaScript/Pagination.js') }}"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const rows = document.querySelectorAll(".clickable-row");
+        const from = "{{ $from ?? '' }}";
         rows.forEach(row => {
             row.addEventListener("click", function () {
-                window.location.href = this.dataset.href;
+                const npsn = this.dataset.npsn;
+                if(from) {
+                    window.location.href = `/${from}?npsn=${npsn}`;
+
+                } else {
+                    window.location.href = `/siswa/by-sekolah/${npsn}`;
+                }
             });
         });
     });

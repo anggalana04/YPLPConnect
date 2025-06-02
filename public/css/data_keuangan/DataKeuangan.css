@@ -50,14 +50,32 @@ body {
     gap: 85vh;
 }
 
-.download button{
+.option-box-konten.gap-operator-yayasan {
+    gap: 39.5vh; /* Atur sesuai kebutuhan layout yayasan */
+}
+
+/* Gaya umum untuk tombol */
+.download button,
+.download-btn {
     border: none;
     border-radius: 20px;
-    background-color: #301AF4;
-    color: white;
     padding: 8px;
     font-size: 12px;
+    color: white;
+    cursor: pointer;
 }
+
+/* Khusus operator sekolah */
+.download-btn.download-sekolah {
+    background-color: #301AF4; /* Biru */
+}
+
+/* Khusus operator yayasan */
+.download-btn.download-yayasan {
+    background-color: #301AF4; /* Hijau – atau ganti sesuai branding yayasan */
+    
+}
+
 
 .kategori label {
   font-weight: 400;
