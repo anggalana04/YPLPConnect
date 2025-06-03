@@ -1,9 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-
 body {
     font-family: 'Montserrat' !important;
-  }
+}
 
 .sidebar {
     position: fixed;
@@ -29,7 +28,6 @@ body {
     border-radius: 40px;
     padding: 20px;
 }
-
 
 /* CSS HEAD-BODY-KONTEN */
 .head-body-konten{
@@ -57,9 +55,6 @@ button{
     font-weight: 500;
 }
 
-
-/* CSS HEAD-BODY-KONTEN */
-
 /* CSS SEARCH */
 .search-container {
   position: relative;
@@ -83,7 +78,6 @@ button{
   font-size: 16px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-/* CSS SEARCH */
 
 /* CSS TABLE */
 .table-box {
@@ -94,7 +88,6 @@ button{
     margin-top: 20px;
     padding: 15px;
     overflow-y: auto;
-
 }
 
 .table-konten {
@@ -130,15 +123,9 @@ th:last-child {
     color: black;
 }
 
-/* .table-konten tr:last-child td {
-    border-bottom: none;
+.titik3{
+    cursor: pointer;
 }
-
-.table-konten tr:hover {
-    background-color: #f5f5f5;
-} */
-/* CSS TABLE */
-
 
 /* CSS PAGINATION */
 .pagination {
@@ -179,8 +166,6 @@ th:last-child {
     text-decoration: none;
 }
 
-/* CSS PAGINATION */
-
 /* CSS HEAD FORM BOX */
 .modal-pengaduan {
     display: none; /* disembunyikan awalnya */
@@ -217,7 +202,6 @@ th:last-child {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
-/* CSS HEAD FORM BOX */
 
 /* CSS ISI-PENGADUAN */
 .sub-form-box{
@@ -248,10 +232,8 @@ th:last-child {
     height: 15vh;
     border: none;
     outline: none;
-    outline: none;
     resize: none;
 }
-/* CSS ISI-PENGADUAN */
 
 /* CSS BUTTON */
 .button-pengaduan{
@@ -316,4 +298,36 @@ th:last-child {
 }
 
 
+/* CSS EDIT & DELETE */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 100%; /* agar muncul di kiri ikon */
+    margin-right: 5px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    z-index: 999;
+    min-width: 100px;
+}
 
+.table-konten td {
+    vertical-align: middle;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-item-hapus {
+    color: red !important;
+}

@@ -84,9 +84,52 @@
                 @endif
             </div>
 
-            <div class="card card-4">
-                <h1>Dokumen</h1>
-            </div>
+<div class="card card-yayasan">
+    <h1>Dokumen</h1>
+
+    @if ($dokumens->isEmpty())
+        <p class="No-data-dokumen">Tidak ada dokumen ditemukan.</p>
+    @else
+        <div class="dokumen-scroll">
+            @foreach ($dokumens as $dokumen)
+                <div class="status-head">
+                    <span class="head toggle-status" style="display: flex; align-items: center; width: 100%;">
+                        <div class="judul-dokumen">
+                            Judul Dokumen: {{ $dokumen->jenis_sk }}
+                        </div>
+                        <img src="{{ asset('image/icon-row/row.svg') }}" class="arrow-icon" alt="Toggle Arrow" style="cursor: pointer;" />
+                    </span>
+                    <div class="detail-status">
+                        <span class="head-detail">
+                            Nama Guru :
+                            @if ($dokumen->guru)
+                                {{ $dokumen->guru->nama }} [{{ $dokumen->guru->npsn }}]
+                            @else
+                                -
+                            @endif
+                        </span>
+
+                        @php
+                            $statusSteps = ['terkirim', 'diterima', 'diproses', 'selesai'];
+                            $currentIndex = array_search($dokumen->status, $statusSteps);
+                        @endphp
+                        <div class="box-status-step">
+                            @foreach ($statusSteps as $index => $step)
+                                <div class="status-step {{ $index <= $currentIndex ? 'active' : '' }}">
+                                    <img src="{{ asset('image/icon-status&detail_dokumen/icon-' . $step . '.svg') }}" alt="{{ $step }}">
+                                    <span>{{ $step == 'diterima' ? 'Diterima & Dilihat' : ucfirst($step) }}</span>
+                                </div>
+                                @if ($index < count($statusSteps) - 1)
+                                    <div class="status-line {{ $index < $currentIndex ? 'active' : '' }}"></div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
+</div>
 
             <div class="card card-yayasan card-full-width" style="grid-area: card5; height: 300px; overflow: hidden; position: relative;">
                 <h1 class="head-keuangan">Keuangan Yayasan</h1>

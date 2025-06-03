@@ -27,7 +27,9 @@ class KeuanganController extends Controller
             $jumlahSiswa = \App\Models\Siswa::where('npsn', $user->npsn)->count();
         } elseif ($user->role === 'operator_yayasan' && $npsnDipilih) {
             $query->where('npsn', $npsnDipilih);
+            $jumlahSiswa = \App\Models\Siswa::where('npsn', $npsnDipilih)->count();
         }
+
 
         $keuangan = $query->where('tahun', $tahunDipilih)->get();
         $tahunList = Keuangan::select('tahun')->distinct()->orderBy('tahun', 'desc')->pluck('tahun');

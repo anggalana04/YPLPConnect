@@ -22,18 +22,23 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
-        return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => Hash::make('password123'), // password default
-            'role' => $role = $this->faker->randomElement(['operator_sekolah', 'operator_yayasan']),
-            'npsn' => null, // will be set in seeder if needed
-            'remember_token' => Str::random(10),
-        ];
-    }
+// database/factories/UserFactory.php
+public function definition(): array
+{
+    $role = $this->faker->randomElement(['operator_sekolah', 'operator_yayasan']);
+    
+    return [
+        'name' => $this->faker->name,
+        'email' => $this->faker->unique()->safeEmail,
+        'email_verified_at' => now(),
+        'password' => bcrypt('password123'), // password default
+        'remember_token' => Str::random(10),
+        'role' => $role,
+        'no_hp' => $this->faker->phoneNumber,
+        // npsn akan di-set di seeder, hanya kalau role == operator_sekolah
+    ];
+}
+
 
     /**
      * Indicate that the model's email address should be unverified.

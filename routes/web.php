@@ -10,6 +10,7 @@ use App\Http\Controllers\GuruController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengaduanController;
@@ -41,6 +42,7 @@ Route::middleware('auth')->group(function () {
 
             $tahunSekarang = date('Y');
             $tahunList = Keuangan::select('tahun')->distinct()->orderBy('tahun', 'desc')->pluck('tahun');
+            $dokumens = \App\Models\Dokumen::with('guru')->get();
 
 
             $jumlahGuruPerTahun = [];
@@ -50,6 +52,8 @@ Route::middleware('auth')->group(function () {
                 $jumlahSiswaPerTahun[] = Siswa::where('npsn', $npsn)->whereYear('created_at', $tahun)->count();
             }
         } else {
+            $dokumens = \App\Models\Dokumen::with('guru')->get();
+
             $jumlahSiswa = Siswa::count();
             $jumlahGuru = Guru::count();
             $keuangan = collect();
@@ -89,7 +93,7 @@ Route::middleware('auth')->group(function () {
 
         return view('operator_yayasan.v_dashboard.index', compact(
             'jumlahSiswa', 'jumlahGuru', 'keuangan', 'pengaduans',
-            'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList', 'tahunDipilih','bulanList', 'keuanganPerTahun'
+            'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList', 'tahunDipilih','bulanList', 'keuanganPerTahun', 'dokumens'
         ));
     })->name('dashboard');
 
@@ -148,6 +152,11 @@ Route::middleware('auth')->group(function () {
 
     // Users route
     Route::get('/users', [RegisteredUserController::class, 'index'])->name('users.index');
+    Route::post('/user-manage/update-inline/{id}', [RegisteredUserController::class, 'updateInline'])->name('user.update-inline'); 
+    Route::patch('/users/{id}', [RegisteredUserController::class, 'update'])->name('user.update');
+
+    // Route Sekolah
+    Route::post('/sekolah', [SekolahController::class, 'store'])->name('sekolah.store');
 
     // Route untuk menampilkan daftar sekolah khusus operator yayasan
     Route::get('/sekolah', [ListSekolahController::class, 'index'])->name('sekolah.index');

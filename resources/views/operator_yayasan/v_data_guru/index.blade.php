@@ -94,7 +94,7 @@
                         <input type="text" id="ttl" name="ttl" placeholder="Jakarta, 1990-01-01" required />
                     </div>
                     <div class="form-group">
-                        <label for="ttl">No HP</label>
+                        <label for="no_hp">No HP</label>
                         <input type="text" id="no_hp" name="no_hp" placeholder="" required />
                     </div>
                     <div class="form-group">

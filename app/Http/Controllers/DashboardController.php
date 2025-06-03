@@ -59,6 +59,8 @@ class DashboardController extends Controller
         else {
             $jumlahSiswa = Siswa::count();
             $jumlahGuru = Guru::count();
+            $dokumens = \App\Models\Dokumen::with('guru')->get();
+
 
             $keuanganPerTahun = [];
             foreach ($tahunList as $tahun) {
@@ -78,7 +80,7 @@ class DashboardController extends Controller
 
             return view('operator_yayasan.v_dashboard.index', compact(
                 'jumlahSiswa', 'jumlahGuru', 'keuanganPerTahun', 'pengaduans',
-                'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList', 'tahunDipilih', 'bulanList'
+                'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList', 'tahunDipilih', 'bulanList','dokumens'
             ));
         }
     }
