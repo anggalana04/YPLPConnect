@@ -37,12 +37,12 @@ class KeuanganController extends Controller
         }
 
         return view('operator_yayasan.v_keuangan.index', [
-        'keuangan' => $keuangan,
-        'tahunList' => $tahunList,
-        'tahunDipilih' => $tahunDipilih,
-        'sekolahList' => $sekolahList,
-        'npsnDipilih' => $npsnDipilih,
-         'jumlahSiswa' => $jumlahSiswa,
+            'keuangan' => $keuangan,
+            'tahunList' => $tahunList,
+            'tahunDipilih' => $tahunDipilih,
+            'sekolahList' => $sekolahList,
+            'npsnDipilih' => $npsnDipilih,
+            'jumlahSiswa' => $jumlahSiswa,
         ]);
     }
 
@@ -90,6 +90,42 @@ class KeuanganController extends Controller
         $keuangan->save();
 
         return back()->with('success', 'Bukti berhasil diupload.');
+    }
+
+    /**
+     * Validasi status keuangan.
+     */
+    public function validasi(Request $request, $id)
+    {
+        $user = Auth::user();
+        if ($user->role !== 'operator_yayasan') {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+
+        $request->validate([
+            'status' => 'required|in:Disetujui,Ditolak'
+        ]);
+
+        $keuangan = Keuangan::findOrFail($id);
+        $keuangan->status = $request->status;
+        $keuangan->verified_by = $user->id;
+        $keuangan->verified_at = now();
+        $keuangan->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * Get URL Bukti SPP.
+     */
+    public function getBukti($id)
+    {
+        $keuangan = \App\Models\Keuangan::find($id);
+        if (!$keuangan || !$keuangan->bukti_path) {
+            return response()->json(['success' => false]);
+        }
+        $url = asset('storage/' . $keuangan->bukti_path);
+        return response()->json(['success' => true, 'url' => $url]);
     }
 
 

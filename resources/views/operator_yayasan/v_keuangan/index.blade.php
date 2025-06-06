@@ -61,7 +61,7 @@
                         $status = $data->status ?? 'Menunggu';
                         $color = $statusColor[$status] ?? 'kuning';
                     @endphp
-                    <div class="bulan-item {{ $loop->iteration % 2 == 0 ? 'genap' : '' }}">
+                    <div class="bulan-item {{ $loop->iteration % 2 == 0 ? 'genap' : '' }}" @if($data) data-id="{{ $data->id }}" @endif>
                         <img src="{{ asset('image/icon-Data_Keuangan/icon-Plus.svg') }}" alt="Toggle Icon" class="icon-plus toggle-icon">
                         <span class="nama">{{ $bulan }}</span>
                         <button class="status status-{{ $color }}" type="button">
@@ -85,13 +85,15 @@
                                 @if (auth()->user()->role === 'operator_sekolah')
                                     <form action="{{ route('keuangan.upload', $data->id ?? 0) }}" method="POST" enctype="multipart/form-data">
                                         @csrf
+                                        <input type="hidden" name="bulan" value="{{ $bulan }}">
+                                        <input type="hidden" name="tahun" value="{{ $tahunDipilih }}">
                                         <label for="uploadBukti{{ $bulan }}" class="upload-bukti-button">Upload Bukti</label>
                                         <input type="file" id="uploadBukti{{ $bulan }}" name="bukti" class="upload-input" accept="image/*,application/pdf">
                                         <button type="submit" class="upload-submit" style="display:none;">Submit</button>
                                     </form>
                                     <button class="bayar-button" data-bulan="{{ $bulan }}">Bayar</button>
                                 @elseif (auth()->user()->role === 'operator_yayasan')
-                                    <button class="cek-bukti-button" data-bulan="{{ $bulan }}">Cek Bukti</button>
+                                    <button class="cek-bukti-button" data-id="{{ $data->id ?? '' }}" data-bulan="{{ $bulan }}">Cek Bukti</button>
                                     <button class="sudah-bayar-button" data-bulan="{{ $bulan }}">Sudah Bayar</button>
                                 @endif
                             </div>
@@ -109,6 +111,14 @@
         <h3>No Rekening</h3>
         <p>Bank ABC - 1234567890 a.n. Yayasan Pendidikan Contoh</p>
         <button onclick="tutupPopup()">Tutup</button>
+    </div>
+</div>
+
+<!-- Popup Bukti Bayar -->
+<div id="popupBukti" class="popup-bukti" style="display:none;">
+    <div class="popup-content">
+        <span class="close-popup" onclick="tutupPopupBukti()">&times;</span>
+        <div id="buktiContainer"></div>
     </div>
 </div>
 @endsection
@@ -147,6 +157,66 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
+    document.querySelectorAll('.sudah-bayar-button').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const bulan = this.getAttribute('data-bulan');
+            // Ambil id keuangan dari data bulan
+            const keuanganRow = [...document.querySelectorAll('.bulan-list .bulan-item')].find(item => item.querySelector('.nama').textContent.trim() === bulan);
+            if (!keuanganRow) return;
+            // Ambil id dari data-id pada bulan-item (lebih baik tambahkan data-id di div bulan-item)
+            const id = keuanganRow.getAttribute('data-id');
+            if (!id) return alert('Data tidak ditemukan');
+
+            if (confirm('Setujui pembayaran bulan ' + bulan + '?')) {
+                fetch(`/keuangan/${id}/validasi`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ status: 'Disetujui' })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.success){
+                        alert('Status pembayaran disetujui!');
+                        location.reload();
+                    } else {
+                        alert('Gagal validasi: ' + (data.message || ''));
+                    }
+                });
+            }
+        });
+    });
+
+    document.querySelectorAll('.cek-bukti-button').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const id = this.getAttribute('data-id');
+            if (!id) return alert('Bukti belum diupload.');
+            fetch(`/keuangan/${id}/bukti`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success && data.url) {
+                        const ext = data.url.split('.').pop().toLowerCase();
+                        let html = '';
+                        if (['jpg','jpeg','png','gif','bmp','webp'].includes(ext)) {
+                            html = `<img src="${data.url}" alt="Bukti Bayar">`;
+                        } else if (ext === 'pdf') {
+                            html = `<embed src="${data.url}" type="application/pdf" width="600" height="800"/>`;
+                        } else {
+                            html = 'Format file tidak didukung.';
+                        }
+                        document.getElementById('buktiContainer').innerHTML = html;
+                        document.getElementById('popupBukti').style.display = 'flex';
+                    } else {
+                        alert('Bukti tidak ditemukan!');
+                    }
+                });
+        });
+    });
 });
 
 function tampilkanPopup() {
@@ -154,6 +224,10 @@ function tampilkanPopup() {
 }
 function tutupPopup() {
     document.getElementById('popupRekening').style.display = 'none';
+}
+function tutupPopupBukti() {
+    document.getElementById('popupBukti').style.display = 'none';
+    document.getElementById('buktiContainer').innerHTML = '';
 }
 </script>
 @endpush

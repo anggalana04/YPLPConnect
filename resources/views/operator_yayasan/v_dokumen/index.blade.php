@@ -58,7 +58,17 @@
                             <td>{{ $row->nuptk }}</td>
                             <td>{{ $row->nama }}</td>
                             <td>{{ $row->jenis_sk }}</td>
-                            <td>{{ $row->status }}</td>
+                            <td>
+                                @if(auth()->user()->role === 'operator_yayasan')
+                                    <select class="status-dropdown" data-id="{{ $row->id }}">
+                                        <option value="Menunggu" {{ $row->status == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
+                                        <option value="Diproses" {{ $row->status == 'Diproses' ? 'selected' : '' }}>Diproses</option>
+                                        <option value="Selesai" {{ $row->status == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                                    </select>
+                                @else
+                                    <span class="status-text">{{ $row->status }}</span>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -137,9 +147,38 @@
     // Membuat setiap baris tabel bisa diklik untuk menuju detail
     document.querySelectorAll('tr[data-id]').forEach(row => {
         row.style.cursor = 'pointer';
-        row.addEventListener('click', function () {
+        row.addEventListener('click', function (e) {
+            // Prevent row click if the target is inside a select (dropdown)
+            if (e.target.tagName.toLowerCase() === 'select') return;
             const id = this.getAttribute('data-id');
             window.location.href = `/dokumen/detail/${id}`;
+        });
+    });
+
+    // Prevent row click when interacting with the dropdown
+    document.querySelectorAll('.status-dropdown').forEach(function(select) {
+        select.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+        select.addEventListener('change', function() {
+            const id = this.getAttribute('data-id');
+            const status = this.value;
+            fetch(`/dokumen/${id}/status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ status })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success){
+                    alert('Status berhasil diubah!');
+                } else {
+                    alert('Gagal mengubah status');
+                }
+            });
         });
     });
 </script>
@@ -152,7 +191,7 @@
 
         fetch(`/dokumen/ajax/search?q=${query}&kategori=${kategori}`)
             .then(response => response.json())
-            .then(data => {
+            .then data => {
                 document.getElementById('dokumen-body').innerHTML = data.html;
 
                 // Re-assign event untuk baris yang baru
@@ -169,5 +208,4 @@
     document.getElementById('search-input').addEventListener('input', fetchDokumen);
     document.getElementById('kategori-select').addEventListener('change', fetchDokumen);
 </script>
-
 @endpush

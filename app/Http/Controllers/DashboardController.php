@@ -26,6 +26,9 @@ class DashboardController extends Controller
             ->orderBy('tahun', 'desc')
             ->pluck('tahun');
 
+        $keuangan = [];
+        $keuanganPerTahun = [];
+
         if (Auth::user()->role === 'operator_sekolah') {
             $npsn = Auth::user()->npsn;
 

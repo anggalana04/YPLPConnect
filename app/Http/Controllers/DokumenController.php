@@ -181,6 +181,22 @@ public function ajaxSearch(Request $request)
     return response()->json(['html' => $html]);
 }
 
-   
-    
+public function updateStatus(Request $request, $id)
+{
+    // Only operator yayasan can update
+    if (auth()->user()->role !== 'operator_yayasan') {
+        return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+    }
+
+    $request->validate([
+        'status' => 'required|in:Menunggu,Disetujui,Ditolak'
+    ]);
+
+    $dokumen = Dokumen::findOrFail($id);
+    $dokumen->status = $request->status;
+    $dokumen->save();
+
+    return response()->json(['success' => true]);
+}
+
 }

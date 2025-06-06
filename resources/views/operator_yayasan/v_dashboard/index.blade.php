@@ -16,6 +16,11 @@
                 Selamat datang! {{ auth()->user()->name }}
                 @if(auth()->user()->role == 'operator_yayasan')
                     , Kamu adalah operator yayasan!
+                @elseif(auth()->user()->role == 'operator_sekolah')
+                    , Kamu adalah operator sekolah
+                    @if(auth()->user()->sekolah)
+                        di <b>{{ auth()->user()->sekolah->nama }}</b>
+                    @endif
                 @endif
             </h2>
         </div>
@@ -84,8 +89,51 @@
                 @endif
             </div>
 
-            <div class="card card-4">
-                <h1>Dokumen</h1>
+            <div class="card card-yayasan">
+                <h1>Pengajuan SK Menunggu</h1>
+                @if($dokumenMenunggu->isEmpty())
+                    <p class="No-data-pengajuan">Tidak ada pengajuan SK yang menunggu.</p>
+                @else
+                    <div class="dokumen-scroll">
+                        @foreach($dokumenMenunggu as $dokumen)
+                            <div class="status-head">
+                                <span class="head toggle-status" style="display: flex; align-items: center; width: 100%;">
+                                    <div class="judul-pengajuan">
+                                        Pengajuan: {{ $dokumen->nama }} ({{ $dokumen->jenis_sk }})
+                                    </div>
+                                    <img src="{{ asset('image/icon-row/row.svg') }}" class="arrow-icon" alt="Toggle Arrow" style="cursor: pointer;" />
+                                </span>
+                                <div class="detail-status">
+                                    <span class="head-detail">Status Pengajuan SK</span>
+                                    @php
+                                        $statusSteps = ['terkirim', 'diterima', 'diproses', 'selesai'];
+                                        $statusMap = [
+                                            'Menunggu'  => 0,
+                                            'Disetujui' => 3,
+                                            'Ditolak'   => 2,
+                                        ];
+                                        $currentIndex = $statusMap[$dokumen->status] ?? 0;
+                                    @endphp
+                                    <div class="box-status-step">
+                                        @foreach ($statusSteps as $index => $step)
+                                            <div class="status-step {{ $index <= $currentIndex ? 'active' : '' }}">
+                                                <img src="{{ asset('image/icon-status&detail_dokumen/icon-' . $step . '.svg') }}" alt="{{ $step }}">
+                                                <span>{{ $step == 'diterima' ? 'Diterima & Dilihat' : ucfirst($step) }}</span>
+                                            </div>
+                                            @if ($index < count($statusSteps) - 1)
+                                                <div class="status-line {{ $index < $currentIndex ? 'active' : '' }}"></div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    <div style="margin-top: 8px;">
+                                        <small>ID: {{ $dokumen->id }}</small>
+                                        <a href="{{ route('dokumen.show', $dokumen->id) }}" class="btn-detail" style="margin-left: 10px;">Detail</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
 
             <div class="card card-yayasan card-full-width" style="grid-area: card5; height: 300px; overflow: hidden; position: relative;">
@@ -296,5 +344,16 @@
             .catch(error => console.error('Error fetch keuangan:', error));
         });
     });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.dokumen-scroll .status-head').forEach(function(head) {
+        head.addEventListener('click', function(e) {
+            // Toggle aktif pada elemen ini saja
+            this.classList.toggle('active');
+        });
+    });
+});
 </script>
 @endpush

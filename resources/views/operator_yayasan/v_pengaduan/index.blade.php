@@ -44,9 +44,17 @@
                            <td>{{ $row->id }}</td>
                             <td>{{ $row->created_at->format('d/m/Y') }}</td>
                             <td>
-                                <span class="status {{ strtolower($row->status) }}">
-                                    {{ ucfirst($row->status) }}
-                                </span>
+                                @if(auth()->user()->role === 'operator_yayasan')
+                                    <select class="status-dropdown" data-id="{{ $row->id }}">
+                                        <option value="Menunggu" {{ $row->status == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
+                                        <option value="Diproses" {{ $row->status == 'Diproses' ? 'selected' : '' }}>Diproses</option>
+                                        <option value="Selesai" {{ $row->status == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                                    </select>
+                                @else
+                                    <span class="status {{ strtolower($row->status) }}">
+                                        {{ ucfirst($row->status) }}
+                                    </span>
+                                @endif
                             </td>
                         </tr>
                     @empty
@@ -70,10 +78,10 @@
     <form action="/pengaduan/submit" method="POST" enctype="multipart/form-data" class="form-box">
         @csrf
         <div class="sub-head-box">
-            <input 
-                type="text" 
-                name="judul" 
-                placeholder="Judul Pengajuan Masalah" 
+            <input
+                type="text"
+                name="judul"
+                placeholder="Judul Pengajuan Masalah"
                 required
             />
         </div>
@@ -182,12 +190,42 @@
 
     // Optional: klik baris untuk redirect detail
     document.addEventListener('click', function (e) {
+        // CEGAH redirect jika klik pada dropdown status
+        if (e.target.classList.contains('status-dropdown')) return;
         if (e.target.closest('.clickable-row')) {
             const id = e.target.closest('.clickable-row').dataset.id;
             window.location.href = `/pengaduan/${id}`;
         }
     });
-});
 
+    // Cegah bubbling pada dropdown
+    document.querySelectorAll('.status-dropdown').forEach(function(select) {
+        select.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+        select.addEventListener('change', function() {
+            const id = this.getAttribute('data-id');
+            const status = this.value;
+            fetch(`/pengaduan/${id}/status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ status })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success){
+                    alert('Status berhasil diubah!');
+                    // Optional: reload page or update row
+                    // location.reload();
+                } else {
+                    alert('Gagal mengubah status');
+                }
+            });
+        });
+    });
+});
 </script>
 @endpush

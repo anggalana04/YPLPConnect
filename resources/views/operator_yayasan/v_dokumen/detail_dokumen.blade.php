@@ -19,8 +19,16 @@
         <label for="">Status</label>
 
         @php
+            // Step names and asset keys (do not change)
             $statusSteps = ['terkirim', 'diterima', 'diproses', 'selesai'];
-            $currentIndex = array_search($dokumen->status, $statusSteps);
+
+            // Map DB status to step index
+            $statusMap = [
+                'Menunggu'  => 0, // terkirim
+                'Disetujui' => 3, // selesai
+                'Ditolak'   => 2, // diproses (or you can add a new step if you want)
+            ];
+            $currentIndex = $statusMap[$dokumen->status] ?? 0;
         @endphp
 
         <div class="status-container">
@@ -41,7 +49,6 @@
         </div>
 
         <div class="ket-detail">
-            <p id="no"></p>
             <p><strong>ID Pengajuan : </strong>{{ $dokumen->id }}</p>
             <p><strong>NPA PGRI : </strong>{{ $guru->nuptk }}</p>
             <p><strong>Nama : </strong>{{ $dokumen->nama }}</p>

@@ -45,16 +45,19 @@ class PengaduanController extends Controller
         // 1. Buat bagian awal ID
         $prefix = 'PD' . now()->format('dmy'); // Contoh: PD240525
 
-        // 2. Ambil jumlah pengaduan hari ini
-        $countToday = Pengaduan::whereDate('created_at', now())
-            ->where('id', 'like', $prefix . '%')
-            ->count() + 1;
+        // Get the last number for today
+        $lastId = Pengaduan::where('id', 'like', $prefix . '%')
+            ->orderBy('id', 'desc')
+            ->value('id');
 
-        // 3. Buat nomor 4 digit
-        $number = str_pad($countToday, 4, '0', STR_PAD_LEFT); // 0001
+        if ($lastId) {
+            $lastNumber = (int)substr($lastId, -4);
+            $nextNumber = $lastNumber + 1;
+        } else {
+            $nextNumber = 1;
+        }
 
-        // 4. Gabungkan jadi ID lengkap
-        $customId = $prefix . $number; // Contoh: PD2405250001
+        $customId = $prefix . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
 
         // 5. Simpan file jika ada
         $path = null;
@@ -71,7 +74,7 @@ class PengaduanController extends Controller
             'kategori'    => $validated['kategori'],
             'bukti_path'  => $path,
             'status'      => 'Menunggu',
-            'submitted_by'=> Auth::id(),
+            'submitted_by' => Auth::id(),
         ]);
 
         return back()->with('success', 'Pengaduan berhasil dikirim.');
@@ -125,13 +128,35 @@ class PengaduanController extends Controller
         if ($keyword) {
             $query->where(function ($q) use ($keyword) {
                 $q->where('judul', 'like', "%$keyword%")
-                  ->orWhere('id', 'like', "%$keyword%")
-                  ->orWhere('status', 'like', "%$keyword%");
+                    ->orWhere('id', 'like', "%$keyword%")
+                    ->orWhere('status', 'like', "%$keyword%");
             });
         }
 
         $data = $query->orderBy('created_at', 'desc')->get();
 
         return response()->json($data);
+    }
+
+    /**
+     * Update the status of the Pengaduan (AJAX).
+     */
+    public function updateStatus(Request $request, $id)
+    {
+        if (auth()->user()->role !== 'operator_yayasan') {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+
+        $request->validate([
+            'status' => 'required|in:Menunggu,Diproses,Selesai'
+        ]);
+
+        $pengaduan = Pengaduan::findOrFail($id);
+        $pengaduan->status = $request->status;
+        $pengaduan->verified_by = auth()->id();
+        $pengaduan->verified_at = now();
+        $pengaduan->save();
+
+        return response()->json(['success' => true]);
     }
 }

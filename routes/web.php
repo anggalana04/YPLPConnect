@@ -23,10 +23,20 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function (Request $request) {
         $tahunDipilih = $request->get('tahun') ?? date('Y');
-            $bulanList = [
-        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-    ];
+        $bulanList = [
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        ];
 
 
         if (Auth::user()->role === 'operator_sekolah') {
@@ -47,6 +57,12 @@ Route::middleware('auth')->group(function () {
             foreach ($tahunList as $tahun) {
                 $jumlahGuruPerTahun[] = Guru::where('npsn', $npsn)->whereYear('created_at', $tahun)->count();
                 $jumlahSiswaPerTahun[] = Siswa::where('npsn', $npsn)->whereYear('created_at', $tahun)->count();
+            }
+
+            // FIX: Define $keuanganPerTahun for operator_sekolah
+            $keuanganPerTahun = [];
+            foreach ($tahunList as $tahun) {
+                $keuanganPerTahun[] = Keuangan::where('npsn', $npsn)->where('tahun', $tahun)->sum('jumlah_spp');
             }
         } else {
             $jumlahSiswa = Siswa::count();
@@ -87,10 +103,21 @@ Route::middleware('auth')->group(function () {
             ]);
         }
 
-        return view('operator_yayasan.v_dashboard.index', compact(
-            'jumlahSiswa', 'jumlahGuru', 'keuangan', 'pengaduans',
-            'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList', 'tahunDipilih','bulanList', 'keuanganPerTahun'
-        ));
+        $dokumenMenunggu = \App\Models\Dokumen::where('status', 'Menunggu')->latest()->get();
+
+        return view('operator_yayasan.v_dashboard.index', [
+            'jumlahSiswa' => $jumlahSiswa,
+            'jumlahGuru' => $jumlahGuru,
+            'keuangan' => $keuangan,
+            'pengaduans' => $pengaduans,
+            'jumlahGuruPerTahun' => $jumlahGuruPerTahun,
+            'jumlahSiswaPerTahun' => $jumlahSiswaPerTahun,
+            'tahunList' => $tahunList,
+            'tahunDipilih' => $tahunDipilih,
+            'bulanList' => $bulanList,
+            'keuanganPerTahun' => $keuanganPerTahun,
+            'dokumenMenunggu' => $dokumenMenunggu,
+        ]);
     })->name('dashboard');
 
     // Route AJAX untuk data keuangan berdasarkan tahun
@@ -119,10 +146,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengaduan/detail/{id}', [PengaduanController::class, 'show'])->name('pengaduan.detail');
     Route::get('/pengaduan/search', [PengaduanController::class, 'search'])->name('pengaduan.search');
     Route::post('/pengaduan/submit', [PengaduanController::class, 'store'])->name('pengaduan.store');
+    Route::post('/pengaduan/{id}/status', [\App\Http\Controllers\PengaduanController::class, 'updateStatus'])->middleware('auth');
 
     // Keuangan routes
     Route::get('keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
     Route::post('keuangan/upload/{id?}', [KeuanganController::class, 'upload'])->name('keuangan.upload');
+    Route::post('/keuangan/{id}/validasi', [KeuanganController::class, 'validasi'])->middleware('auth')->name('keuangan.validasi');
+    Route::get('/keuangan/{id}/bukti', [KeuanganController::class, 'getBukti'])->middleware('auth');
 
     // Dokumen routes
     Route::get('/dokumen', [DokumenController::class, 'index'])->name('dokumen.index');
@@ -130,6 +160,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/dokumen/store', [DokumenController::class, 'store'])->name('dokumen.store');
     Route::get('/dokumen/ajax/search', [DokumenController::class, 'ajaxSearch'])->name('dokumen.ajax.search');
     Route::get('/dokumen/download/{id}', [DokumenController::class, 'download'])->name('dokumen.download');
+    Route::post('/dokumen/{id}/status', [\App\Http\Controllers\DokumenController::class, 'updateStatus'])->middleware('auth')->name('dokumen.updateStatus');
 
     // Data siswa routes
     Route::get('/siswa/sekolah', [SiswaController::class, 'ListSekolah'])->name('siswa.sekolah');

@@ -260,3 +260,24 @@ body {
 }
 
 /* CSS PENGADUAN BAR */
+
+<style>
+.dokumen-scroll {
+    max-height: 250px; /* atur sesuai kebutuhan */
+    overflow-y: auto;
+    padding-right: 8px;
+}
+.status-head {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    cursor: pointer;
+}
+.detail-status {
+    display: none;
+    margin-top: 8px;
+}
+.status-head.active .detail-status {
+    display: block;
+}
+</style>
