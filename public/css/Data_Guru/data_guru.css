@@ -15,7 +15,7 @@ body {
 
 .konten{
     margin-left: 276px;
-    margin-top: 25px;
+    margin-top: 15px;
     margin-right: 20px;
 }
 
@@ -23,7 +23,7 @@ body {
 .box-konten{
     background-color: #F0F0F0;
     border-radius: 40px;
-    height: 93vh;
+    height: 95vh;
     padding: 20px;
 }
 

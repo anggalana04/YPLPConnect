@@ -125,11 +125,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengaduan/detail/{id}', [PengaduanController::class, 'show'])->name('pengaduan.detail');
     Route::get('/pengaduan/search', [PengaduanController::class, 'search'])->name('pengaduan.search');
     Route::post('/pengaduan/submit', [PengaduanController::class, 'store'])->name('pengaduan.store');
+    Route::get('/pengaduan/{id}', [PengaduanController::class, 'show'])->name('pengaduan.show');
+    // Update status pakai PUT, status disisipkan di URL
+    Route::put('/pengaduan/{id}/status/{status}', [PengaduanController::class, 'updateStatus'])
+        ->name('pengaduan.updateStatus')
+        ->middleware('auth');
+
 
     // Keuangan routes
     Route::get('keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
     Route::post('keuangan/upload/{id?}', [KeuanganController::class, 'upload'])->name('keuangan.upload');
     Route::get('/keuangan/yayasan', [KeuanganController::class, 'yayasan'])->name('keuangan.yayasan');
+    Route::post('/keuangan/verifikasi/{id}', [KeuanganController::class, 'verifikasi'])->name('keuangan.verifikasi');
+    Route::get('/keuangan/bukti-preview/{id}', [KeuanganController::class, 'previewBukti'])->name('keuangan.bukti.preview');
+    Route::get('/keuangan/download-recap', [KeuanganController::class, 'downloadRecap'])->name('keuangan.download.recap');
 
 
     // Dokumen routes
@@ -139,16 +148,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/dokumen/yayasan', [DokumenController::class, 'yayasan'])->name('dokumen.yayasan');
     Route::get('/dokumen/ajax/search', [DokumenController::class, 'ajaxSearch'])->name('dokumen.ajax.search');
     Route::get('/dokumen/download/{id}', [DokumenController::class, 'download'])->name('dokumen.download');
+    Route::put('/dokumen/{id}/status/{status}', [DokumenController::class, 'updateStatus'])->name('dokumen.updateStatus');
+
+    
 
     // Data siswa routes
     Route::get('/siswa', [SiswaController::class, 'redirectToSiswa'])->name('siswa.index');
     Route::post('/siswa', [SiswaController::class, 'store'])->name('siswa.store');
-    // Route::get('/siswa/by-sekolah/{npsn}', [SiswaController::class, 'index'])->name('siswa.by-sekolah');
+    Route::post('/siswa/import', [SiswaController::class, 'import'])->name('siswa.import');
+    Route::get('/siswa/search', [SiswaController::class, 'search'])->name('siswa.search');
+    Route::get('/siswa/by-sekolah/{npsn}', [SiswaController::class, 'index'])->name('siswa.by-sekolah');
 
     // Data guru routes
     Route::get('guru', [GuruController::class, 'index'])->name('guru.index');
     Route::get('/search-guru', [GuruController::class, 'search'])->name('search.guru');
     Route::post('/guru', [GuruController::class, 'store'])->name('guru.store');
+    Route::post('/guru/import', [GuruController::class, 'import'])->name('guru.import');
+
 
     // Users route
     Route::get('/users', [RegisteredUserController::class, 'index'])->name('users.index');

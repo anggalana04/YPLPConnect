@@ -27,7 +27,7 @@ return new class extends Migration
                 'SK Kepala Sekolah',
                 'SK Guru'
             ]);
-            $table->enum('status', ['Menunggu', 'Disetujui', 'Ditolak'])->default('Menunggu');
+            $table->enum('status', ['Menunggu', 'Diterima', 'Diproses', 'Selesai', 'Ditolak'])->default('Menunggu');
             $table->string('file_path', 255)->nullable(); // Path to uploaded SK document
             $table->foreignId('submitted_by')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('verified_by')->nullable()->constrained('users')->onDelete('set null');

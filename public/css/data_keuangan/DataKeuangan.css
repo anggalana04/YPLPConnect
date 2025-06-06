@@ -24,7 +24,7 @@ body {
     background-color: #f0f0f0;
     border-radius: 20px;
     padding: 20px;
-    height: 90vh;
+    height: 93vh;
 }
 
 .head-box-konten h1{
@@ -51,7 +51,7 @@ body {
 }
 
 .option-box-konten.gap-operator-yayasan {
-    gap: 39.5vh; /* Atur sesuai kebutuhan layout yayasan */
+    gap: 37vh; /* Atur sesuai kebutuhan layout yayasan */
 }
 
 /* Gaya umum untuk tombol */
@@ -277,3 +277,48 @@ body {
     padding: 10px;
 }
 /* CSS POPUP */
+
+.popup-rekening {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    max-width: 600px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.popup-content img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+}
+
+
+.status-abu {
+    background-color: #ccc;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.status-kuning {
+    background-color: yellow;
+    color: #000;
+}
+
+.status-hijau {
+    background-color: lime;
+    color: #fff;
+}
+

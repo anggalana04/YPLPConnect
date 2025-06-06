@@ -7,6 +7,37 @@
 <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
 @endpush
 
+@if(session('success'))
+    <style>
+    #uploadSuccessNotification {
+        position: fixed;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #28a745;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        z-index: 9999;
+        font-weight: bold;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        animation: fadeOut 4s forwards;
+    }
+
+    @keyframes fadeOut {
+        0%   { opacity: 1; }
+        80%  { opacity: 1; }
+        100% { opacity: 0; display: none; }
+    }
+    </style>
+
+    <div id="uploadSuccessNotification">
+        {{ session('success') }}
+    </div>
+@endif
+
+
+
 @section('content')
 <div class="konten">
     <div class="box-konten">
@@ -17,7 +48,10 @@
             </div>
 
             <div class="option-button">
-                <button class="upload-guru">Upload Data Guru</button>
+                <form action="{{ route('guru.import') }}" method="POST" enctype="multipart/form-data" id="uploadGuruForm" style="display:inline-block;">
+                    @csrf
+                    <button type="button" class="upload-guru" id="uploadGuruButton">Upload Data Guru</button>
+                </form>
                 <button onclick="openPopUpForm()" class="tambah-guru">Tambah Data Guru</button>
             </div>
         </div>
@@ -169,4 +203,27 @@ document.querySelectorAll('.batal').forEach(function(btn) {
 });
 </script>
 
+{{-- JS UPLOAD FILE EXCEL --}}
+
+<script>
+document.getElementById('uploadGuruButton').addEventListener('click', function () {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.name = 'file';
+    input.accept = '.csv, .xlsx, .xls';
+    input.style.display = 'none';
+
+    const form = document.getElementById('uploadGuruForm');
+    form.appendChild(input);
+
+    input.addEventListener('change', function () {
+        if (input.files.length > 0) {
+            form.submit();
+        }
+    });
+
+    input.click();
+});
+</script>
+{{-- JS UPLOAD FILE EXCEL --}}
 @endpush

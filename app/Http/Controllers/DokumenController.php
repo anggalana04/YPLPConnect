@@ -14,29 +14,45 @@ class DokumenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
-        $query = Dokumen::query();
+public function index(Request $request)
+{
+    $query = Dokumen::query();
 
-        if (Auth::user()->role === 'operator_sekolah') {
-            $npsn = Auth::user()->npsn;
+    if (Auth::user()->role === 'operator_sekolah') {
+        $npsn = Auth::user()->npsn;
+
+        // Filter dokumen berdasarkan NPSN guru
+        $query->whereHas('guru', function ($q) use ($npsn) {
+            $q->where('npsn', $npsn);
+        });
+    } elseif (Auth::user()->role === 'operator_yayasan') {
+        $npsn = $request->npsn;
+
+        // Jika yayasan pilih NPSN, filter sesuai itu
+        if ($npsn) {
             $query->whereHas('guru', function ($q) use ($npsn) {
                 $q->where('npsn', $npsn);
             });
+        } else {
+            // Jika tidak memilih sekolah, tampilkan data kosong
+            $query->whereRaw('0 = 1');
         }
-
-        if ($request->filled('q')) {
-            $query->where('nama', 'like', '%' . $request->q . '%');
-        }
-
-        if ($request->filled('kategori')) {
-            $query->where('jenis_sk', $request->kategori);
-        }
-
-        $dokumen = $query->latest()->get();
-
-        return view('operator_yayasan.v_dokumen.index', compact('dokumen'));
     }
+
+    // Tambahan filter jika diperlukan
+    if ($request->filled('q')) {
+        $query->where('nama', 'like', '%' . $request->q . '%');
+    }
+
+    if ($request->filled('kategori')) {
+        $query->where('jenis_sk', $request->kategori);
+    }
+
+    $dokumen = $query->latest()->get();
+
+    return view('operator_yayasan.v_dokumen.index', compact('dokumen'));
+}
+
 
 
     /**
@@ -74,7 +90,7 @@ class DokumenController extends Controller
         $dokumen->tanggal_lahir     = $tanggal_lahir;
         $dokumen->alamat_unit_kerja = $validated['alamat'];
         $dokumen->jenis_sk          = $validated['kategori'];
-        $dokumen->status            = 'Menunggu';
+        $dokumen->status            = 'menunggu';
         $dokumen->submitted_by      = Auth::id();
 
         $dokumen->save();
@@ -113,7 +129,9 @@ class DokumenController extends Controller
     $dokumen = Dokumen::findOrFail($id);
     $guru = Guru::where('nuptk', $dokumen->nuptk)->first(); // cari data guru yang sesuai
 
-    return view('operator_yayasan.v_dokumen.detail_dokumen', compact('dokumen', 'guru'));
+    $sekolah = $guru?->sekolah; // pakai relasi
+
+    return view('operator_yayasan.v_dokumen.detail_dokumen', compact('dokumen', 'guru', 'sekolah'));
 }
 
 
@@ -145,8 +163,9 @@ class DokumenController extends Controller
 {
     $dokumen = Dokumen::findOrFail($id);
     $guru = Guru::where('nuptk', $dokumen->nuptk)->first();
+    $sekolah = $guru?->sekolah;
 
-    $pdf = Pdf::loadView('operator_yayasan.v_dokumen.Dokumen_PDF_Layouts', compact('dokumen', 'guru'));
+    $pdf = Pdf::loadView('operator_yayasan.v_dokumen.Dokumen_PDF_Layouts', compact('dokumen', 'guru', 'sekolah'));
     // Tampilkan langsung di browser (inline)
     return $pdf->stream('dokumen.pdf');
     // return $pdf->download('Dokumen_SK_' . $dokumen->id . '.pdf');
@@ -192,6 +211,27 @@ public function ajaxSearch(Request $request)
 
         $dokumen = Dokumen::all(); // sesuaikan query jika perlu
         return view('operator_yayasan.v_dokumen.index', compact('dokumen'));
+    }
+
+    public function updateStatus($id, $status)
+    {
+        $allowedStatuses = ['diterima', 'diproses', 'selesai'];
+
+        if (!in_array($status, $allowedStatuses)) {
+            abort(400, 'Status tidak valid');
+        }
+
+        $dokumen = Dokumen::findOrFail($id);
+        $dokumen->status = $status;
+
+        // Simpan tanggal mulai ketika status menjadi "selesai"
+        if ($status === 'selesai' && $dokumen->tanggal_mulai === null) {
+            $dokumen->tanggal_mulai = now();
+        }
+
+        $dokumen->save();
+
+        return redirect()->back()->with('success', ucfirst($status) . ' sukses');
     }
     
 }

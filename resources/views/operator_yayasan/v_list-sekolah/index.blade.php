@@ -134,17 +134,25 @@ document.querySelectorAll('.batal').forEach(function(btn) {
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const from = "{{ $from ?? '' }}";
+    const rows = document.querySelectorAll("tbody#result-table tr[data-npsn]");
+
     rows.forEach(row => {
         row.addEventListener("click", function () {
             const npsn = this.dataset.npsn;
-            if (from) {
+            if (from === 'siswa') {
+                // Langsung ke route siswa.by-sekolah dengan npsn
+                window.location.href = `/siswa/by-sekolah/${npsn}`;
+            } else if (from) {
+                // Untuk from lain, pakai pola ?npsn=...
                 window.location.href = `/${from}?npsn=${npsn}`;
             } else {
+                // Default fallback
                 window.location.href = `/siswa/by-sekolah/${npsn}`;
             }
         });
     });
 });
+
 </script>
 
 <script>
