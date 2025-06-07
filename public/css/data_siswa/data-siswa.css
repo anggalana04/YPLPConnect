@@ -24,7 +24,7 @@ body {
 .box-konten{
     background-color: #F0F0F0;
     border-radius: 40px;
-    height: 91dvh;
+    height: 93dvh;
     padding: 20px;
 }
 
@@ -161,7 +161,7 @@ th:last-child {
     list-style: none;
     padding-left: 0;
     justify-content: flex-end;
-    margin-top: 8px;
+    margin-top: 10px;
     gap: 2px;
 }
 
@@ -336,8 +336,32 @@ th:last-child {
 }
 
 /* CSS BUTTON */
-
 /* CSS FORM */
+
+/* CSS NOTIF */
+.alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 300px;
+    max-width: 80%;
+    padding: 15px 25px;
+    border-radius: 5px;
+    font-weight: 600;
+    color: #fff;
+    z-index: 9999;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    text-align: center;
+    opacity: 0.95;
+}
+.alert-success {
+    background-color: #28a745;
+}
+.alert-danger {
+    background-color: #dc3545;
+}
+/* CSS NOTIF */
 
 
 /* Responsive: Stack sidebar on top for small screens */

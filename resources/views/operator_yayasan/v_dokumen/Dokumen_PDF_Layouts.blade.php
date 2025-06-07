@@ -56,54 +56,66 @@
   <tr>
     <td class="menetapkan-cell">
       <strong>Menetapkan</strong>
-      <table class="decision-table">
-        <tr>
-          <td class="main-item">PERTAMA</td>
-          <td class="colon">:</td>
-          <td class="sub-item">1. Nama dan gelar</td>
-          <td class="colon">:</td>
-          <td>H. Ahmad Purwanto, S.Pd.</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td class="sub-item">2. Tempat/tanggal lahir</td>
-          <td class="colon">:</td>
-          <td>Bogor, 03 Maret 1977</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td class="sub-item">3. Pendidikan Umum</td>
-          <td class="colon">:</td>
-          <td>S1 Tahun 2015</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td class="sub-item">4. NUPTK</td>
-          <td class="colon">:</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td class="sub-item">5. NPA-PGRI</td>
-          <td class="colon">:</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td class="sub-item">6. Unit Kerja</td>
-          <td class="colon">:</td>
-          <td>SMP PGRI 1 Tenjo, Kabupaten Bogor</td>
-        </tr>
-      </table>
+        <table class="decision-table">
+            <tr>
+                <td class="main-item">PERTAMA</td>
+                <td class="colon">:</td>
+                <td class="sub-item">1. Nama dan gelar</td>
+                <td class="colon">:</td>
+                <td>{{ $guru->nama_gelar ?? $dokumen->nama }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="sub-item">2. Tempat, Tanggal lahir</td>
+                <td class="colon">:</td>
+                <td>
+                    {{ $guru->tempat_lahir ?? $dokumen->tempat_lahir }},
+                    {{ \Carbon\Carbon::parse($guru->tanggal_lahir ?? $dokumen->tanggal_lahir)->translatedFormat('d F Y') }}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="sub-item">3. Pendidikan Umum</td>
+                <td class="colon">:</td>
+                <td>{{ $guru->pendidikan_umum ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="sub-item">4. NUPTK</td>
+                <td class="colon">:</td>
+                <td>{{ $guru->nuptk ?? $dokumen->nuptk ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="sub-item">5. NPA-PGRI</td>
+                <td class="colon">:</td>
+                <td>{{ $guru->npa ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="sub-item">6. Unit Kerja</td>
+                <td class="colon">:</td>
+                <td>{{ $guru->unit_kerja ?? $dokumen->alamat_unit_kerja }}</td>
+            </tr>
+        </table>
+        @php
+            use Carbon\Carbon;
+            Carbon::setLocale('id'); // <- Tambahkan ini untuk mengatur locale ke Bahasa Indonesia
 
-      <p class="effective-date">
-        Terhitung mulai tanggal 04 Juli 2023 sampai dengan 30 Juni 2027 diangkat menjadi Kepala SMP PGRI 1 Tenjo, Kabupaten Bogor.
-      </p>
+            $mulai = $dokumen->tanggal_mulai ? Carbon::parse($dokumen->tanggal_mulai) : now();
+            $berakhir = $mulai->copy()->addYears(4)->subDay();
+        @endphp
+
+        <p class="effective-date">
+            Terhitung mulai tanggal <strong>{{ $mulai->translatedFormat('d F Y') }}</strong>
+            sampai dengan <strong>{{ $berakhir->translatedFormat('d F Y') }}</strong>
+            diangkat menjadi Kepala <strong>{{ $sekolah->nama }}</strong>, Kabupaten Bogor.
+        </p>
     </td>
   </tr>
 </table>
@@ -148,7 +160,7 @@
     <td>
       <div class="ttd">
         <p>Ditetapkan di : Bogor</p>
-        <p>Pada tanggal : 04 Juli 2023</p>
+        <p>Pada tanggal : {{ $mulai->translatedFormat('d F Y') }}</p>
         <p>Pengurus Perwakilan YPLP PGRI</p>
         <p>Kabupaten Bogor</p><br><br>
         <div class="ketua-yayasan">

@@ -89,52 +89,52 @@
                 @endif
             </div>
 
-            <div class="card card-yayasan">
-                <h1>Pengajuan SK Menunggu</h1>
-                @if($dokumenMenunggu->isEmpty())
-                    <p class="No-data-pengajuan">Tidak ada pengajuan SK yang menunggu.</p>
-                @else
-                    <div class="dokumen-scroll">
-                        @foreach($dokumenMenunggu as $dokumen)
-                            <div class="status-head">
-                                <span class="head toggle-status" style="display: flex; align-items: center; width: 100%;">
-                                    <div class="judul-pengajuan">
-                                        Pengajuan: {{ $dokumen->nama }} ({{ $dokumen->jenis_sk }})
-                                    </div>
-                                    <img src="{{ asset('image/icon-row/row.svg') }}" class="arrow-icon" alt="Toggle Arrow" style="cursor: pointer;" />
-                                </span>
-                                <div class="detail-status">
-                                    <span class="head-detail">Status Pengajuan SK</span>
-                                    @php
-                                        $statusSteps = ['terkirim', 'diterima', 'diproses', 'selesai'];
-                                        $statusMap = [
-                                            'Menunggu'  => 0,
-                                            'Disetujui' => 3,
-                                            'Ditolak'   => 2,
-                                        ];
-                                        $currentIndex = $statusMap[$dokumen->status] ?? 0;
-                                    @endphp
-                                    <div class="box-status-step">
-                                        @foreach ($statusSteps as $index => $step)
-                                            <div class="status-step {{ $index <= $currentIndex ? 'active' : '' }}">
-                                                <img src="{{ asset('image/icon-status&detail_dokumen/icon-' . $step . '.svg') }}" alt="{{ $step }}">
-                                                <span>{{ $step == 'diterima' ? 'Diterima & Dilihat' : ucfirst($step) }}</span>
-                                            </div>
-                                            @if ($index < count($statusSteps) - 1)
-                                                <div class="status-line {{ $index < $currentIndex ? 'active' : '' }}"></div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                    <div style="margin-top: 8px;">
-                                        <small>ID: {{ $dokumen->id }}</small>
-                                        <a href="{{ route('dokumen.show', $dokumen->id) }}" class="btn-detail" style="margin-left: 10px;">Detail</a>
-                                    </div>
+<div class="card card-yayasan">
+    <h1>Dokumen</h1>
+
+    @if ($dokumens->isEmpty())
+        <p class="No-data-dokumen">Tidak ada dokumen ditemukan.</p>
+    @else
+        <div class="dokumen-scroll">
+            @foreach ($dokumens as $dokumen)
+                <div class="status-head">
+                    <span class="head toggle-status" style="display: flex; align-items: center; width: 100%;">
+                        <div class="judul-dokumen">
+                            Judul Dokumen: {{ $dokumen->jenis_sk }}
+                        </div>
+                        <img src="{{ asset('image/icon-row/row.svg') }}" class="arrow-icon" alt="Toggle Arrow" style="cursor: pointer;" />
+                    </span>
+                    <div class="detail-status">
+                        <span class="head-detail">
+                            Nama Guru :
+                            @if ($dokumen->guru)
+                                {{ $dokumen->guru->nama }} [{{ $dokumen->guru->npsn }}]
+                            @else
+                                -
+                            @endif
+                        </span>
+
+                        @php
+                            $statusSteps = ['terkirim', 'diterima', 'diproses', 'selesai'];
+                            $currentIndex = array_search($dokumen->status, $statusSteps);
+                        @endphp
+                        <div class="box-status-step">
+                            @foreach ($statusSteps as $index => $step)
+                                <div class="status-step {{ $index <= $currentIndex ? 'active' : '' }}">
+                                    <img src="{{ asset('image/icon-status&detail_dokumen/icon-' . $step . '.svg') }}" alt="{{ $step }}">
+                                    <span>{{ $step == 'diterima' ? 'Diterima & Dilihat' : ucfirst($step) }}</span>
                                 </div>
-                            </div>
-                        @endforeach
+                                @if ($index < count($statusSteps) - 1)
+                                    <div class="status-line {{ $index < $currentIndex ? 'active' : '' }}"></div>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
-                @endif
-            </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
+</div>
 
             <div class="card card-yayasan card-full-width" style="grid-area: card5; height: 300px; overflow: hidden; position: relative;">
                 <h1 class="head-keuangan">Keuangan Yayasan</h1>

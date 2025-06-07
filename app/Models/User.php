@@ -19,6 +19,7 @@ class User extends Authenticatable
         'name',
         'npsn', // <--- Ini perlu ditambahkan
         'email',
+        'no_hp', // <--- Ini perlu ditambahkan
         'password',
         'role', // <--- Ini perlu ditambahkan
     ];

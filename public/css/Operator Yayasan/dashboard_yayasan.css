@@ -380,6 +380,23 @@ canvas#chartGuru {
     background-color: limegreen;
 }
 
+/* CSS BAR DOKUMEN */
+.dokumen-scroll {
+    max-height: 200px; /* Sesuaikan tinggi agar kira-kira 10 item muat */
+    overflow-y: auto;
+    padding-right: 8px; /* Biar tidak tertutup scrollbar */
+}
+
+/* Tambahan styling opsional agar tidak mepet */
+.status-head {
+    margin-bottom: 16px;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+
 /* CSS BAR KEUANGAN YAYASAN */
 #chartKeuangan {
     width: 100%;

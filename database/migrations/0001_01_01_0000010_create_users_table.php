@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('npsn')->references('npsn')->on('sekolah')->onDelete('set null');
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('no_hp')->nullable(); // <- kolom ini boleh kosong (NULL)
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['operator_sekolah', 'operator_yayasan']);

@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Sekolah extends Model
 {
+    
     // Table name
     protected $table = 'sekolah';
 
@@ -34,4 +36,11 @@ class Sekolah extends Model
     {
         return $this->hasMany(Guru::class, 'npsn', 'npsn');
     }
+
+    // Sekolah.php
+    public function users()
+    {
+        return $this->hasMany(User::class, 'npsn', 'npsn');
+    }
+
 }

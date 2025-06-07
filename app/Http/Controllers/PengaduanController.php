@@ -11,16 +11,26 @@ class PengaduanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        if (Auth::user()->role == 'operator_sekolah') {
-            $data = Pengaduan::where('npsn', Auth::user()->npsn)->get();
-        } else {
-            $data = Pengaduan::all();
-        }
+public function index(Request $request)
+{
+    if (Auth::user()->role == 'operator_sekolah') {
+        // Operator sekolah hanya bisa lihat berdasarkan NPSN-nya sendiri
+        $data = Pengaduan::where('npsn', Auth::user()->npsn)->get();
+    } elseif (Auth::user()->role == 'operator_yayasan') {
+        // Operator yayasan bisa pilih NPSN via URL
+        $npsn = $request->npsn;
 
-        return view('operator_yayasan.v_pengaduan.index', compact('data'));
+        if ($npsn) {
+            $data = Pengaduan::where('npsn', $npsn)->get();
+        } else {
+            $data = collect(); // Kosong jika belum pilih sekolah
+        }
+    } else {
+        $data = collect(); // Kosong untuk role lain
     }
+
+    return view('operator_yayasan.v_pengaduan.index', compact('data'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -138,25 +148,31 @@ class PengaduanController extends Controller
         return response()->json($data);
     }
 
-    /**
-     * Update the status of the Pengaduan (AJAX).
-     */
-    public function updateStatus(Request $request, $id)
+    public function updateStatus($id, $status)
     {
-        if (auth()->user()->role !== 'operator_yayasan') {
-            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        $allowedStatuses = ['diterima', 'diproses', 'selesai'];
+
+        if (!in_array($status, $allowedStatuses)) {
+            abort(400, 'Status tidak valid');
         }
 
-        $request->validate([
-            'status' => 'required|in:Menunggu,Diproses,Selesai'
-        ]);
-
         $pengaduan = Pengaduan::findOrFail($id);
-        $pengaduan->status = $request->status;
-        $pengaduan->verified_by = auth()->id();
-        $pengaduan->verified_at = now();
+        $currentStatus = strtolower($pengaduan->status);
+
+        // Logika validasi agar tidak lompat status (optional)
+        $statusOrder = ['menunggu', 'terkirim', 'diterima', 'diproses', 'selesai'];
+        $currentIndex = array_search($currentStatus, $statusOrder);
+        $newIndex = array_search($status, $statusOrder);
+
+        if ($newIndex <= $currentIndex) {
+            return redirect()->back()->with('error', 'Status tidak bisa mundur atau sama.');
+        }
+
+        $pengaduan->status = $status;
         $pengaduan->save();
 
-        return response()->json(['success' => true]);
+        return redirect()->back()->with('success', ucfirst($status) . ' sukses');
     }
+
+
 }

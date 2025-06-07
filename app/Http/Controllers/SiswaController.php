@@ -4,19 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Siswa;
 use App\Models\Sekolah;
+use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-
-    public function listSekolah() {
-        $sekolah = Sekolah::all(); // Ambil semua data sekolah dari DB
-        return view('operator_yayasan.v_list-sekolah.index', compact('sekolah'));
-    }
 
     public function redirectToSiswa()
     {
@@ -32,17 +29,24 @@ class SiswaController extends Controller
     }
 
 
-    public function index($npsn = null)
-    {
-        if (Auth::user()->role == 'operator_sekolah') {
-            $siswa = Siswa::where('npsn', Auth::user()->npsn)->get();
-        } elseif ($npsn) {
+public function index($npsn = null)
+{
+    if (Auth::user()->role == 'operator_sekolah') {
+        $siswa = Siswa::where('npsn', Auth::user()->npsn)->get();
+    } elseif (Auth::user()->role == 'operator_yayasan') {
+        // Tambahan logika yayasan: hanya tampilkan data jika npsn dikirim
+        if ($npsn) {
             $siswa = Siswa::where('npsn', $npsn)->get();
         } else {
-            $siswa = Siswa::all();
+            $siswa = collect(); // kosongkan jika belum pilih sekolah
         }
-        return view('operator_yayasan.v_data_siswa.index', compact('siswa'));
+    } else {
+        $siswa = collect(); // kosongkan untuk role lain
     }
+
+    return view('operator_yayasan.v_data_siswa.index', compact('siswa'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -123,6 +127,36 @@ public function store(Request $request)
     {
         //
     }
+
+    public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|file|mimes:csv,xlsx,xls',
+    ]);
+
+    Excel::import(new SiswaImport, $request->file('file'));
+
+    return redirect()->back()->with('success', 'Data siswa berhasil diimpor.');
+}
+
+public function search(Request $request)
+{
+    $keyword = $request->query('keyword');
+    $npsn = Auth::user()->npsn;
+
+    $siswa = Siswa::where('npsn', $npsn)
+        ->where(function ($query) use ($keyword) {
+            $query->where('nama', 'like', '%' . $keyword . '%')
+                ->orWhere('nisn', 'like', '%' . $keyword . '%')
+                ->orWhere('kelas', 'like', '%' . $keyword . '%');
+        })
+        ->get();
+
+    return response()->json([
+        'data' => $siswa
+    ]);
+}
+
 
     
 }

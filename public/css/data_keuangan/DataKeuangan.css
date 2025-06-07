@@ -17,14 +17,14 @@ body {
     margin-left: 296px;
     margin-top: 30px;
     margin-right: 40px;
-}   
+}
 
 /* CSS BOX-KONTEN */
 .box-konten{
     background-color: #f0f0f0;
     border-radius: 20px;
     padding: 20px;
-    height: 90vh;
+    height: 93vh;
 }
 
 .head-box-konten h1{
@@ -50,11 +50,15 @@ body {
     gap: 85vh;
 }
 
-.download button{
+.option-box-konten.gap-operator-yayasan {
+    gap: 37vh; /* Atur sesuai kebutuhan layout yayasan */
+}
+
+/* Gaya umum untuk tombol */
+.download button,
+.download-btn {
     border: none;
     border-radius: 20px;
-    background-color: #301AF4;
-    color: white;
     padding: 8px;
     font-size: 12px;
 }
@@ -258,6 +262,53 @@ body {
     background-color: red;
     padding: 10px;
 }
+/* CSS POPUP */
+
+.popup-rekening {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    max-width: 600px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.popup-content img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+}
+
+
+.status-abu {
+    background-color: #ccc;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.status-kuning {
+    background-color: yellow;
+    color: #000;
+}
+
+.status-hijau {
+    background-color: lime;
+    color: #fff;
+}
+
+
 
 /* Tambahkan di css/data_keuangan/DataKeuangan.css */
 .popup-bukti {

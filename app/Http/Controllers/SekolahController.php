@@ -28,8 +28,19 @@ class SekolahController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'npsn' => 'required|numeric|unique:sekolah,npsn',
+            'nama' => 'required|string|max:255',
+            'jenjang' => 'required|string',
+            'alamat' => 'required|string|max:255',
+            'email' => 'required|email|unique:sekolah,email',
+        ]);
+
+        Sekolah::create($validated);
+
+        return redirect()->back()->with('success', 'Data sekolah berhasil ditambahkan!');
     }
+
 
     /**
      * Display the specified resource.

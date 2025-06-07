@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use Throwable;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
 
 class RegisteredUserController extends Controller
 {
-    public function index()
-    {
-        return view('operator_yayasan.v_ManageUser.index');
-    }
+public function index()
+{
+    $users = User::with('sekolah')->get(); // ambil relasi sekolah berdasarkan NPSN
+
+    return view('operator_yayasan.v_ManageUser.index', compact('users'));
+}
+
     public function create(): View
     {
         return view('auth.register');
@@ -48,4 +53,58 @@ class RegisteredUserController extends Controller
 
         return redirect(route('dashboard', absolute: false));
     }
+
+public function updateInline(Request $request, $id)
+{
+    Log::info('Update inline user, data diterima:', $request->all());
+
+    try {
+        $user = User::with('sekolah')->findOrFail($id);
+
+        $allowedUserFields = ['name', 'role', 'no_hp'];
+        $allowedSekolahFields = ['sekolah_nama', 'sekolah_alamat'];
+
+        foreach ($request->all() as $field => $value) {
+            if (in_array($field, $allowedUserFields)) {
+                // Update atribut user
+                $user->$field = $value;
+            } elseif (in_array($field, $allowedSekolahFields)) {
+                // Update atribut sekolah, pastikan sekolah ada
+                if ($user->sekolah) {
+                    $attr = str_replace('sekolah_', '', $field);
+                    $user->sekolah->$attr = $value;
+                } else {
+                    Log::warning("User ID {$id} tidak memiliki sekolah terkait, tidak bisa update $field");
+                }
+            }
+        }
+
+        $user->save();
+
+        if ($user->sekolah) {
+            $user->sekolah->save();
+        }
+
+        return response()->json(['success' => true]);
+
+    } catch (\Illuminate\Database\QueryException $ex) {
+        Log::error('QueryException updateInline:', [
+            'message' => $ex->getMessage(),
+            'sql' => $ex->getSql(),
+            'bindings' => $ex->getBindings(),
+        ]);
+        return response()->json(['success' => false, 'message' => 'Database error'], 500);
+
+    } catch (Throwable $e) {
+        Log::error('Error updateInline:', [
+            'message' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+        ]);
+        return response()->json(['success' => false, 'message' => 'Server error'], 500);
+    }
+}
+
+
+
+
 }

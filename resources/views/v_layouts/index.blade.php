@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 
@@ -28,7 +30,9 @@
         <div class="menu-sidebar">
             <ul class="menu-item">
                 <img src="{{ asset('image/icon-sidebar/Icon-dashboard.svg') }}" alt="">
-                <Span><a href="{{ route('dashboard') }}">Dashboard</a></Span>
+                <span>
+                    <a href="{{ route('dashboard') }}">Dashboard</a>
+                </span>
             </ul>
 
             <ul class="menu-item">
@@ -42,25 +46,40 @@
             <!-- PISAHKAN dropdown dari menu utama -->
             <div class="collapse" id="laporanCollapse">
                 <ul class="nav flex-column">
-                    <li><a class="dropdown-item" href="{{ route('siswa.index') }}">Siswa</a></li>
-                    <li><a class="dropdown-item" href="{{ route('guru.index') }}">Guru</a></li>
+                   @php
+                        $isOperatorYayasan = auth()->user()->role === 'operator_yayasan';
+                    @endphp
+                    <li><a class="dropdown-item" href="{{ route('sekolah.index', ['from' => 'siswa']) }}">Siswa</a></li>
+                    <li><a class="dropdown-item" href="{{ route('sekolah.index', ['from' => 'guru']) }}">Guru</a></li>
+
                 </ul>
             </div>
 
+            @php
+                $keuanganRoute = auth()->user()->role === 'operator_yayasan' ? route('keuangan.yayasan') : route('keuangan.index');
+            @endphp
             <ul class="menu-item">
                 <img src="{{ asset('image/icon-sidebar/icon-keuangan.svg') }}" alt="">
-                <SPan><a href="{{ route('keuangan.index') }}">Keuangan</a></SPan>
+                <span><a href="{{ route('sekolah.index', ['from' => 'keuangan']) }}">Keuangan</a></span>
             </ul>
 
+
+            @php
+                $dokumenRoute = auth()->user()->role === 'operator_yayasan' ? route('dokumen.yayasan') : route('dokumen.index');
+            @endphp
             <ul class="menu-item">
                 <img src="{{ asset('image/icon-sidebar/icon-dokumen.svg') }}" alt="">
-                <SPan><a href="{{ route('dokumen.index') }}">Dokumen</a></SPan>
+                <span><a href="{{ route('sekolah.index', ['from' => 'dokumen']) }}">Dokumen</a></span>
             </ul>
 
+            @php
+                $pengaduanRoute = auth()->user()->role === 'operator_yayasan' ? route('pengaduan.yayasan') : route('pengaduan.index');
+            @endphp
             <ul class="menu-item">
                 <img src="{{ asset('image/icon-sidebar/icon-pengaduan.svg') }}" alt="">
-                <SPan><a href="{{ route('pengaduan.index') }}">Pengaduan</a></SPan>
+                <span><a href="{{ route('sekolah.index', ['from' => 'pengaduan']) }}">Pengaduan</a></span>
             </ul>
+
 
             @if (auth()->user()->role == 'operator_yayasan')
             <ul class="menu-item">
@@ -79,17 +98,6 @@
                     <span class="logout-text">LogOut</span>
                 </a>
             </form>
-
-
-            {{-- <form class="logout" method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-            </form> --}}
         </div>
 
 

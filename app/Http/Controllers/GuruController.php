@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use App\Imports\GuruImport;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
 
 class GuruController extends Controller
@@ -12,15 +14,24 @@ class GuruController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
-    {
-        if (Auth::user()->role == 'operator_sekolah') {
-            $guru = Guru::where('npsn', Auth::user()->npsn)->get();
+public function index()
+{
+    $npsn = request()->query('npsn');
+
+    if (Auth::user()->role == 'operator_sekolah') {
+        $guru = Guru::where('npsn', Auth::user()->npsn)->get();
+    } elseif (Auth::user()->role == 'operator_yayasan') {
+        if ($npsn) {
+            $guru = Guru::where('npsn', $npsn)->get();
         } else {
-            $guru = Guru::all();
+            $guru = collect();
         }
-        return view('operator_yayasan.v_data_guru.index', compact('guru'));
+    } else {
+        $guru = collect();
     }
+
+    return view('operator_yayasan.v_data_guru.index', compact('guru'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -113,4 +124,14 @@ class GuruController extends Controller
         return response()->json($gurus);
     }
 
+public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls,csv',
+    ]);
+
+    Excel::import(new GuruImport, $request->file('file'));
+
+    return redirect()->back()->with('success', 'Data guru berhasil Ditambahkan.');
+}
 }

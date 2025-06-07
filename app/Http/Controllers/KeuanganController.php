@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Siswa;
 use App\Models\Sekolah;
 use App\Models\Keuangan;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 
 class KeuanganController extends Controller
@@ -27,7 +29,9 @@ class KeuanganController extends Controller
             $jumlahSiswa = \App\Models\Siswa::where('npsn', $user->npsn)->count();
         } elseif ($user->role === 'operator_yayasan' && $npsnDipilih) {
             $query->where('npsn', $npsnDipilih);
+            $jumlahSiswa = \App\Models\Siswa::where('npsn', $npsnDipilih)->count();
         }
+
 
         $keuangan = $query->where('tahun', $tahunDipilih)->get();
         $tahunList = Keuangan::select('tahun')->distinct()->orderBy('tahun', 'desc')->pluck('tahun');
@@ -89,7 +93,8 @@ class KeuanganController extends Controller
         $keuangan->status = 'Menunggu';
         $keuangan->save();
 
-        return back()->with('success', 'Bukti berhasil diupload.');
+        return redirect()->back()->with('success', 'Bukti pembayaran berhasil diupload dan sudah terkirim');
+
     }
 
     /**
@@ -129,5 +134,82 @@ class KeuanganController extends Controller
     }
 
 
+
+public function previewBukti($id)
+{
+    $data = Keuangan::findOrFail($id);
+
+    if (!$data->bukti_path) {
+        abort(404, 'Bukti tidak ditemukan.');
+    }
+
+    // Data tambahan (misalnya dari relasi)
+    $jumlahSiswa = Siswa::where('npsn', $data->npsn)->count();
+    $biayaPerSiswa = 2000;
+
+    $viewData = [
+        'bulan' => $data->bulan,
+        'tahun' => $data->tahun, // Tambahkan ini
+        'jumlahSiswa' => $jumlahSiswa,
+        'biayaPerSiswa' => $biayaPerSiswa,
+        'total' => $jumlahSiswa * $biayaPerSiswa,
+        'catatan' => $data->catatan,
+        'buktiPath' => $data->bukti_path,
+    ];
+
+    $pdf = Pdf::loadView('operator_yayasan.v_keuangan.Bukti_bulanan', $viewData)->setPaper('a4', 'portrait');
+
+    return $pdf->stream("bukti_{$data->bulan}.pdf"); // Untuk preview, bukan download
+}
+
+public function downloadRecap(Request $request)
+{
+    $tahun = $request->tahun;
+    $user = Auth::user();
+
+    if ($user->role !== 'operator_sekolah') {
+        abort(403);
+    }
+
+    $npsn = $user->npsn;
+
+    // Ambil data keuangan untuk tahun dan NPSN terkait
+    $keuangan = Keuangan::where('npsn', $npsn)
+        ->where('tahun', $tahun)
+        ->get();
+
+    // Cek apakah semua bulan dari Januari–Desember sudah lunas (status == Disetujui)
+    $bulanList = [
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
+
+    foreach ($bulanList as $bulan) {
+        $data = $keuangan->firstWhere('bulan', $bulan);
+        if (!$data || $data->status !== 'Disetujui') {
+            return back()->with('error', 'Lunasi pembayaran untuk mendownload recap.');
+        }
+    }
+
+    // Jika semua bulan sudah lunas, lanjut generate PDF
+    $sekolah = Sekolah::where('npsn', $npsn)->first();
+    $namaSekolah = $sekolah ? $sekolah->nama : 'Nama Sekolah Tidak Ditemukan';
+
+    $rekap = [];
+    foreach ($bulanList as $bulan) {
+        $rekap[] = [
+            'bulan' => $bulan,
+            'status' => 'Lunas',
+        ];
+    }
+
+    $pdf = PDF::loadView('operator_yayasan.v_keuangan.all_recap', [
+        'rekap' => $rekap,
+        'tahun' => $tahun,
+        'namaSekolah' => $namaSekolah,
+    ]);
+
+    return $pdf->stream("Rekap_Pembayaran_{$tahun}.pdf");
+}
     // Tambahkan method lain jika diperlukan (show, edit, update, destroy)
 }
