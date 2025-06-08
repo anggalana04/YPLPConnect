@@ -173,8 +173,9 @@
                                         <button class="bayar-button" data-bulan="{{ $bulan }}">Bayar</button>
                                     @elseif (auth()->user()->role === 'operator_yayasan')
                                         <button class="cek-bukti-button" data-bulan="{{ $bulan }}">Cek Bukti</button>
-                                        <form method="POST" action="{{ route('keuangan.verifikasi', $data->id ?? 0) }}">
+                                        <form method="POST" action="{{ route('keuangan.validasi', $data->id ?? 0) }}" class="form-validasi">
                                             @csrf
+                                            <input type="hidden" name="status" value="Disetujui">
                                             <button type="submit" class="sudah-bayar-button" data-bulan="{{ $bulan }}">Sudah Bayar</button>
                                         </form>
                                     @endif
@@ -357,6 +358,34 @@
                 setTimeout(() => notifSuccess.remove(), 500);
             }, 3000);
         }
+    });
+</script>
+
+<script>
+    document.querySelectorAll('.form-validasi').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            fetch(this.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': formData.get('_token'),
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // Optionally update the status and button color in the UI
+                    // You may want to reload the page or update only the relevant DOM
+                    location.reload(); // simplest way
+                } else {
+                    alert(data.message || 'Gagal memvalidasi pembayaran.');
+                }
+            })
+            .catch(() => alert('Terjadi kesalahan.'));
+        });
     });
 </script>
 @endpush

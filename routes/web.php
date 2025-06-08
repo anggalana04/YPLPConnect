@@ -23,87 +23,103 @@ Route::get('/', function () {
 })->name('landing-page');
 
 Route::middleware('auth')->group(function () {
-
     Route::get('/dashboard', function (Request $request) {
         $tahunDipilih = $request->get('tahun') ?? date('Y');
         $bulanList = [
-            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
         ];
 
         $keuanganPerTahun = [];
-
         if (Auth::user()->role === 'operator_sekolah') {
             $npsn = Auth::user()->npsn;
-
             $jumlahSiswa = Siswa::where('npsn', $npsn)->count();
             $jumlahGuru = Guru::where('npsn', $npsn)->count();
-            $keuangan = Keuangan::where('npsn', $npsn)->where('tahun', $tahunDipilih)->get();
+            $keuangan = \App\Models\Keuangan::where('npsn', $npsn)
+                ->where('tahun', $tahunDipilih)
+                ->get();
             $pengaduans = \App\Models\Pengaduan::where('npsn', $npsn)->get();
-            $tahunSekarang = date('Y');
 
+            $tahunSekarang = date('Y');
             $tahunList = Keuangan::select('tahun')->distinct()->orderBy('tahun', 'desc')->pluck('tahun');
             $dokumens = \App\Models\Dokumen::with('guru')->get();
 
+
             $jumlahGuruPerTahun = [];
             $jumlahSiswaPerTahun = [];
-
             foreach ($tahunList as $tahun) {
                 $jumlahGuruPerTahun[] = Guru::where('npsn', $npsn)->whereYear('created_at', $tahun)->count();
                 $jumlahSiswaPerTahun[] = Siswa::where('npsn', $npsn)->whereYear('created_at', $tahun)->count();
             }
 
             // FIX: Define $keuanganPerTahun for operator_sekolah
+            $keuanganPerTahun = [];
             foreach ($tahunList as $tahun) {
                 $keuanganPerTahun[] = Keuangan::where('npsn', $npsn)->where('tahun', $tahun)->sum('jumlah_spp');
             }
-
         } else {
-            // Ambil semua dokumen dengan relasi guru
             $dokumens = \App\Models\Dokumen::with('guru')->get();
 
-            // Ambil data dasar
             $jumlahSiswa = Siswa::count();
             $jumlahGuru = Guru::count();
+            $keuangan = collect();
 
-            // Ambil daftar tahun dari tabel keuangan
-            $tahunList = Keuangan::select('tahun')->distinct()->orderBy('tahun', 'desc')->pluck('tahun');
-            $totalKeuanganTahun = \App\Models\Keuangan::where('tahun', $tahunDipilih)->sum('jumlah_spp');
-
-            // Ambil total keuangan per bulan
-            $keuanganPerBulan = [];
-            foreach ($bulanList as $bulan) {
-                $keuanganPerBulan[] = Keuangan::where('tahun', $tahunDipilih)
-                    ->where('bulan', $bulan)
-                    ->sum('jumlah_spp');
+            $tahunSekarang = date('Y');
+            $tahunList = [];
+            for ($i = 5; $i >= 0; $i--) {
+                $tahunList[] = (string)($tahunSekarang - $i);
             }
 
-            // Ambil semua pengaduan
+            $keuanganPerTahun = [];
+            foreach ($tahunList as $tahun) {
+                $keuanganPerTahun[] = Keuangan::where('tahun', $tahun)->sum('jumlah_spp');
+            }
+
             $pengaduans = \App\Models\Pengaduan::all();
 
-            // Statistik guru dan siswa per tahun dari data tahun keuangan
+            $tahunSekarang = date('Y');
+            $tahunList = [];
+            for ($i = 5; $i >= 0; $i--) {
+                $tahunList[] = (string)($tahunSekarang - $i);
+            }
+
             $jumlahGuruPerTahun = [];
             $jumlahSiswaPerTahun = [];
-
             foreach ($tahunList as $tahun) {
                 $jumlahGuruPerTahun[] = Guru::whereYear('created_at', $tahun)->count();
                 $jumlahSiswaPerTahun[] = Siswa::whereYear('created_at', $tahun)->count();
             }
-
-            // Jika request ajax, kirim data JSON (misalnya untuk chart dinamis)
-            if ($request->ajax()) {
-                return response()->json([
-                    'keuangan' => $keuanganPerBulan,
-                ]);
-            }
-
-            // Kirim ke view
-            return view('operator_yayasan.v_dashboard.index', compact(
-                'jumlahSiswa', 'jumlahGuru', 'keuanganPerBulan', 'pengaduans',
-                'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList',
-                'tahunDipilih', 'bulanList', 'dokumens', 'totalKeuanganTahun'
-            ));
         }
+
+        if ($request->ajax()) {
+            return response()->json([
+                'keuangan' => $keuangan,
+            ]);
+        }
+
+        return view('operator_yayasan.v_dashboard.index', compact(
+            'jumlahSiswa',
+            'jumlahGuru',
+            'keuangan',
+            'pengaduans',
+            'jumlahGuruPerTahun',
+            'jumlahSiswaPerTahun',
+            'tahunList',
+            'tahunDipilih',
+            'bulanList',
+            'keuanganPerTahun',
+            'dokumens'
+        ));
     })->name('dashboard');
 
     // Route AJAX untuk data keuangan berdasarkan tahun
@@ -147,7 +163,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
     Route::post('/keuangan/upload/{id?}', [KeuanganController::class, 'upload'])->name('keuangan.upload');
     Route::get('/keuangan/yayasan', [KeuanganController::class, 'yayasan'])->name('keuangan.yayasan');
-    Route::post('/keuangan/verifikasi/{id}', [KeuanganController::class, 'verifikasi'])->name('keuangan.verifikasi');
+    Route::post('/keuangan/validasi/{id}', [KeuanganController::class, 'validasi'])->name('keuangan.validasi');
     Route::get('/keuangan/bukti-preview/{id}', [KeuanganController::class, 'previewBukti'])->name('keuangan.bukti.preview');
     Route::get('/keuangan/download-recap', [KeuanganController::class, 'downloadRecap'])->name('keuangan.download.recap');
 
@@ -157,7 +173,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/dokumen/store', [DokumenController::class, 'store'])->name('dokumen.store');
     Route::get('/dokumen/yayasan', [DokumenController::class, 'yayasan'])->name('dokumen.yayasan');
     Route::get('/dokumen/ajax/search', [DokumenController::class, 'ajaxSearch'])->name('dokumen.ajax.search');
-    Route::get('/dokumen/download/{id}', [DokumenController::class, 'download'])->name('dokumen.download');
+    Route::get('/dokumen/{id}/download', [DokumenController::class, 'download'])->name('dokumen.download');
     Route::put('/dokumen/{id}/status/{status}', [DokumenController::class, 'updateStatus'])->name('dokumen.updateStatus');
 
     // Data siswa routes

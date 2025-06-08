@@ -45,6 +45,7 @@
                 'diterima' => 'diterima',
                 'diproses' => 'diproses',
                 'selesai'  => 'selesai',
+                'ditolak'  => 'selesai', // treat 'ditolak' as 'selesai' for the indicator
             ];
 
             $dokumenStatus = strtolower($dokumen->status);
@@ -86,47 +87,29 @@
         </div>
 
         <div class="download action-buttons">
-            @if(auth()->user()->role === 'operator_yayasan')
-                @php
-                    $status = strtolower($dokumen->status);
-                    $statusOrder = ['terkirim', 'diterima', 'diproses', 'selesai'];
-                    $currentIndex = array_search($status, $statusOrder);
-                @endphp
-
-                {{-- Tombol: Diterima --}}
-                <form action="{{ route('dokumen.updateStatus', [$dokumen->id, 'diterima']) }}" method="POST" style="display:inline-block;">
+            @if(auth()->user()->role === 'operator_yayasan' && $dokumen->status === 'Menunggu')
+                <form action="{{ route('dokumen.updateStatus', [$dokumen->id, 'Selesai']) }}" method="POST" style="display:inline-block;">
                     @csrf
                     @method('PUT')
-                    <button type="submit" class="btn-download btn-diterima" {{ $status !== 'menunggu' ? 'disabled' : '' }}>
-                        Diterima
-                    </button>
+                    <button type="submit" class="btn-approve">Disetujui</button>
                 </form>
-
-                {{-- Tombol: Diproses --}}
-                <form action="{{ route('dokumen.updateStatus', [$dokumen->id, 'diproses']) }}" method="POST" style="display:inline-block;">
+                <form action="{{ route('dokumen.updateStatus', [$dokumen->id, 'Ditolak']) }}" method="POST" style="display:inline-block;">
                     @csrf
                     @method('PUT')
-                    <button type="submit" class="btn-download btn-diproses" {{ $status !== 'diterima' ? 'disabled' : '' }}>
-                        Diproses
-                    </button>
+                    <button type="submit" class="btn-reject">Ditolak</button>
                 </form>
+            @endif
 
-                {{-- Tombol: Selesai --}}
-                <form action="{{ route('dokumen.updateStatus', [$dokumen->id, 'selesai']) }}" method="POST" style="display:inline-block;">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit" class="btn-download btn-selesai" {{ $status !== 'diproses' ? 'disabled' : '' }}>
-                        Selesai
-                    </button>
-                </form>
-            @else
-                @if(auth()->user()->role === 'operator_sekolah')
-                    @if (strtolower($dokumen->status) === 'selesai')
-                        <a href="{{ route('dokumen.download', $dokumen->id) }}" class="btn-download">Download</a>
-                    @else
-                        <button class="btn-download" disabled>Download</button>
-                    @endif
-                @endif
+            {{-- Show status result --}}
+            @if($dokumen->status === 'Selesai')
+                <span class="status-label status-success">Disetujui</span>
+            @elseif($dokumen->status === 'Ditolak')
+                <span class="status-label status-reject">Ditolak</span>
+            @endif
+
+            {{-- Tombol download untuk operator sekolah & yayasan --}}
+            @if($dokumen->status === 'Selesai' && $dokumen->file_path && (auth()->user()->role === 'operator_sekolah' || auth()->user()->role === 'operator_yayasan'))
+                <a href="{{ route('dokumen.download', $dokumen->id) }}" class="btn-download" target="_blank">Download SK PDF</a>
             @endif
         </div>
     </div>
