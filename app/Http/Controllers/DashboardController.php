@@ -42,7 +42,10 @@ class DashboardController extends Controller
                 ->orderByRaw("FIELD(bulan, 'Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember')")
                 ->get();
 
-            $pengaduans = Pengaduan::where('npsn', $npsn)->get();
+           $pengaduans = Pengaduan::where('npsn', $npsn)
+                       ->where('status', 'menunggu')
+                       ->get();
+
 
             $jumlahGuruPerTahun = [];
             $jumlahSiswaPerTahun = [];

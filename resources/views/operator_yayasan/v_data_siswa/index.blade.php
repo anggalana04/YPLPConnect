@@ -48,19 +48,21 @@
 
 @section('content')
 <div class="konten">
-    <div class="box-konten">
+    <div class="box-konten {{ auth()->user()->role === 'operator_sekolah' ? 'sekolah' : (auth()->user()->role === 'operator_yayasan' ? 'yayasan' : '') }}">
         <div class="head-box-konten">
             <div class="teks-head-box-konten">
                 <h1>Data Siswa</h1>
                 <p>Lihat Dan Kelola Data Siswa Sekolah Anda</p>
             </div>
             <div class="option-button">
-                <form action="{{ route('siswa.import') }}" method="POST" enctype="multipart/form-data" id="uploadForm" style="display:inline-block;">
-                    @csrf
-                    <button type="button" class="upload-siswa" id="uploadDataButton">Upload Data Siswa</button>
-                </form>
+                @if(auth()->user()->role === 'operator_sekolah')
+                    <form action="{{ route('siswa.import') }}" method="POST" enctype="multipart/form-data" id="uploadForm" style="display:inline-block;">
+                        @csrf
+                        <button type="button" class="upload-siswa" id="uploadDataButton">Upload Data Siswa</button>
+                    </form>
 
-                <button onclick="openPopUpForm()" class="tambah-siswa">Tambah Data Siswa</button>
+                    <button onclick="openPopUpForm()" class="tambah-siswa">Tambah Data Siswa</button>
+                @endif
             </div>
         </div>
 

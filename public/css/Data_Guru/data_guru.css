@@ -27,6 +27,10 @@ body {
     padding: 20px;
 }
 
+.box-konten.sekolah{
+    height: 95vh;
+}
+
 .head-box-konten{
     display: flex;
     align-items: center;
@@ -116,13 +120,16 @@ body {
 .table-box {
     width: 100%;
     background-color: white;
-    height: 48dvh;
+    height: 50dvh;
     overflow-x: auto;
     border-radius: 20px;
     margin-top: 20px;
     padding: 15px;
     overflow-y: auto;
+}
 
+.table-box.yayasan{
+    height: 60dvh;
 }
 
 .table-konten {

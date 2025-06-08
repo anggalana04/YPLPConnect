@@ -32,7 +32,6 @@ body {
     justify-content: center;
     align-items: flex-start;
     gap: 4px;
-    text-align: center;
 }
 
 .welcome {
@@ -41,7 +40,7 @@ body {
 }
 
 .konten-head h1 {
-    font-size: 1.9rem;
+    font-size: 1.8rem;
     margin: 0;
 }
 .konten-head h2 {
@@ -50,8 +49,9 @@ body {
     font-weight: 500;
 }
 
-.konten-head-sekolah{
+.konten-head-sekolah h2{
     width: 100%;
+    font-size: 0.9rem;
 }
 
 /* CSS konten-body*/
@@ -122,7 +122,6 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
 .card-sekolah{
@@ -192,6 +191,7 @@ canvas#chartGuru {
     height: 32px; /* Mengatur tinggi dropdown */
     border-radius: 6px;
     border: 1px solid #ccc;
+    width: 100px;
 }
 
 /* Untuk memperpendek tampilan opsi saat dropdown dibuka (tidak semua browser mendukung sepenuhnya) */
@@ -248,6 +248,7 @@ canvas#chartGuru {
 }
 
 .detail-status {
+    display: none;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s ease;
@@ -294,7 +295,7 @@ canvas#chartGuru {
 /* CSS DETAIL PENGADUAN */
 /* Tambahkan di dashboard_yayasan.css */
 .pengaduan-scroll {
-    max-height: 200px; /* atur sesuai kebutuhan agar kira-kira 10 item terlihat */
+    max-height: 250px; /* atur sesuai kebutuhan agar kira-kira 10 item terlihat */
     overflow-y: auto;
     padding-right: 8px; /* agar scroll bar tidak menutupi konten */
 }

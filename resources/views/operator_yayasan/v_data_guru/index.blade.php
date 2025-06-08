@@ -40,19 +40,20 @@
 
 @section('content')
 <div class="konten">
-    <div class="box-konten">
+    <div class="box-konten {{ auth()->user()->role === 'operator_sekolah' ? 'sekolah' : (auth()->user()->role === 'operator_yayasan' ? 'yayasan' : '') }}">
         <div class="head-box-konten">
             <div class="teks-head-box-konten">
                 <h1>Data Guru</h1>
                 <p>Lihat Dan Kelola Data Guru Sekolah Anda</p>
             </div>
-
             <div class="option-button">
-                <form action="{{ route('guru.import') }}" method="POST" enctype="multipart/form-data" id="uploadGuruForm" style="display:inline-block;">
-                    @csrf
-                    <button type="button" class="upload-guru" id="uploadGuruButton">Upload Data Guru</button>
-                </form>
-                <button onclick="openPopUpForm()" class="tambah-guru">Tambah Data Guru</button>
+                @if(auth()->user()->role === 'operator_sekolah')
+                    <form action="{{ route('guru.import') }}" method="POST" enctype="multipart/form-data" id="uploadGuruForm" style="display:inline-block;">
+                        @csrf
+                        <button type="button" class="upload-guru" id="uploadGuruButton">Upload Data Guru</button>
+                    </form>
+                    <button onclick="openPopUpForm()" class="tambah-guru">Tambah Data Guru</button>
+                @endif
             </div>
         </div>
 
@@ -65,7 +66,7 @@
             </div>
         </div>
 
-        <div class="table-box">
+        <div class="table-box {{ auth()->user()->role === 'operator_sekolah' ? 'sekolah' : (auth()->user()->role === 'operator_yayasan' ? 'yayasan' : '') }}">
             <table class="table-konten">
                 <thead id="table-header">
                     <tr>

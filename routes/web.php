@@ -3,6 +3,7 @@
 use App\Models\Guru;
 use App\Models\Siswa;
 use App\Models\Keuangan;
+use App\Models\Pengaduan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -48,7 +49,10 @@ Route::middleware('auth')->group(function () {
             $keuangan = \App\Models\Keuangan::where('npsn', $npsn)
                 ->where('tahun', $tahunDipilih)
                 ->get();
-            $pengaduans = \App\Models\Pengaduan::where('npsn', $npsn)->get();
+            $pengaduans = Pengaduan::where('npsn', $npsn)
+                       ->where('status', 'menunggu')
+                       ->get();
+
 
             $tahunSekarang = date('Y');
             $tahunList = Keuangan::select('tahun')->distinct()->orderBy('tahun', 'desc')->pluck('tahun');
@@ -169,10 +173,10 @@ Route::middleware('auth')->group(function () {
 
     // Dokumen routes
     Route::get('/dokumen', [DokumenController::class, 'index'])->name('dokumen.index');
+    Route::get('/dokumen/ajax-search', [DokumenController::class, 'ajaxSearch'])->name('dokumen.ajaxSearch');
     Route::get('/dokumen/detail/{id_pengajuan}', [DokumenController::class, 'show'])->name('dokumen.show');
     Route::post('/dokumen/store', [DokumenController::class, 'store'])->name('dokumen.store');
     Route::get('/dokumen/yayasan', [DokumenController::class, 'yayasan'])->name('dokumen.yayasan');
-    Route::get('/dokumen/ajax/search', [DokumenController::class, 'ajaxSearch'])->name('dokumen.ajax.search');
     Route::get('/dokumen/{id}/download', [DokumenController::class, 'download'])->name('dokumen.download');
     Route::put('/dokumen/{id}/status/{status}', [DokumenController::class, 'updateStatus'])->name('dokumen.updateStatus');
 

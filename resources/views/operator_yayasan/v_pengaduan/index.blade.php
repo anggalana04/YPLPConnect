@@ -15,7 +15,9 @@
                 <h1>PENGADUAN</h1>
                 <p>Ajukan pengaduan jika sekolah anda mengalami masalah</p>
             </div>
-            <button onclick="openPopUpForm()">Ajukan Pengaduan</button>
+            @if(auth()->user()->role === 'operator-sekolah')
+                <button onclick="openPopUpForm()">Ajukan Pengaduan</button>
+            @endif
         </div>
 
         <div class="search-container">

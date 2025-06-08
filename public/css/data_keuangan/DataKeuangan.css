@@ -51,7 +51,7 @@ body {
 }
 
 .option-box-konten.gap-operator-yayasan {
-    gap: 37vh; /* Atur sesuai kebutuhan layout yayasan */
+    gap: 48vh; /* Atur sesuai kebutuhan layout yayasan */
 }
 
 /* Gaya umum untuk tombol */
@@ -61,7 +61,11 @@ body {
     border-radius: 20px;
     padding: 8px;
     font-size: 12px;
+    background-color: blue;
+    color: white;
 }
+
+
 
 .kategori label {
   font-weight: 400;
