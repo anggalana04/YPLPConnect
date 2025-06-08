@@ -44,17 +44,9 @@
                            <td>{{ $row->id }}</td>
                             <td>{{ $row->created_at->format('d/m/Y') }}</td>
                             <td>
-                                @if(auth()->user()->role === 'operator_yayasan')
-                                    <select class="status-dropdown" data-id="{{ $row->id }}">
-                                        <option value="Menunggu" {{ $row->status == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
-                                        <option value="Diproses" {{ $row->status == 'Diproses' ? 'selected' : '' }}>Diproses</option>
-                                        <option value="Selesai" {{ $row->status == 'Selesai' ? 'selected' : '' }}>Selesai</option>
-                                    </select>
-                                @else
-                                    <span class="status {{ strtolower($row->status) }}">
-                                        {{ ucfirst($row->status) }}
-                                    </span>
-                                @endif
+                                <span class="status {{ strtolower($row->status) }}">
+                                    {{ ucfirst($row->status) }}
+                                </span>
                             </td>
                         </tr>
                     @empty

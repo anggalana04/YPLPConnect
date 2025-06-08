@@ -145,35 +145,6 @@
             window.location.href = `/dokumen/detail/${id}`;
         });
     });
-
-    // Prevent row click when interacting with the dropdown
-    document.querySelectorAll('.status-dropdown').forEach(function(select) {
-        select.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-        select.addEventListener('change', function() {
-            const id = this.getAttribute('data-id');
-            const status = this.value;
-            fetch(`/dokumen/${id}/status`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ status })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.success){
-                    alert('Status berhasil diubah!');
-                } else {
-                    alert('Gagal mengubah status');
-                }
-            });
-        });
-    });
-
-
 </script>
 
 {{-- SCRIPT AJAX --}}

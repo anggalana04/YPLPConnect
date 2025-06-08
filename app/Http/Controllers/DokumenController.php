@@ -34,10 +34,9 @@ class DokumenController extends Controller
                 $query->whereHas('guru', function ($q) use ($npsn) {
                     $q->where('npsn', $npsn);
                 });
-            } else {
-                // Jika tidak memilih sekolah, tampilkan data kosong
-                $query->whereRaw('0 = 1');
             }
+        } else {
+            abort(403, 'Unauthorized access'); // Handle other roles
         }
 
         // Tambahan filter jika diperlukan
@@ -169,7 +168,7 @@ class DokumenController extends Controller
         $dokumen = Dokumen::findOrFail($id);
 
         if (!$dokumen->file_path || !Storage::exists('public/' . $dokumen->file_path)) {
-            return back()->with('error', 'File SK belum tersedia.');
+            return redirect()->back()->with('error', 'File tidak ditemukan.');
         }
 
         return Storage::download('public/' . $dokumen->file_path, 'SK_' . $dokumen->id . '.pdf');
@@ -206,14 +205,24 @@ class DokumenController extends Controller
 
     public function updateStatus(Request $request, $id, $status)
     {
-        $allowed = ['Selesai', 'Ditolak'];
-        if (!in_array($status, $allowed)) {
-            return back()->with('error', 'Status tidak valid');
-        }
-        $dokumen = Dokumen::findOrFail($id);
-        $dokumen->status = $status;
+        $allowedStatuses = ['Diproses', 'Selesai', 'Ditolak'];
 
-        // Jika status disetujui (Selesai), generate PDF dan simpan path-nya
+        if (!in_array($status, $allowedStatuses)) {
+            return redirect()->back()->with('error', 'Status tidak valid');
+        }
+
+        $dokumen = Dokumen::findOrFail($id);
+        $currentStatus = strtolower($dokumen->status);
+
+        // Ensure logical status transition
+        $statusOrder = ['menunggu', 'diproses', 'selesai', 'ditolak'];
+        $currentIndex = array_search($currentStatus, $statusOrder);
+        $newIndex = array_search(strtolower($status), $statusOrder);
+
+        if ($newIndex <= $currentIndex) {
+            return redirect()->back()->with('error', 'Status tidak bisa mundur atau sama.');
+        }
+
         if ($status === 'Selesai') {
             $guru = $dokumen->guru;
             $sekolah = $guru?->sekolah;
@@ -223,8 +232,9 @@ class DokumenController extends Controller
             $dokumen->file_path = $pdfPath;
         }
 
+        $dokumen->status = $status;
         $dokumen->save();
 
-        return back()->with('success', 'Status dokumen berhasil diubah!');
+        return redirect()->back()->with('success', ucfirst($status) . ' sukses');
     }
 }

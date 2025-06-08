@@ -26,19 +26,17 @@ class KeuanganController extends Controller
 
         if ($user->role === 'operator_sekolah') {
             $query->where('npsn', $user->npsn);
-            $jumlahSiswa = \App\Models\Siswa::where('npsn', $user->npsn)->count();
+            $jumlahSiswa = Siswa::where('npsn', $user->npsn)->count();
         } elseif ($user->role === 'operator_yayasan' && $npsnDipilih) {
             $query->where('npsn', $npsnDipilih);
-            $jumlahSiswa = \App\Models\Siswa::where('npsn', $npsnDipilih)->count();
+            $jumlahSiswa = Siswa::where('npsn', $npsnDipilih)->count();
+        } else {
+            abort(403, 'Unauthorized access'); // Handle other roles
         }
-
 
         $keuangan = $query->where('tahun', $tahunDipilih)->get();
         $tahunList = Keuangan::select('tahun')->distinct()->orderBy('tahun', 'desc')->pluck('tahun');
-        $sekolahList = [];
-        if ($user->role === 'operator_yayasan') {
-            $sekolahList = Sekolah::pluck('nama', 'npsn');
-        }
+        $sekolahList = $user->role === 'operator_yayasan' ? Sekolah::pluck('nama', 'npsn') : [];
 
         return view('operator_yayasan.v_keuangan.index', [
             'keuangan' => $keuangan,
@@ -65,25 +63,13 @@ class KeuanganController extends Controller
         ]);
 
         // Jika id ada, update data keuangan yang sudah ada
-        if ($id) {
-            $keuangan = Keuangan::findOrFail($id);
-        } else {
-            // Jika tidak ada id, cari data keuangan berdasarkan npsn, tahun, bulan
-            $keuangan = Keuangan::where('npsn', $user->npsn)
-                ->where('tahun', $tahun)
-                ->where('bulan', $bulan)
-                ->first();
+        $keuangan = $id ? Keuangan::findOrFail($id) : Keuangan::where('npsn', $user->npsn)->where('tahun', $tahun)->where('bulan', $bulan)->first();
 
-            // Jika belum ada, buat baru (minimal field)
-            if (!$keuangan) {
-                $keuangan = Keuangan::create([
-                    'npsn' => $user->npsn,
-                    'tahun' => $tahun,
-                    'bulan' => $bulan,
-                    'jumlah_spp' => 0,
-                    'status' => 'Menunggu',
-                ]);
-            }
+        if (!$keuangan) {
+            $keuangan = new Keuangan();
+            $keuangan->npsn = $user->npsn;
+            $keuangan->tahun = $tahun;
+            $keuangan->bulan = $bulan;
         }
 
         // Simpan file bukti

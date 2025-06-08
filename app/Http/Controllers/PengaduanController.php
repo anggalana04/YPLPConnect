@@ -13,21 +13,30 @@ class PengaduanController extends Controller
      */
 public function index(Request $request)
 {
+    $query = Pengaduan::query();
+
     if (Auth::user()->role == 'operator_sekolah') {
-        // Operator sekolah hanya bisa lihat berdasarkan NPSN-nya sendiri
-        $data = Pengaduan::where('npsn', Auth::user()->npsn)->get();
+        $query->where('npsn', Auth::user()->npsn);
     } elseif (Auth::user()->role == 'operator_yayasan') {
-        // Operator yayasan bisa pilih NPSN via URL
         $npsn = $request->npsn;
 
         if ($npsn) {
-            $data = Pengaduan::where('npsn', $npsn)->get();
-        } else {
-            $data = collect(); // Kosong jika belum pilih sekolah
+            $query->where('npsn', $npsn);
         }
     } else {
-        $data = collect(); // Kosong untuk role lain
+        abort(403, 'Unauthorized access'); // Handle other roles
     }
+
+    // Tambahan filter jika diperlukan
+    if ($request->filled('q')) {
+        $query->where('judul', 'like', '%' . $request->q . '%');
+    }
+
+    if ($request->filled('kategori')) {
+        $query->where('kategori', $request->kategori);
+    }
+
+    $data = $query->latest()->get();
 
     return view('operator_yayasan.v_pengaduan.index', compact('data'));
 }
@@ -153,13 +162,13 @@ public function index(Request $request)
         $allowedStatuses = ['diterima', 'diproses', 'selesai'];
 
         if (!in_array($status, $allowedStatuses)) {
-            abort(400, 'Status tidak valid');
+            return redirect()->back()->with('error', 'Status tidak valid');
         }
 
         $pengaduan = Pengaduan::findOrFail($id);
         $currentStatus = strtolower($pengaduan->status);
 
-        // Logika validasi agar tidak lompat status (optional)
+        // Ensure logical status transition
         $statusOrder = ['menunggu', 'terkirim', 'diterima', 'diproses', 'selesai'];
         $currentIndex = array_search($currentStatus, $statusOrder);
         $newIndex = array_search($status, $statusOrder);

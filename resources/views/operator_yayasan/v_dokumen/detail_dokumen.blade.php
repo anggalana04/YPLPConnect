@@ -86,32 +86,45 @@
             <p><strong>Alamat Kerja : </strong>{{ $dokumen->alamat_unit_kerja }}</p>
         </div>
 
+        {{-- Tombol aksi hanya untuk operator yayasan --}}
+        @if(auth()->user()->role === 'operator_yayasan')
         <div class="download action-buttons">
-            @if(auth()->user()->role === 'operator_yayasan' && $dokumen->status === 'Menunggu')
-                <form action="{{ route('dokumen.updateStatus', [$dokumen->id, 'Selesai']) }}" method="POST" style="display:inline-block;">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit" class="btn-approve">Disetujui</button>
-                </form>
-                <form action="{{ route('dokumen.updateStatus', [$dokumen->id, 'Ditolak']) }}" method="POST" style="display:inline-block;">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit" class="btn-reject">Ditolak</button>
-                </form>
-            @endif
+            @php
+                $status = strtolower($dokumen->status);
+            @endphp
 
-            {{-- Show status result --}}
-            @if($dokumen->status === 'Selesai')
-                <span class="status-label status-success">Disetujui</span>
-            @elseif($dokumen->status === 'Ditolak')
-                <span class="status-label status-reject">Ditolak</span>
-            @endif
+            {{-- Tombol Diproses --}}
+            <form action="{{ route('dokumen.updateStatus', [$dokumen->id, 'Diproses']) }}" method="POST" class="form-action">
+                @csrf
+                @method('PUT')
+                <button type="submit" class="btn btn-diproses" {{ $status !== 'menunggu' ? 'disabled' : '' }}>Diproses</button>
+            </form>
 
-            {{-- Tombol download untuk operator sekolah & yayasan --}}
-            @if($dokumen->status === 'Selesai' && $dokumen->file_path && (auth()->user()->role === 'operator_sekolah' || auth()->user()->role === 'operator_yayasan'))
-                <a href="{{ route('dokumen.download', $dokumen->id) }}" class="btn-download" target="_blank">Download SK PDF</a>
-            @endif
+            {{-- Tombol Diterima dan Ditolak --}}
+            <form action="{{ route('dokumen.updateStatus', [$dokumen->id, 'Selesai']) }}" method="POST" class="form-action">
+                @csrf
+                @method('PUT')
+                <button type="submit" class="btn btn-diterima" {{ $status !== 'diproses' ? 'disabled' : '' }}>Diterima</button>
+            </form>
+            <form action="{{ route('dokumen.updateStatus', [$dokumen->id, 'Ditolak']) }}" method="POST" class="form-action">
+                @csrf
+                @method('PUT')
+                <button type="submit" class="btn btn-ditolak" {{ $status !== 'diproses' ? 'disabled' : '' }}>Ditolak</button>
+            </form>
         </div>
+        @endif
+
+        {{-- Show status result --}}
+        @if($dokumen->status === 'Selesai')
+            <span class="status-label status-success">Disetujui</span>
+        @elseif($dokumen->status === 'Ditolak')
+            <span class="status-label status-reject">Ditolak</span>
+        @endif
+
+        {{-- Tombol download untuk operator sekolah & yayasan --}}
+        @if($dokumen->status === 'Selesai' && $dokumen->file_path && (auth()->user()->role === 'operator_sekolah' || auth()->user()->role === 'operator_yayasan'))
+            <a href="{{ route('dokumen.download', $dokumen->id) }}" class="btn-download" target="_blank">Download SK PDF</a>
+        @endif
     </div>
 </div>
 @endsection

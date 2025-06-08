@@ -109,7 +109,7 @@
         </table>
     </div>
 
-    {{-- Tombol aksi untuk operator yayasan --}}
+    {{-- Tombol aksi hanya untuk operator yayasan --}}
     @if($user->role === 'operator_yayasan')
     <div class="action-buttons">
         @php

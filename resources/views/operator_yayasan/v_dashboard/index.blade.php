@@ -54,7 +54,7 @@
                 <h1>Pengaduan</h1>
 
                 @if ($pengaduans->isEmpty())
-                    <p class="No-data-pengaduan">Tidak ada pengaduan ditemukan.</p>
+                    <p class="No-data-pengaduan">Tidak ada pengaduan dengan status "Menunggu" ditemukan.</p>
                 @else
                     <div class="pengaduan-scroll">
                         @foreach ($pengaduans as $pengaduan)
@@ -66,22 +66,7 @@
                                     <img src="{{ asset('image/icon-row/row.svg') }}" class="arrow-icon" alt="Toggle Arrow" style="cursor: pointer;" />
                                 </span>
                                 <div class="detail-status">
-                                    <span class="head-detail">Status Pengaduan</span>
-                                    @php
-                                        $statusSteps = ['terkirim', 'diterima', 'diproses', 'selesai'];
-                                        $currentIndex = array_search($pengaduan->status, $statusSteps);
-                                    @endphp
-                                    <div class="box-status-step">
-                                        @foreach ($statusSteps as $index => $step)
-                                            <div class="status-step {{ $index <= $currentIndex ? 'active' : '' }}">
-                                                <img src="{{ asset('image/icon-status&detail_dokumen/icon-' . $step . '.svg') }}" alt="{{ $step }}">
-                                                <span>{{ $step == 'diterima' ? 'Diterima & Dilihat' : ucfirst($step) }}</span>
-                                            </div>
-                                            @if ($index < count($statusSteps) - 1)
-                                                <div class="status-line {{ $index < $currentIndex ? 'active' : '' }}"></div>
-                                            @endif
-                                        @endforeach
-                                    </div>
+                                    <span class="head-detail">Status: {{ ucfirst($pengaduan->status) }}</span>
                                 </div>
                             </div>
                         @endforeach
@@ -93,7 +78,7 @@
     <h1>Dokumen</h1>
 
     @if ($dokumens->isEmpty())
-        <p class="No-data-dokumen">Tidak ada dokumen ditemukan.</p>
+        <p class="No-data-dokumen">Tidak ada dokumen dengan status "Menunggu" ditemukan.</p>
     @else
         <div class="dokumen-scroll">
             @foreach ($dokumens as $dokumen)
@@ -105,30 +90,7 @@
                         <img src="{{ asset('image/icon-row/row.svg') }}" class="arrow-icon" alt="Toggle Arrow" style="cursor: pointer;" />
                     </span>
                     <div class="detail-status">
-                        <span class="head-detail">
-                            Nama Guru :
-                            @if ($dokumen->guru)
-                                {{ $dokumen->guru->nama }} [{{ $dokumen->guru->npsn }}]
-                            @else
-                                -
-                            @endif
-                        </span>
-
-                        @php
-                            $statusSteps = ['terkirim', 'diterima', 'diproses', 'selesai'];
-                            $currentIndex = array_search($dokumen->status, $statusSteps);
-                        @endphp
-                        <div class="box-status-step">
-                            @foreach ($statusSteps as $index => $step)
-                                <div class="status-step {{ $index <= $currentIndex ? 'active' : '' }}">
-                                    <img src="{{ asset('image/icon-status&detail_dokumen/icon-' . $step . '.svg') }}" alt="{{ $step }}">
-                                    <span>{{ $step == 'diterima' ? 'Diterima & Dilihat' : ucfirst($step) }}</span>
-                                </div>
-                                @if ($index < count($statusSteps) - 1)
-                                    <div class="status-line {{ $index < $currentIndex ? 'active' : '' }}"></div>
-                                @endif
-                            @endforeach
-                        </div>
+                        <span class="head-detail">Status: {{ ucfirst($dokumen->status) }}</span>
                     </div>
                 </div>
             @endforeach
@@ -136,24 +98,28 @@
     @endif
 </div>
 
-            <div class="card card-yayasan card-full-width" style="grid-area: card5; height: 300px; overflow: hidden; position: relative;">
-                <h1 class="head-keuangan">Keuangan Yayasan</h1>
+            @if(auth()->user()->role == 'operator_yayasan')
+                <div class="card card-yayasan card-full-width" style="grid-area: card5; height: 300px; overflow: hidden; position: relative;">
+                    <h1 class="head-keuangan">Keuangan Yayasan</h1>
 
-                <div class="header-bar-yayasan">
-                    <h1 id="totalKeuanganTahun" class="head-keuangan">Rp.{{ number_format($totalKeuanganTahun, 0, ',', '.') }}</h1>
-                    <select id="kategori" name="tahun" class="select-tahun-yayasan">
-                        <option value="">-- Pilih Tahun --</option>
-                        @foreach ($tahunList as $tahun)
-                            <option value="{{ $tahun }}" {{ $tahun == $tahunDipilih ? 'selected' : '' }}>
-                                {{ $tahun }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <div class="header-bar-yayasan">
+                        <h1 id="totalKeuanganTahun" class="head-keuangan">
+                            Rp.{{ isset($totalKeuanganTahun) ? number_format($totalKeuanganTahun, 0, ',', '.') : '0' }}
+                        </h1>
+                        <select id="kategori" name="tahun" class="select-tahun-yayasan">
+                            <option value="">-- Pilih Tahun --</option>
+                            @foreach ($tahunList as $tahun)
+                                <option value="{{ $tahun }}" {{ $tahun == $tahunDipilih ? 'selected' : '' }}>
+                                    {{ $tahun }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div style="height: 300px; overflow-x: auto;">
+                        <canvas id="chartKeuangan" style="max-height: 100%;"></canvas>
+                    </div>
                 </div>
-                <div style="height: 300px; overflow-x: auto;">
-                    <canvas id="chartKeuangan" style="max-height: 100%;"></canvas>
-                </div>
-            </div>
+            @endif
 
         @else
             {{-- Konten untuk operator sekolah --}}
@@ -228,7 +194,7 @@
                 <h1>Pengaduan</h1>
 
                 @if ($pengaduans->isEmpty())
-                    <p class="No-data-pengaduan">Tidak ada pengaduan ditemukan.</p>
+                    <p class="No-data-pengaduan">Tidak ada pengaduan dengan status "Menunggu" ditemukan.</p>
                 @else
                     <div class="pengaduan-scroll">
                         @foreach ($pengaduans as $pengaduan)
@@ -240,22 +206,7 @@
                                     <img src="{{ asset('image/icon-row/row.svg') }}" class="arrow-icon" alt="Toggle Arrow" style="cursor: pointer;" />
                                 </span>
                                 <div class="detail-status">
-                                    <span class="head-detail">Status Pengaduan</span>
-                                    @php
-                                        $statusSteps = ['terkirim', 'diterima', 'diproses', 'selesai'];
-                                        $currentIndex = array_search($pengaduan->status, $statusSteps);
-                                    @endphp
-                                    <div class="box-status-step">
-                                        @foreach ($statusSteps as $index => $step)
-                                            <div class="status-step {{ $index <= $currentIndex ? 'active' : '' }}">
-                                                <img src="{{ asset('image/icon-status&detail_dokumen/icon-' . $step . '.svg') }}" alt="{{ $step }}">
-                                                <span>{{ $step == 'diterima' ? 'Diterima & Dilihat' : ucfirst($step) }}</span>
-                                            </div>
-                                            @if ($index < count($statusSteps) - 1)
-                                                <div class="status-line {{ $index < $currentIndex ? 'active' : '' }}"></div>
-                                            @endif
-                                        @endforeach
-                                    </div>
+                                    <span class="head-detail">Status: {{ ucfirst($pengaduan->status) }}</span>
                                 </div>
                             </div>
                         @endforeach
@@ -280,7 +231,7 @@
     window.siswaData = @json($jumlahSiswaPerTahun);
     window.tahunList = @json($tahunList);
     window.bulanList = @json($bulanList);
-    window.keuanganData = @json($keuanganPerBulan);
+    window.keuanganData = @json(isset($keuanganPerBulan) ? $keuanganPerBulan : []);
 </script>
 
 <script>
@@ -407,5 +358,20 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const pengaduanScroll = document.querySelector('.pengaduan-scroll');
+        const dokumenScroll = document.querySelector('.dokumen-scroll');
+
+        if (pengaduanScroll && pengaduanScroll.children.length === 0) {
+            pengaduanScroll.innerHTML = '<p class="No-data-pengaduan">Tidak ada pengaduan dengan status "Menunggu" ditemukan.</p>';
+        }
+
+        if (dokumenScroll && dokumenScroll.children.length === 0) {
+            dokumenScroll.innerHTML = '<p class="No-data-dokumen">Tidak ada dokumen dengan status "Menunggu" ditemukan.</p>';
+        }
+    });
 </script>
 @endpush

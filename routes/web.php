@@ -153,7 +153,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengaduan/search', [PengaduanController::class, 'search'])->name('pengaduan.search');
     Route::post('/pengaduan/submit', [PengaduanController::class, 'store'])->name('pengaduan.store');
     Route::get('/pengaduan/{id}', [PengaduanController::class, 'show'])->name('pengaduan.show');
-    
+
     // Update status pakai PUT, status disisipkan di URL
     Route::put('/pengaduan/{id}/status/{status}', [PengaduanController::class, 'updateStatus'])
         ->name('pengaduan.updateStatus')
@@ -193,6 +193,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/users', [RegisteredUserController::class, 'index'])->name('users.index');
     Route::post('/user-manage/update-inline/{id}', [RegisteredUserController::class, 'updateInline'])->name('user.update-inline');
     Route::patch('/users/{id}', [RegisteredUserController::class, 'update'])->name('user.update');
+    Route::post('/user/add', [RegisteredUserController::class, 'store'])->name('user.add');
 
     // Route Sekolah
     Route::post('/sekolah', [SekolahController::class, 'store'])->name('sekolah.store');

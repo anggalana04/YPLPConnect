@@ -82,16 +82,62 @@
             </nav>
         </div>
     </div>
+    <!-- Modal Form Pengaduan (disembunyikan awalnya) -->
+  <!-- Modal Form Tambah User (disembunyikan awalnya) -->
+<div class="modal-pengaduan" id="PopUpForm" style="display: none;">
+    <form action="/user/add" method="POST" enctype="multipart/form-data" class="form-box">
+        @csrf
+        <div class="sub-head-box">
+            <input
+                type="text"
+                name="name"
+                placeholder="Nama Lengkap"
+                required
+            />
+        </div>
+
+        <div class="sub-form-box">
+            <div class="isi-user">
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    required
+                />
+                <input
+                    type="text"
+                    name="no_hp"
+                    placeholder="Nomor HP"
+                    required
+                />
+                <select name="role" required>
+                    <option value="">Pilih Role</option>
+                    <option value="operator_sekolah">Operator Sekolah</option>
+                    <option value="operator_yayasan">Operator Yayasan</option>
+                </select>
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    required
+                />
+            </div>
+        </div>
+        <div class="all-button">
+            <button type="button" class="batal" onclick="closePopUpForm()">Batal</button>
+            <button type="submit" class="kirim">Tambah User</button>
+        </div>
+    </form>
+</div>
 @endsection
 
 @push('scripts')
     <script src="{{ asset('JavaScript/Pagination.js') }}"></script>
     <script src="{{ asset('JavaScript/Edit_User/Edit_user.js') }}"></script>
-
+    <script src="{{ asset('JavaScript/PopUpForm/PopUpform.js') }}"></script>
     <script>
-        function openPopUpForm() {
-            alert('Fungsi tambah user belum dibuat');
-        }
+
+
 
         function toggleDropdown(button) {
             const dropdown = button.nextElementSibling;
