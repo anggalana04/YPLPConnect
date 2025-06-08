@@ -23,7 +23,7 @@ class DashboardController extends Controller
 
         $tahunList = Keuangan::select('tahun')
             ->distinct()
-            ->orderBy('tahun', 'desc')
+            ->orderBy('tahun', 'asc')
             ->pluck('tahun');
 
         $keuangan = [];
@@ -60,16 +60,27 @@ class DashboardController extends Controller
 
         // Operator Yayasan
         else {
+            $tahunList = Keuangan::select('tahun')->distinct()->orderBy('tahun', 'desc')->pluck('tahun');
+            $tahunDipilih = request('tahun') ?? now()->year;
+            $totalKeuanganTahun = \App\Models\Keuangan::where('tahun', $tahunDipilih)->sum('jumlah_spp');
+
+
             $jumlahSiswa = Siswa::count();
             $jumlahGuru = Guru::count();
             $dokumens = \App\Models\Dokumen::with('guru')->get();
 
 
-            $keuanganPerTahun = [];
-            foreach ($tahunList as $tahun) {
-                $total = Keuangan::where('tahun', $tahun)->sum('jumlah_spp');
-                $keuanganPerTahun[] = $total;
+            $keuanganPerBulan = [];
+            $bulanList = [
+                'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+            ];
+
+            foreach ($bulanList as $bulan) {
+                $total = Keuangan::where('tahun', $tahunDipilih)->where('bulan', $bulan)->sum('jumlah_spp');
+                $keuanganPerBulan[] = $total;
             }
+
 
             $pengaduans = Pengaduan::all();
 
@@ -82,8 +93,8 @@ class DashboardController extends Controller
             }
 
             return view('operator_yayasan.v_dashboard.index', compact(
-                'jumlahSiswa', 'jumlahGuru', 'keuanganPerTahun', 'pengaduans',
-                'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList', 'tahunDipilih', 'bulanList','dokumens'
+                'jumlahSiswa', 'jumlahGuru', 'keuanganPerBulan', 'pengaduans',
+                'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList', 'tahunDipilih', 'bulanList','dokumens', 'totalKeuanganTahun'
             ));
         }
     }
@@ -105,5 +116,31 @@ public function getByTahun(Request $request)
 
     return response()->json($data);
 }
+
+public function getKeuanganYayasanByTahun(Request $request)
+{
+    $tahun = $request->get('tahun') ?? date('Y');
+
+    $bulanList = [
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
+
+    $keuanganPerBulan = [];
+
+    foreach ($bulanList as $bulan) {
+        $jumlahSpp = Keuangan::where('tahun', $tahun)
+            ->where('bulan', $bulan)
+            ->sum('jumlah_spp');
+
+        $keuanganPerBulan[] = [
+            'bulan' => $bulan,
+            'jumlah_spp' => $jumlahSpp,
+        ];
+    }
+
+    return response()->json($keuanganPerBulan);
+}
+
 
 }

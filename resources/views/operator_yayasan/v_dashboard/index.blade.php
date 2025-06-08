@@ -140,7 +140,7 @@
                 <h1 class="head-keuangan">Keuangan Yayasan</h1>
 
                 <div class="header-bar-yayasan">
-                    <h1 class="head-keuangan">Rp.xxxxxx</h1>
+                    <h1 id="totalKeuanganTahun" class="head-keuangan">Rp.{{ number_format($totalKeuanganTahun, 0, ',', '.') }}</h1>
                     <select id="kategori" name="tahun" class="select-tahun-yayasan">
                         <option value="">-- Pilih Tahun --</option>
                         @foreach ($tahunList as $tahun)
@@ -278,8 +278,9 @@
 <script>
     window.guruData = @json($jumlahGuruPerTahun);
     window.siswaData = @json($jumlahSiswaPerTahun);
-    window.keuanganData = @json($keuanganPerTahun); // <- tambahkan ini
     window.tahunList = @json($tahunList);
+    window.bulanList = @json($bulanList);
+    window.keuanganData = @json($keuanganPerBulan);
 </script>
 
 <script>
@@ -345,6 +346,57 @@
         });
     });
 </script>
+
+
+{{-- JS UNTUK KEUANGAN YAYASAN --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const selectTahun = document.getElementById('kategori');
+    const totalKeuanganElem = document.getElementById('totalKeuanganTahun');
+
+    // Daftar bulan yang sama dengan backend, supaya urutan konsisten
+    const bulanList = [
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
+
+    selectTahun.addEventListener('change', function () {
+        const tahunTerpilih = this.value;
+        if (!tahunTerpilih) return;
+
+        fetch(`/yayasan/keuangan/by-tahun?tahun=${tahunTerpilih}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            // data sudah array keuanganPerBulan langsung (dari controller)
+            // Hitung total sendiri di frontend
+            const total = data.reduce((sum, item) => sum + item.jumlah_spp, 0);
+
+            // Tampilkan total
+            totalKeuanganElem.textContent = 'Rp.' + new Intl.NumberFormat('id-ID').format(total);
+
+            // Data per bulan urut berdasarkan bulanList supaya chart tidak acak
+            const dataPerBulan = bulanList.map(bulan => {
+                const bulanData = data.find(item => item.bulan === bulan);
+                return bulanData ? bulanData.jumlah_spp : 0;
+            });
+
+            // Render chart keuangan (pastikan fungsi ini ada)
+            renderBarChart('chartKeuangan', dataPerBulan, ['#43e97b', '#38f9d7'], bulanList);
+        })
+        .catch(err => {
+            console.error('Fetch error:', err);
+            totalKeuanganElem.textContent = 'Rp.0';
+        });
+    });
+});
+
+</script>
+    {{-- JS UNTUK KEUANGAN YAYASAN --}}
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {

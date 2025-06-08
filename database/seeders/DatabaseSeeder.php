@@ -23,7 +23,8 @@ public function run(): void
     // =======================
     // BUAT DATA SEKOLAH
     // =======================
-    for ($i = 1; $i <= 20; $i++) {
+    $jumlahSekolah = rand(15, 25);
+    for ($i = 1; $i <= $jumlahSekolah; $i++) {
         Sekolah::create([
             'npsn'    => '100000' . str_pad($i, 2, '0', STR_PAD_LEFT),
             'nama'    => 'Sekolah ' . $faker->company,
@@ -32,7 +33,6 @@ public function run(): void
             'email'   => $faker->unique()->safeEmail,
         ]);
     }
-
     // Ambil semua NPSN dari Sekolah
     $npsnList = Sekolah::pluck('npsn')->toArray();
 
@@ -52,16 +52,20 @@ public function run(): void
     // =======================
     // BUAT DATA GURU
     // =======================
-    Guru::factory(100)->make()->each(function ($guru) use ($npsnFromUsers) {
-        $tahunSekarang = date('Y');
-        $tahun = $tahunSekarang - rand(0, 5);
+    foreach ($npsnFromUsers as $npsn) {
+        $jumlahGuru = rand(5, 20);
+        Guru::factory($jumlahGuru)->make()->each(function ($guru) use ($npsn) {
+            $tahun = now()->year - rand(0, 5);
 
-        $guru->npsn = $npsnFromUsers[array_rand($npsnFromUsers)];
-        $guru->status = 'aktif'; // Tambahkan ini
-        $guru->created_at = $tahun . '-01-01';
-        $guru->updated_at = now();
-        $guru->save();
-    });
+            $guru->npsn = $npsn;
+            $guru->status = 'aktif';
+            $guru->created_at = $tahun . '-01-01';
+            $guru->updated_at = now();
+            $guru->save();
+        });
+    }
+
+
 
     // =======================
     // BUAT SISWA, PENGADUAN, KEUANGAN PER SEKOLAH
@@ -73,17 +77,21 @@ public function run(): void
     $tahunSekarang = date('Y');
 
     foreach ($npsnFromUsers as $npsn) {
+
         // Siswa
-        Siswa::factory(50)->create([
+        Siswa::factory(rand(30, 70))->create([
             'npsn' => $npsn,
-            'status' => 'aktif', // Tambahkan ini
+            'status' => 'aktif',
         ]);
 
+
+
         // Pengaduan
-        Pengaduan::factory(15)->create([
+        Pengaduan::factory(rand(5, 20))->create([
             'npsn' => $npsn,
-            'status' => 'Menunggu', // Ubah agar semua status awalnya 'Menunggu'
+            'status' => 'Menunggu',
         ]);
+
 
 
         // Keuangan
@@ -113,7 +121,9 @@ public function run(): void
     // BUAT DOKUMEN PER SEKOLAH
     // =======================
     foreach ($npsnFromUsers as $npsn) {
-        for ($i = 1; $i <= 15; $i++) {
+        // Dokumen
+        $jumlahDokumen = rand(10, 25);
+        for ($i = 1; $i <= $jumlahDokumen; $i++) {
             Dokumen::create([
                 'nuptk'             => Guru::where('npsn', $npsn)->inRandomOrder()->value('nuptk'),
                 'nama'              => $faker->name,
@@ -121,7 +131,7 @@ public function run(): void
                 'tanggal_lahir'     => $faker->date('Y-m-d', '-25 years'),
                 'alamat_unit_kerja' => $faker->address,
                 'jenis_sk'          => $faker->randomElement(['SK Pengangkatan', 'SK Pensiun', 'SK Mutasi']),
-                 'status'            => 'Menunggu', // Ubah ini agar default-nya 'Menunggu'
+                'status'            => 'Menunggu',
                 'file_path'         => 'dokumen/' . Str::random(10) . '.pdf',
                 'submitted_by'      => 1,
                 'verified_by'       => null,
@@ -129,6 +139,7 @@ public function run(): void
                 'catatan'           => $faker->sentence,
             ]);
         }
+
     }
 }
 }

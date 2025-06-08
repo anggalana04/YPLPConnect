@@ -1,7 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     const tahunList = window.tahunList;
+    const bulanList = window.bulanList;
 
-    function renderBarChart(canvasId, data, gradientColors) {
+    // Render awal chart
+    let chartKeuanganInstance = null;
+
+    function renderBarChart(canvasId, data, gradientColors, labels) {
         const canvas = document.getElementById(canvasId);
         if (!canvas) return;
 
@@ -10,10 +14,15 @@ document.addEventListener('DOMContentLoaded', function () {
         gradient.addColorStop(0, gradientColors[0]);
         gradient.addColorStop(1, gradientColors[1]);
 
-        new Chart(ctx, {
+        // Jika sudah ada chart sebelumnya, destroy dulu supaya gak duplikat
+        if (canvas.chartInstance) {
+            canvas.chartInstance.destroy();
+        }
+
+        const newChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: tahunList,
+                labels: labels,
                 datasets: [{
                     data: data,
                     backgroundColor: gradient,
@@ -61,9 +70,47 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             plugins: [ChartDataLabels]
         });
+
+        // Simpan instance chart ke elemen canvas supaya bisa di-destroy nanti
+        canvas.chartInstance = newChart;
+
+        return newChart;
     }
 
-    renderBarChart('chartGuru', window.guruData, ['#4facfe', '#00f2fe']);
-    renderBarChart('chartSiswa', window.siswaData, ['#4facfe', '#00f2fe']);
-    renderBarChart('chartKeuangan', window.keuanganData, ['#43e97b', '#38f9d7']); // bar chart keuangan
+    // Render chart guru dan siswa seperti awal
+    renderBarChart('chartGuru', window.guruData, ['#4facfe', '#00f2fe'], tahunList);
+    renderBarChart('chartSiswa', window.siswaData, ['#4facfe', '#00f2fe'], tahunList);
+    // Render chart keuangan awal dengan data bulan
+    renderBarChart('chartKeuangan', window.keuanganData, ['#43e97b', '#38f9d7'], bulanList);
+
+    // --- Bagian update chart keuangan dan total saat tahun dipilih ---
+    const selectTahun = document.getElementById('kategori');
+    const totalKeuanganElem = document.getElementById('totalKeuanganTahun');
+
+    selectTahun.addEventListener('change', function () {
+        const tahunTerpilih = this.value;
+        if (!tahunTerpilih) return; // jika kosong, skip
+
+        fetch(`yayasan/keuangan/by-tahun?tahun=${tahunTerpilih}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            // Hitung total keuangan (jumlah_spp)
+            const total = data.reduce((sum, item) => sum + item.jumlah_spp, 0);
+            totalKeuanganElem.textContent = 'Rp.' + new Intl.NumberFormat('id-ID').format(total);
+
+            // Map data per bulan sesuai bulanList, jika bulan tidak ada data isi 0
+            const dataPerBulan = bulanList.map(bulan => {
+                const bulanData = data.find(k => k.bulan === bulan);
+                return bulanData ? bulanData.jumlah_spp : 0;
+            });
+
+            // Update chart keuangan (destroy dan render ulang)
+            renderBarChart('chartKeuangan', dataPerBulan, ['#43e97b', '#38f9d7'], bulanList);
+        })
+        .catch(e => console.error('Error fetch keuangan:', e));
+    });
 });
