@@ -6,8 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="{{ asset('css/Landing_Page/landing_page.css') }}">
+    <link rel="shortcut icon" href="{{ asset('image/logoYPLP/logo.svg') }}" type="image/x-icon">
 
-    <title>Landing Page</title>
+    <title>YPLP PGRI</title>
 </head>
 <body>
     {{-- NAVBAR START --}}
@@ -45,13 +46,16 @@
 
 {{-- BERANDA START --}}
 <div id="Beranda" class="beranda">
-
+    <img class="slide" src="{{ asset('image/Image_LandingPage/img-index-1.svg') }}" alt="">
+    <img class="slide" src="{{ asset('image/Image_LandingPage/img-index-2.svg') }}" alt="">
+    <img class="slide" src="{{ asset('image/Image_LandingPage/img-index-3.svg') }}" alt="">
 </div>
+
 {{-- BERANDA END --}}
 
 {{-- ABOUT START --}}
 <div id="about">
-    <div class="about-desc">
+    <div class="about-desc animate-left hidden">
         <div class="about-header">
             <h1>About Us</h1>
         </div>
@@ -62,22 +66,23 @@
         {{-- Statistik START --}}
         <div class="statistik-container">
             <div class="statistik-box">
-                <h2 class="angka">111</h2>
+                <h2 class="angka">{{ $jumlahSekolah }}</h2>
                 <p class="label">Sekolah</p>
             </div>
             <div class="statistik-box">
-                <h2 class="angka">111</h2>
+                <h2 class="angka">{{ $jumlahSiswa }}</h2>
                 <p class="label">Pelajar</p>
             </div>
             <div class="statistik-box">
-                <h2 class="angka">111</h2>
+                <h2 class="angka">{{ $jumlahGuru }}</h2>
                 <p class="label">Tenaga Pendidik</p>
             </div>
         </div>
+
         {{-- Statistik END --}}
     </div>
-    <div class="foto-about">
-        
+    <div class="foto-about animate-right hidden">
+        <img src="{{ asset('image/Image_LandingPage/img-about.svg') }}" alt="">
     </div>
 </div>
 {{-- ABOUT END --}}
@@ -86,9 +91,15 @@
 <div id="services">
     <h1 class="services-header">Our Services</h1>
         <div class="box-konten">
-            <div class="sub-box-konten"><h1>Pembinaan Guru</h1></div>
-            <div class="sub-box-konten"><h1>Tata Kelola Administasi</h1></div>
-            <div class="sub-box-konten"><h1>Mendukung Komunitas</h1></div>
+            <div class="sub-box-konten" style="background-color: #5F5E5E; color:white;"><h1>Pembinaan Guru</h1>
+                <img class="img-box-konten" src="{{ asset('image/Image_LandingPage/img-Binaguru.svg') }}" alt="">
+            </div>
+            <div class="sub-box-konten" style="background-color: #D2D2D2; color;black;"><h1>Tata Kelola Administasi</h1>
+                <img class="img-box-konten" src="{{ asset('image/Image_LandingPage/img-kelolaAdmin.svg') }}" alt="">
+            </div>
+            <div class="sub-box-konten" style="background-color: #5F5E5E; color:white;"><h1>Mendukung Komunitas</h1>
+                <img class="img-box-konten" style="border: 1px solid black; border-radius:40px;" src="{{ asset('image/Image_LandingPage/img-komunitas.svg') }}" alt="">
+            </div>
         </div>
 </div>
 {{-- SERVICES END --}}
@@ -127,6 +138,10 @@
 {{-- CONTACT US END --}}
 </body>
 
+<script src="{{ asset('JavaScript/ANIMASI/Animasi-AboutUs.js') }}"></script>
+<script src="{{ asset('JavaScript/ANIMASI/Animasi-Services.js') }}"></script>
+<script src="{{ asset('JavaScript/ANIMASI/Animasi-Contact.js') }}"></script>
+
 <script>
     let prevScrollPos = window.pageYOffset;
     const navbar = document.getElementById("navbar");
@@ -145,5 +160,28 @@
         prevScrollPos = currentScrollPos;
     });
 </script>
+
+{{-- JS SLIDE OTOMATIS --}}
+<script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function showSlides() {
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active');
+        });
+
+        slideIndex++;
+        if (slideIndex > slides.length) {
+            slideIndex = 1;
+        }
+
+        slides[slideIndex - 1].classList.add('active');
+        setTimeout(showSlides, 3000); // ganti slide setiap 3 detik
+    }
+
+    showSlides();
+</script>
+{{-- JS SLIDE OTOMATIS --}}
 
 </html>

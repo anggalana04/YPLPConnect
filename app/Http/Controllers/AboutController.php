@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guru;
 use App\Models\about;
+use App\Models\Siswa;
+use App\Models\Sekolah;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
@@ -12,7 +15,11 @@ class AboutController extends Controller
      */
     public function index()
     {
-        return view('about');
+        $jumlahSekolah = Sekolah::count();
+        $jumlahSiswa = Siswa::where('status', 'aktif')->count();
+        $jumlahGuru = Guru::where('status', 'aktif')->count();
+
+        return view('Landing_Page.index', compact('jumlahSekolah', 'jumlahSiswa', 'jumlahGuru'));
     }
 
     /**

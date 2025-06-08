@@ -140,11 +140,27 @@ button .logo-login {
     background-color: #F0F0F0;
     width: 97%;
     border-radius: 35px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 120px;
+    margin: 120px 20px 0 20px;
     height: 450px;
+    position: relative;
+    overflow: hidden;
 }
+
+.slide {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
 
 /* CSS FOTO END */
 
@@ -171,13 +187,11 @@ button .logo-login {
 }
 
 .foto-about {
-    background-color: #F0F0F0;
     border-radius: 35px;
     height: 370px;
     width: 190%;
 }
 
-/* Statistik Styles */
 .statistik-container {
     display: flex;
     justify-content: center;
@@ -202,6 +216,58 @@ button .logo-login {
     display: inline;
 }
 
+.hidden {
+  opacity: 0;
+  /* hilangkan transition di sini jika pakai animation saja */
+  /* transition: opacity 0.6s ease, transform 0.6s ease; */
+}
+
+.animate-left {
+  /* awal posisi */
+  transform: translateX(-100px);
+  opacity: 0;
+}
+
+.animate-left.show {
+  /* animasi masuk dari kiri */
+  animation: slideInLeft 1s forwards ease;
+}
+
+.animate-right {
+  /* awal posisi */
+  transform: translateX(100px);
+  opacity: 0;
+}
+
+.animate-right.show {
+  /* animasi masuk dari kanan */
+  animation: slideInRight 1s forwards ease;
+}
+
+/* Keyframes yang sudah kamu punya */
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
 /* CSS ABOUT US END */
 
 /* CSS SERVICES START*/
@@ -209,7 +275,7 @@ button .logo-login {
     width: 97%;
     margin-left: 20px;
     margin-right: 20px;
-    padding-top: 6%;
+    padding-top: 5%;
 }
 
 .services-header {
@@ -223,27 +289,42 @@ button .logo-login {
     justify-content: center;
     align-items: center;
     gap: 70px;
-    margin-top: 60px;
+    margin-top: 40px;
 }
 
 .sub-box-konten {
     background-color: #F0F0F0;
     width: 350px;
     border-radius: 35px;
-    display: flex;
-    justify-content: center;
-    /* horizontal center */
     height: 350px;
-    /* atur tinggi sesuai kebutuhan */
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    padding-top: 20px; /* Add space from the top */
+    opacity: 0;
+    transform: translateY(100px);  /* Mulai dari bawah */
+    transition: all 1s ease;
+}
+
+.sub-box-konten.show {
+  opacity: 1;
+  transform: translateY(0);
+    transition: all 0.6s ease;
 }
 
 .sub-box-konten h1 {
-    padding-top: 15px;
     font-size: 25px;
     font-weight: 500;
-
+    text-align: center;
+    margin: 0; /* Remove default margins */
+    margin-bottom: 10px; /* Space between title and image */
 }
+
+.img-box-konten {
+    width: 350px; /* Slightly smaller for padding */
+    margin-top: auto; /* Push image to bottom if needed */
+}
+
 
 /* CSS SERVICES END*/
 
@@ -260,7 +341,7 @@ button .logo-login {
 .contact-header {
     text-align: center;
     margin: 0 auto;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .contact-konten {
@@ -268,6 +349,7 @@ button .logo-login {
     justify-content: center;
     align-items: center;
     gap: 30px;
+
 }
 
 .contact-box1 {
@@ -307,14 +389,40 @@ button .logo-login {
 
 .img-lokasi {
     width: 405px;
-
 }
+
+.contact-box1,
+.contact-box2 {
+  opacity: 0;
+  transition: transform 1s ease, opacity 1s ease;
+}
+
+/* Masuk dari kiri */
+.contact-box1 {
+  transform: translateX(-100px);
+}
+
+.contact-box1.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Masuk dari kanan */
+.contact-box2 {
+  transform: translateX(100px);
+}
+
+.contact-box2.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 
 /* CSS CONTACT US END */
 
 
+/* ANIMASI */
 
-a {
+a{
     text-decoration: none;
-    color: red;
 }

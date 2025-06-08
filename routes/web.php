@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\ProfileController;
@@ -18,9 +19,8 @@ use App\Http\Controllers\ListSekolahController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
 // Route landing page
-Route::get('/', function () {
-    return view('Landing_Page.index');
-})->name('landing-page');
+Route::get('/', [AboutController::class, 'index'])->name('about');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function (Request $request) {
