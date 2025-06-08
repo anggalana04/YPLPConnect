@@ -59,15 +59,7 @@
                             <td>{{ $row->nama }}</td>
                             <td>{{ $row->jenis_sk }}</td>
                             <td>
-                                @if(auth()->user()->role === 'operator_yayasan')
-                                    <select class="status-dropdown" data-id="{{ $row->id }}">
-                                        <option value="Menunggu" {{ $row->status == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
-                                        <option value="Diproses" {{ $row->status == 'Diproses' ? 'selected' : '' }}>Diproses</option>
-                                        <option value="Selesai" {{ $row->status == 'Selesai' ? 'selected' : '' }}>Selesai</option>
-                                    </select>
-                                @else
-                                    <span class="status-text">{{ $row->status }}</span>
-                                @endif
+                                <span class="status-text">{{ $row->status }}</span>
                             </td>
                         </tr>
                     @endforeach
@@ -94,17 +86,15 @@
             <div class="sub-form-box">
                 <div class="border-form">
                     <div class="form-group">
-                        <label for="nama">Nama</label>
-                        <input type="text" id="nama" name="nama" required />
+                        <label for="guru">Pilih Guru</label>
+                        <select id="nuptk" name="nuptk" required>
+                            <option value="">-- Pilih Guru --</option>
+                            @foreach($guruList as $guru)
+                                <option value="{{ $guru->nuptk }}">{{ $guru->nama }} ({{ $guru->nuptk }})</option>
+                            @endforeach
+                        </select>
                     </div>
-                    <div class="form-group">
-                        <label for="npa">NPA PGRI</label>
-                        <input type="text" id="npa" name="npa" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="ttl">Tempat, Tanggal Lahir</label>
-                        <input type="text" id="ttl" name="ttl" placeholder="Jakarta, 1990-01-01" required />
-                    </div>
+
                     <div class="form-group">
                         <label for="alamat">Alamat Unit Kerja</label>
                         <input type="text" id="alamat" name="alamat" required />
@@ -118,6 +108,7 @@
                             <option value="SK Mutasi">SK Mutasi</option>
                         </select>
                     </div>
+
                 </div>
 
                 <!-- Tombol Aksi -->
@@ -181,6 +172,8 @@
             });
         });
     });
+
+
 </script>
 
 {{-- SCRIPT AJAX --}}

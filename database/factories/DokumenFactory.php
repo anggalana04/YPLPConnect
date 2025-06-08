@@ -19,7 +19,7 @@ class DokumenFactory extends Factory
             'tanggal_lahir'     => $this->faker->date('Y-m-d', '-25 years'),
             'alamat_unit_kerja' => $this->faker->address,
             'jenis_sk'          => $this->faker->randomElement(['SK Pengangkatan', 'SK Pensiun', 'SK Mutasi']),
-            'status'            => $this->faker->randomElement(['Menunggu', 'Disetujui', 'Ditolak']),
+            'status'            => $this->faker->randomElement(['Menunggu', 'Diterima', 'Ditolak', 'Selesai', 'Ditolak', 'Diproses']),
             'file_path'         => 'dokumen/' . Str::random(10) . '.pdf',
             'submitted_by'      => 1, // Sesuaikan jika ingin ambil dari user tertentu
             'verified_by'       => null,

@@ -108,8 +108,17 @@ Route::middleware('auth')->group(function () {
         }
 
         return view('operator_yayasan.v_dashboard.index', compact(
-            'jumlahSiswa', 'jumlahGuru', 'keuangan', 'pengaduans',
-            'jumlahGuruPerTahun', 'jumlahSiswaPerTahun', 'tahunList', 'tahunDipilih','bulanList', 'keuanganPerTahun', 'dokumens'
+            'jumlahSiswa',
+            'jumlahGuru',
+            'keuangan',
+            'pengaduans',
+            'jumlahGuruPerTahun',
+            'jumlahSiswaPerTahun',
+            'tahunList',
+            'tahunDipilih',
+            'bulanList',
+            'keuanganPerTahun',
+            'dokumens'
         ));
     })->name('dashboard');
 
@@ -152,7 +161,7 @@ Route::middleware('auth')->group(function () {
     Route::get('keuangan', [KeuanganController::class, 'index'])->name('keuangan.index');
     Route::post('keuangan/upload/{id?}', [KeuanganController::class, 'upload'])->name('keuangan.upload');
     Route::get('/keuangan/yayasan', [KeuanganController::class, 'yayasan'])->name('keuangan.yayasan');
-    Route::post('/keuangan/verifikasi/{id}', [KeuanganController::class, 'verifikasi'])->name('keuangan.verifikasi');
+    Route::post('/keuangan/validasi/{id}', [KeuanganController::class, 'validasi'])->name('keuangan.validasi');
     Route::get('/keuangan/bukti-preview/{id}', [KeuanganController::class, 'previewBukti'])->name('keuangan.bukti.preview');
     Route::get('/keuangan/download-recap', [KeuanganController::class, 'downloadRecap'])->name('keuangan.download.recap');
 
@@ -163,7 +172,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/dokumen/store', [DokumenController::class, 'store'])->name('dokumen.store');
     Route::get('/dokumen/yayasan', [DokumenController::class, 'yayasan'])->name('dokumen.yayasan');
     Route::get('/dokumen/ajax/search', [DokumenController::class, 'ajaxSearch'])->name('dokumen.ajax.search');
-    Route::get('/dokumen/download/{id}', [DokumenController::class, 'download'])->name('dokumen.download');
+    Route::get('/dokumen/{id}/download', [DokumenController::class, 'download'])->name('dokumen.download');
     Route::put('/dokumen/{id}/status/{status}', [DokumenController::class, 'updateStatus'])->name('dokumen.updateStatus');
 
 
