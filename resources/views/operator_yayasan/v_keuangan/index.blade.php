@@ -42,6 +42,26 @@
 @endif
 
 @section('content')
+    @php
+        $bulanList = [
+            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+        ];
+        $statusColor = [
+            'Menunggu' => 'kuning',
+            'Disetujui' => 'hijau',
+            'Ditolak'   => 'merah',
+            'default'   => 'kuning',
+        ];
+        $keuanganData = collect($keuangan ?? []);
+        $allApproved = $keuanganData->count() === count($bulanList) && $keuanganData->every(function($item) {
+            return ($item->status ?? null) === 'Disetujui';
+        });
+        $currentMonth = (int) date('n');
+        $currentYear = (int) date('Y');
+        $isCurrentYear = ($tahunDipilih == $currentYear);
+    @endphp
+
     <div class="konten">
         <div class="box-konten">
             <div class="head-box-konten">
@@ -83,7 +103,8 @@
                         <button type="submit"
                             class="download-btn
                             {{ auth()->user()->role === 'operator_sekolah' ? 'download-sekolah' : '' }}
-                            {{ auth()->user()->role === 'operator_yayasan' ? 'download-yayasan' : '' }}">
+                            {{ auth()->user()->role === 'operator_yayasan' ? 'download-yayasan' : '' }}"
+                            @if(!$allApproved) disabled style="background: #ccc; cursor: not-allowed;" title="Lengkapi verifikasi semua bulan untuk download recap" @endif>
                             Download Recap
                         </button>
                     </form>
@@ -92,59 +113,31 @@
 
             <div class="bulan-wrapper">
                 <div class="bulan-list">
-                    @php
-                        $daftarBulan = [
-                            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-                            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-                        ];
-                    @endphp
-
-                    @foreach ($daftarBulan as $bulan)
+                    @foreach ($bulanList as $i => $bulan)
                         @php
-                            $data = $keuangan->firstWhere('bulan', $bulan);
+                            $data = $keuanganData->first(fn($d) => ($d->bulan ?? null) === $bulan);
                             $status = $data->status ?? 'Menunggu';
+                            $color = $statusColor[$status] ?? $statusColor['default'];
                             $hasBukti = $data && $data->bukti_path;
-                            $statusColor = [
-                                'Menunggu' => 'kuning',
-                                'Disetujui' => 'hijau',
-                                'Ditolak'   => 'merah'
-                            ];
-                            $userRole = auth()->user()->role;
-
-                            if ($hasBukti) {
-                                if ($status === 'Disetujui') {
-                                    $downloadColor = 'hijau';
-                                } else {
-                                    $downloadColor = $userRole === 'operator_yayasan' ? 'merah' : 'kuning';
-                                }
-                            } else {
-                                $downloadColor = 'abu';
-                            }
+                            $isUpcoming = $isCurrentYear && ($i + 1) > $currentMonth;
                         @endphp
 
-                        <div class="bulan-item {{ $loop->iteration % 2 == 0 ? 'genap' : '' }}">
-                            <img src="{{ asset('image/icon-Data_Keuangan/icon-Plus.svg') }}" alt="Toggle Icon" class="icon-plus toggle-icon">
+                        <div class="bulan-item {{ $loop->iteration % 2 == 0 ? 'genap' : '' }} {{ $isUpcoming ? 'bulan-upcoming' : '' }}" @if($isUpcoming) style="opacity:0.5;pointer-events:none;cursor:not-allowed;" @endif>
+                            <img src="{{ asset('image/icon-Data_Keuangan/icon-Plus.svg') }}" alt="Toggle Icon" class="icon-plus toggle-icon" @if($isUpcoming) style="pointer-events:none;filter:grayscale(1);" @endif>
                             <span class="nama">{{ $bulan }}</span>
-                            @if ($hasBukti)
-                                @if (auth()->user()->role === 'operator_sekolah')
-                                    <button class="status status-{{ $downloadColor }}"
-                                        onclick="window.open('{{ route('keuangan.bukti.preview', $data->id) }}', '_blank')">
-                                        <img src="{{ asset('image/icon-Data_Keuangan/icon-download.svg') }}" alt="Preview Icon">
-                                    </button>
-                                @else
-                                    <button class="status status-{{ $downloadColor }}"
-                                        onclick="window.open('{{ asset('storage/' . $data->bukti_path) }}', '_blank')">
-                                        <img src="{{ asset('image/icon-Data_Keuangan/icon-download.svg') }}" alt="Download Icon">
-                                    </button>
-                                @endif
+                            @if ($hasBukti && !$isUpcoming)
+                                <button class="status status-{{ $color }}"
+                                    onclick="window.open('{{ asset('storage/' . $data->bukti_path) }}', '_blank')">
+                                    <img src="{{ asset('image/icon-Data_Keuangan/icon-download.svg') }}" alt="Download Icon">
+                                </button>
                             @else
-                                <button class="status status-{{ $downloadColor }}" disabled>
+                                <button class="status status-{{ $color }}" disabled>
                                     <img src="{{ asset('image/icon-Data_Keuangan/icon-download.svg') }}" alt="Download Icon">
                                 </button>
                             @endif
                         </div>
 
-                        <div class="detail-collapsible" style="max-height:0;overflow:hidden;transition:max-height 0.3s;">
+                        <div class="detail-collapsible" style="max-height:0;overflow:hidden;transition:max-height 0.3s; @if($isUpcoming) display:none; @endif">
                             <div class="detail-content">
                                 <div class="detail-teks">
                                     @if ($data)
@@ -159,7 +152,7 @@
                                 </div>
 
                                 <div class="upload-button-container">
-                                    @if (auth()->user()->role === 'operator_sekolah')
+                                    @if (auth()->user()->role === 'operator_sekolah' && !$isUpcoming)
                                         <form action="{{ route('keuangan.upload', $data->id ?? 0) }}" method="POST" enctype="multipart/form-data" class="form-upload" data-bulan="{{ $bulan }}">
                                             @csrf
                                             <label for="uploadBukti{{ $bulan }}" class="upload-bukti-button">Upload Bukti</label>
@@ -171,7 +164,7 @@
                                             </div>
                                         </form>
                                         <button class="bayar-button" data-bulan="{{ $bulan }}">Bayar</button>
-                                    @elseif (auth()->user()->role === 'operator_yayasan')
+                                    @elseif (auth()->user()->role === 'operator_yayasan' && !$isUpcoming)
                                         <button class="cek-bukti-button" data-bulan="{{ $bulan }}">Cek Bukti</button>
                                         <form method="POST" action="{{ route('keuangan.validasi', $data->id ?? 0) }}" class="form-validasi">
                                             @csrf

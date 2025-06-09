@@ -206,5 +206,4 @@ class KeuanganController extends Controller
 
         return $pdf->stream("Rekap_Pembayaran_{$tahun}.pdf");
     }
-    // Tambahkan method lain jika diperlukan (show, edit, update, destroy)
 }

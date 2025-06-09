@@ -339,6 +339,13 @@ body {
     background-color: #138496;
 }
 
+.btn-ditolak {
+    background-color: #ff4d4d; /* light red */
+    color: white;
+}
+.btn-ditolak:hover {
+    background-color: #e03a3a;
+}
 
 
 /* CSS DOWNLOAD */

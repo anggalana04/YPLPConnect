@@ -20,7 +20,7 @@ class KeuanganFactory extends Factory
         ];
 
         return [
-            'id'          =>$id,
+            // 'id'          =>$id,
             'npsn'        => '10000001', // bisa di-overwrite di seeder
             'tahun'       => $this->faker->numberBetween(date('Y') - 2, date('Y')),
             'bulan'       => $this->faker->randomElement($bulanList),

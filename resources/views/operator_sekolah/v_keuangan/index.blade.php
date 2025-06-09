@@ -14,7 +14,24 @@
             </div>
         </div>
 
-        <div class="option-box-konten {{  auth()->user()->role === 'operator_sekolah' ? 'gap-operator-sekolah' : 'gap-default' }}">
+        @php
+            $bulanList = [
+                'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+            ];
+            $statusColor = [
+                'Menunggu' => 'kuning',
+                'Disetujui' => 'hijau',
+                'Ditolak'   => 'merah',
+                'default'   => 'kuning',
+            ];
+            $keuanganData = collect($keuangan ?? []);
+            $allApproved = $keuanganData->count() === count($bulanList) && $keuanganData->every(function($item) {
+                return ($item->status ?? null) === 'Disetujui';
+            });
+        @endphp
+
+        <div class="option-box-konten {{ auth()->user()->role === 'operator_sekolah' ? 'gap-operator-sekolah' : 'gap-default' }}">
             <div class="kategori">
                 <form id="filter-form" method="GET" action="{{ route('keuangan.index') }}">
                     <select id="kategori" name="tahun" onchange="this.form.submit()">
@@ -26,29 +43,17 @@
                 </form>
             </div>
             <div class="download">
-                <button class="download-btn" type="button">Download Recap</button>
+                <button class="download-btn" type="button" @if(!$allApproved) disabled style="background: #ccc; cursor: not-allowed;" title="Lengkapi verifikasi semua bulan untuk download recap" @endif>Download Recap</button>
             </div>
         </div>
 
         <div class="bulan-wrapper">
             <div class="bulan-list">
-                @php
-                    $daftarBulan = [
-                        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-                        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-                    ];
-                    $statusColor = [
-                        'Menunggu' => 'kuning',
-                        'Disetujui' => 'hijau',
-                        'Ditolak'   => 'merah'
-                    ];
-                @endphp
-
-                @foreach ($daftarBulan as $bulan)
+                @foreach ($bulanList as $bulan)
                     @php
-                        $data = $keuangan->firstWhere('bulan', $bulan);
+                        $data = $keuanganData->first(fn($d) => ($d->bulan ?? null) === $bulan);
                         $status = $data->status ?? 'Menunggu';
-                        $color = $statusColor[$status] ?? 'kuning';
+                        $color = $statusColor[$status] ?? $statusColor['default'];
                     @endphp
                     <div class="bulan-item {{ $loop->iteration % 2 == 0 ? 'genap' : '' }}">
                         <img src="{{ asset('image/icon-Data_Keuangan/icon-Plus.svg') }}" alt="Toggle Icon" class="icon-plus toggle-icon">

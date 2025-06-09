@@ -2,54 +2,278 @@
 
 
 body {
-    font-family: 'Montserrat' !important;
-  }
-
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    margin: 0;
-    padding: 0;
+    font-family: 'Montserrat', Arial, sans-serif !important;
+    background: #f7fafd;
+    color: #2a3556;
 }
 
-.konten{
-    margin-left: 276px;
-    margin-top: 20px;
-    margin-right: 20px;
-    display: block;
-    justify-content: center;
-    
+.sidebar {
+    background: #1a223f;
+    color: #fff;
+    min-width: 250px;
+    width: 250px;
+    height: 100vh;
+    border-radius: 0 32px 32px 0;
+    box-shadow: 4px 0 24px rgba(26,34,63,0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 32px 0 24px 0;
+}
+
+.sidebar .logo {
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #43e97b;
+    margin-bottom: 40px;
+    padding-left: 32px;
+}
+
+.sidebar .nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 16px;
+}
+
+.sidebar .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 24px;
+    border-radius: 16px 0 0 16px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #e0e6f7;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.sidebar .nav-item.active {
+    background: #43e97b;
+    color: #fff;
+}
+.sidebar .nav-item:hover {
+    background: #2a3556;
+    color: #fff;
+}
+
+.sidebar .profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    border-radius: 16px 0 0 16px;
+    background: #232b4a;
+    margin-top: 32px;
+}
+.sidebar .profile img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #43e97b;
+}
+.sidebar .profile .name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.konten {
+    margin-left: 270px;
+    margin-top: 0;
+    margin-right: 0;
+    padding: 0 32px 32px 32px;
+    background: #f7fafd;
+    min-height: 100vh;
 }
 
 .konten-head {
-    background-color: #F0F0F0;
-    border-radius: 40px;
-    height: 65px;
-    width: 125vh;
-    margin: auto;
-    padding: 20px;
-    padding-left: 30px;
-
+    background: #fff;
+    border-radius: 32px;
+    min-height: 80px;
+    margin: 32px 0 24px 0;
+    padding: 32px 40px 24px 40px;
     display: flex;
-    flex-direction: column;      /* susunan vertikal */
-    justify-content: center;     /* center vertikal */
-    align-items: flex-start;         /* center horizontal */
-    gap: 4px;                   /* jarak antar heading */
-    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    box-shadow: 0 2px 16px rgba(26,34,63,0.06);
+    gap: 6px;
 }
-
 .konten-head h1 {
-    font-size: 1.9rem ;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #2a3556;
     margin: 0;
 }
 .konten-head h2 {
     font-size: 1.2rem;
-    margin: 0;
     font-weight: 500;
-    
+    color: #6b7a99;
+    margin: 0;
 }
 
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+.topbar .left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.topbar .greeting {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2a3556;
+}
+.topbar .subtitle {
+    font-size: 1rem;
+    color: #6b7a99;
+}
+.topbar .right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.topbar .icon-btn {
+    background: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(26,34,63,0.08);
+    cursor: pointer;
+    position: relative;
+}
+.topbar .icon-btn .notif-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: #43e97b;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.topbar .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #43e97b;
+}
+
+.konten-body {
+    background: transparent;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 32px;
+    padding: 0;
+    border-radius: 0;
+    width: 100%;
+    margin: 0;
+    min-height: 600px;
+}
+
+.card {
+    background: #fff !important;
+    border: none !important;
+    border-radius: 24px !important;
+    padding: 28px 24px 20px 24px;
+    box-shadow: 0 2px 16px rgba(26,34,63,0.08);
+    min-height: 180px !important;
+    max-width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+}
+.card h1, .card h2, .card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2a3556;
+    margin-bottom: 8px;
+}
+.card .metric {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #43e97b;
+    margin-bottom: 4px;
+}
+.card .trend {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #43e97b;
+}
+.card .trend.negative {
+    color: #ff3b6b;
+}
+.card .progress-bar {
+    width: 100%;
+    height: 12px;
+    background: #e0e6f7;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+.card .progress-bar .progress {
+    height: 100%;
+    background: linear-gradient(90deg, #43e97b 60%, #38f9d7 100%);
+    border-radius: 8px;
+}
+
+.card .donut-chart, .card .bar-chart {
+    width: 100%;
+    height: 180px;
+    margin: 0 auto;
+}
+
+.card .table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    margin-top: 8px;
+}
+.card .table th {
+    background: transparent;
+    color: #6b7a99;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 8px 12px;
+    text-align: left;
+}
+.card .table td {
+    background: #f7fafd;
+    color: #2a3556;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: none;
+}
+.card .table tr {
+    box-shadow: 0 1px 4px rgba(26,34,63,0.04);
+}
+
+/* Muted text, etc */
+.text-muted {
+    color: #b0b8d1;
+}
 
 /* CSS konten-body*/
 .konten-body{
@@ -113,7 +337,7 @@ body {
 .bar-item {
     flex: 1;
     height: 16px;
-   
+
     transition: background-color 0.3s ease;
     cursor: pointer;
 }
@@ -144,7 +368,7 @@ body {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s ease;
-    
+
 }
 
 .detail-status.show {
@@ -260,24 +484,3 @@ body {
 }
 
 /* CSS PENGADUAN BAR */
-
-<style>
-.dokumen-scroll {
-    max-height: 250px; /* atur sesuai kebutuhan */
-    overflow-y: auto;
-    padding-right: 8px;
-}
-.status-head {
-    border-bottom: 1px solid #eee;
-    margin-bottom: 8px;
-    padding-bottom: 8px;
-    cursor: pointer;
-}
-.detail-status {
-    display: none;
-    margin-top: 8px;
-}
-.status-head.active .detail-status {
-    display: block;
-}
-</style>

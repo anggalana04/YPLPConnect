@@ -17,7 +17,7 @@
                 <h1>Dokumen SK</h1>
                 <p>Mengajukan dan melihat file Surat Keputusan</p>
             </div>
-            @if(auth()->user()->role === 'operator-sekolah')
+            @if(auth()->user()->role === 'operator_sekolah' || auth()->user()->role === 'operator_yayasan')
                 <button onclick="openPopUpForm()">Mengajukan SK</button>
             @endif
 

@@ -12,7 +12,7 @@ body {
     padding: 0;
 }
 
-.konten{
+.konten {
     margin-left: 276px;
     margin-top: 20px;
     margin-right: 20px;
@@ -43,13 +43,14 @@ body {
     font-size: 1.8rem;
     margin: 0;
 }
+
 .konten-head h2 {
     font-size: 1.2rem;
     margin: 0;
     font-weight: 500;
 }
 
-.konten-head-sekolah h2{
+.konten-head-sekolah h2 {
     width: 100%;
     font-size: 0.9rem;
 }
@@ -73,8 +74,10 @@ body {
 .konten-body-yayasan {
     display: grid;
     justify-content: center;
-    grid-template-columns: repeat(2, 1fr); /* 2 kolom */
-    grid-template-rows: repeat(3, auto);  /* 3 baris */
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 kolom */
+    grid-template-rows: repeat(3, auto);
+    /* 3 baris */
     grid-template-areas:
         "card1 card2"
         "card3 card4"
@@ -86,6 +89,7 @@ body {
 .card-full-width {
     grid-column: span 2;
 }
+
 /* CSS UNTUK DASHBOARD YAYASAN */
 
 
@@ -94,8 +98,10 @@ body {
 /* CSS UNTUK DASHBOARD SEKOLAH */
 .konten-body-sekolah {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 kolom */
-    grid-template-rows: repeat(2, auto);  /* 2 baris */
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 kolom */
+    grid-template-rows: repeat(2, auto);
+    /* 2 baris */
     grid-template-areas:
         "card1 card2"
         "card3 card4";
@@ -124,14 +130,14 @@ body {
     flex-direction: column;
 }
 
-.card-sekolah{
+.card-sekolah {
     /* height: 193px; */
     padding: 20px;
 }
 
 
 /* CSS DALAM CARD */
-.detail-card{
+.detail-card {
     display: flex;
     align-items: start;
     gap: 10px;
@@ -139,12 +145,12 @@ body {
     margin-top: 0px;
 }
 
-.detail-card img{
+.detail-card img {
     width: 40px;
     height: 40px;
 }
 
-.jumlah-data{
+.jumlah-data {
     font-size: 30px;
 }
 
@@ -159,11 +165,12 @@ canvas#chartGuru {
     height: 300px !important;
 }
 
-.card h1{
+.card h1 {
     font-size: 1.2rem;
     font-weight: 400;
     text-align: center;
 }
+
 /* CSS KEUANGAN-BAR */
 
 .keuangan-bar-container {
@@ -178,7 +185,7 @@ canvas#chartGuru {
 
 .keuangan-bar {
     height: 100%;
-    background-color: rgba(255,255,255,0.4);
+    background-color: rgba(255, 255, 255, 0.4);
     width: 0;
     transition: width 1s ease-in-out;
 }
@@ -188,7 +195,8 @@ canvas#chartGuru {
     margin-bottom: 10px;
     padding: 4px 8px;
     font-size: 14px;
-    height: 32px; /* Mengatur tinggi dropdown */
+    height: 32px;
+    /* Mengatur tinggi dropdown */
     border-radius: 6px;
     border: 1px solid #ccc;
     width: 100px;
@@ -202,7 +210,8 @@ canvas#chartGuru {
 }
 
 .keuangan-scroll {
-    max-height: 130px; /* tampilkan kira-kira 4 item */
+    max-height: 130px;
+    /* tampilkan kira-kira 4 item */
     overflow-y: auto;
     padding-right: 5px;
 }
@@ -217,12 +226,14 @@ canvas#chartGuru {
 }
 
 .keuangan-item span:first-child {
-    flex: 1; /* Bulan */
+    flex: 1;
+    /* Bulan */
     text-align: left;
 }
 
 .keuangan-item span:nth-child(2) {
-    flex: 3.5; /* Rp */
+    flex: 3.5;
+    /* Rp */
     text-align: center;
     font-family: monospace;
 }
@@ -235,7 +246,7 @@ canvas#chartGuru {
 }
 
 /* CSS PENGADUAN BAR */
-.head{
+.head {
     font-size: 12px;
     font-weight: 500;
 }
@@ -295,9 +306,11 @@ canvas#chartGuru {
 /* CSS DETAIL PENGADUAN */
 /* Tambahkan di dashboard_yayasan.css */
 .pengaduan-scroll {
-    max-height: 250px; /* atur sesuai kebutuhan agar kira-kira 10 item terlihat */
+    max-height: 250px;
+    /* atur sesuai kebutuhan agar kira-kira 10 item terlihat */
     overflow-y: auto;
-    padding-right: 8px; /* agar scroll bar tidak menutupi konten */
+    padding-right: 8px;
+    /* agar scroll bar tidak menutupi konten */
 }
 
 .No-data-pengaduan {
@@ -307,7 +320,8 @@ canvas#chartGuru {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%; /* gunakan 100% tinggi parent */
+    height: 100%;
+    /* gunakan 100% tinggi parent */
 }
 
 
@@ -317,7 +331,7 @@ canvas#chartGuru {
     flex-wrap: nowrap;
     position: relative;
     margin-top: 5px;
-    
+
 }
 
 .status-step {
@@ -352,6 +366,7 @@ canvas#chartGuru {
     width: 30px !important;
     height: 30px;
 }
+
 .status-step img[alt="diterima"] {
     width: 25px !important;
     height: 25px;
@@ -383,9 +398,11 @@ canvas#chartGuru {
 
 /* CSS BAR DOKUMEN */
 .dokumen-scroll {
-    max-height: 200px; /* Sesuaikan tinggi agar kira-kira 10 item muat */
+    max-height: 200px;
+    /* Sesuaikan tinggi agar kira-kira 10 item muat */
     overflow-y: auto;
-    padding-right: 8px; /* Biar tidak tertutup scrollbar */
+    padding-right: 8px;
+    /* Biar tidak tertutup scrollbar */
 }
 
 /* Tambahan styling opsional agar tidak mepet */
@@ -401,15 +418,17 @@ canvas#chartGuru {
 /* CSS BAR KEUANGAN YAYASAN */
 #chartKeuangan {
     width: 100%;
-    height: 300px; /* kamu bisa sesuaikan */
+    height: 300px;
+    /* kamu bisa sesuaikan */
 }
 
-.select-tahun-yayasan{
+.select-tahun-yayasan {
     float: right;
     margin-bottom: 10px;
     padding: 4px 8px;
     font-size: 14px;
-    height: 32px; /* Mengatur tinggi dropdown */
+    height: 32px;
+    /* Mengatur tinggi dropdown */
     border-radius: 6px;
     border: 1px solid #ccc;
     width: 100px;
@@ -423,20 +442,55 @@ canvas#chartGuru {
 }
 
 .dokumen-scroll {
-    max-height: 250px; /* atur sesuai kebutuhan */
+    max-height: 250px;
+    /* atur sesuai kebutuhan */
     overflow-y: auto;
     padding-right: 8px;
 }
+
 .status-head {
     border-bottom: 1px solid #eee;
     margin-bottom: 8px;
     padding-bottom: 8px;
     cursor: pointer;
 }
+
 .detail-status {
     display: none;
     margin-top: 8px;
 }
+
 .status-head.active .detail-status {
     display: block;
 }
+
+
+/* --- ENFORCE LEFT-ALIGNMENT FOR DASHBOARD CARDS --- */
+.status-head,
+.status-head *,
+.judul-pengaduan,
+.detail-status,
+.head,
+.head-detail,
+.status-text,
+.dokumen-row,
+.dokumen-row *,
+.pengaduan-scroll *,
+.dokumen-scroll * {
+    text-align: left !important;
+}
+
+/* Remove center alignment for card content in pengaduan/dokumen cards */
+.card .jumlah-data,
+.card .status-text,
+.card .judul-pengaduan {
+    text-align: left !important;
+}
+
+/* Ensure table headers and cells in dashboard cards are left-aligned */
+.table-konten th,
+.table-konten td {
+    text-align: left !important;
+}
+
+/* Remove/override any center alignment for .status-head, .dokumen-row, .detail-status, .head, .head-detail, .status-text */

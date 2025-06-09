@@ -15,7 +15,7 @@
                 <h1>PENGADUAN</h1>
                 <p>Ajukan pengaduan jika sekolah anda mengalami masalah</p>
             </div>
-            @if(auth()->user()->role === 'operator-sekolah')
+            @if(auth()->user()->role === 'operator_sekolah' || auth()->user()->role === 'operator_yayasan')
                 <button onclick="openPopUpForm()">Ajukan Pengaduan</button>
             @endif
         </div>
