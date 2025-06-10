@@ -20,12 +20,20 @@
 
                 <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
                 @if ($errors->has('email'))
-                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                    <span class="text-danger" style="color:red; font-size:13px;">{{ $errors->first('email') }}</span>
                 @endif
 
                 <input type="password" name="password" placeholder="Password" required>
                 @if ($errors->has('password'))
-                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                    <span class="text-danger" style="color:red; font-size:13px; display:block; margin-top:2px;">{{ $errors->first('password') }}</span>
+                @endif
+
+                @if ($errors->has('auth'))
+                    <span class="text-danger" style="color:red; font-size:13px;">{{ $errors->first('auth') }}</span>
+                @endif
+
+                @if (session('status'))
+                    <span class="text-danger" style="color:red; font-size:13px;">{{ session('status') }}</span>
                 @endif
 
                 <button type="submit">Login</button>
