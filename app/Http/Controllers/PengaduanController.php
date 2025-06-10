@@ -55,7 +55,7 @@ public function index(Request $request)
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'judul'     => 'required|string|max:100',
+            'judul'     => 'required|string|min:15|max:100', // Added min:15 for minimum character validation
             'deskripsi' => 'required|string',
             'kategori'  => 'required|string|in:Kendala Teknis,Pelayanan,Lainnya',
             'bukti'     => 'nullable|image|max:2048',
