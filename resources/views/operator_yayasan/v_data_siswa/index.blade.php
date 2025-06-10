@@ -160,11 +160,11 @@
 <div class="modal-pengaduan" id="PopUpForm" style="display:none;">
     <form method="POST" action="{{ route('siswa.store') }}" class="form-box" style="padding:0; background:transparent; box-shadow:none;">
         @csrf
-        <div class="form-modal-blur" style="background:rgba(255,255,255,0.97); border-radius:24px; padding:32px 32px 18px 32px; max-width:420px; margin:0 auto; box-shadow:0 8px 32px 0 rgba(67,233,123,0.12);">
+        <div class="form-modal-blur" style="background:#f0f0f0; border-radius:24px; max-width:420px; margin:0 auto; box-shadow:0 8px 32px 0 rgba(67,233,123,0.12);">
             <div class="sub-head-box" style="margin-bottom:18px;">
                 <h1 style="font-size:1.25rem; font-weight:600; margin-bottom:0;">Form Tambah Data Siswa</h1>
             </div>
-            <div class="sub-form-box" style="background: #f7f7fa; border-radius: 18px; padding: 20px 18px 10px 18px; display: flex; flex-direction: column; gap: 16px; box-shadow:0 2px 8px 0 rgba(60,60,60,0.04);">
+            <div class="sub-form-box" style="background: #f7f7fa; border-radius: 18px; padding: 20px 18px 10px 18px; display: flex; flex-direction: column; gap: 10px; box-shadow:0 2px 8px 0 rgba(60,60,60,0.04);">
                 <div>
                     <label for="nama" style="font-weight:600; font-size:0.97rem; margin-bottom:2px; display:block;">Nama</label>
                     <input type="text" id="nama" name="nama" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">

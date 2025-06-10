@@ -152,14 +152,13 @@
                     </select>
                 </div>
             </div>
-            <form>
+
     <!-- input fields di sini -->
 
-    <div class="all-button" style="display: flex; flex-direction: column; align-items: stretch; gap: 10px; margin-top: 32px;">
+    <div class="all-button" >
         <button type="button" class="batal" onclick="closePopUpForm()">Batal</button>
         <button type="submit" class="kirim">Kirim</button>
     </div>
-</form>
 
         </div>
     </form>

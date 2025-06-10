@@ -322,10 +322,12 @@ th:last-child {
     padding: 10px;
 }
 
+
 .sub-form-box {
     background-color: white;
-    height: 70vh;
+    height: 100vh;
     padding: 20px;
+    overflow-y:auto ;
 
 }
 
