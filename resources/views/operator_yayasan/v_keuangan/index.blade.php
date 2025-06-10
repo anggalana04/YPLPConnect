@@ -48,10 +48,10 @@
             'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
         ];
         $statusColor = [
-            'Menunggu' => 'kuning',
+            'Menunggu' => 'abu',
             'Disetujui' => 'hijau',
             'Ditolak'   => 'merah',
-            'default'   => 'kuning',
+            'default'   => 'kuning', // Change default to 'abu' (gray)
         ];
         $keuanganData = collect($keuangan ?? []);
         $allApproved = $keuanganData->count() === count($bulanList) && $keuanganData->every(function($item) {
@@ -117,7 +117,7 @@
                         @php
                             $data = $keuanganData->first(fn($d) => ($d->bulan ?? null) === $bulan);
                             $status = $data->status ?? 'Menunggu';
-                            $color = $statusColor[$status] ?? $statusColor['default'];
+                            $color = $status === 'Disetujui' ? 'hijau' : ($status === 'Ditolak' ? 'merah' : ($data && $data->bukti_path ? 'kuning' : 'abu'));
                             $hasBukti = $data && $data->bukti_path;
                             $isUpcoming = $isCurrentYear && ($i + 1) > $currentMonth;
                         @endphp
@@ -166,11 +166,6 @@
                                         <button class="bayar-button" data-bulan="{{ $bulan }}">Bayar</button>
                                     @elseif (auth()->user()->role === 'operator_yayasan' && !$isUpcoming)
                                         <button class="cek-bukti-button" data-bulan="{{ $bulan }}">Cek Bukti</button>
-                                        <form method="POST" action="{{ route('keuangan.validasi', $data->id ?? 0) }}" class="form-validasi">
-                                            @csrf
-                                            <input type="hidden" name="status" value="Disetujui">
-                                            <button type="submit" class="sudah-bayar-button" data-bulan="{{ $bulan }}">Sudah Bayar</button>
-                                        </form>
                                     @endif
                                 </div>
                             </div>
@@ -207,6 +202,14 @@
         <div class="popup-content">
             <h3>Bukti Pembayaran</h3>
             <div id="buktiContainer"></div>
+            <form id="formSetujui" method="POST" class="form-validasi">
+                @csrf
+                <button type="submit" class="setujui-button">Setujui</button>
+            </form>
+            <form id="formTolak" method="POST" class="form-validasi">
+                @csrf
+                <button type="submit" class="tolak-button">Tolak</button>
+            </form>
             <button onclick="tutupBukti()">Tutup</button>
         </div>
     </div>
@@ -319,6 +322,9 @@
                 } else {
                     container.innerHTML = `<a href="${filePath}" target="_blank">Lihat Bukti (PDF)</a>`;
                 }
+                // Set the correct action for both forms
+                document.getElementById('formSetujui').action = "{{ url('/keuangan/setujui') }}/" + data.id;
+                document.getElementById('formTolak').action = "{{ url('/keuangan/tolak') }}/" + data.id;
                 document.getElementById('modalCekBukti').style.display = 'flex';
             } else {
                 alert('Bukti tidak ditemukan.');

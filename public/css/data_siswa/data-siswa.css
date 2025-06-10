@@ -7,9 +7,12 @@ body {
 .konten {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Pusatkan vertikal */
-    align-items: center; /* Pusatkan horizontal (opsional) */
-    margin-left: 270px; /* Same as sidebar width */
+    justify-content: center;
+    /* Pusatkan vertikal */
+    align-items: center;
+    /* Pusatkan horizontal (opsional) */
+    margin-left: 270px;
+    /* Same as sidebar width */
     align-items: center;
     margin-right: 20px;
     transition: margin-left 0.2s;
@@ -17,11 +20,20 @@ body {
     box-sizing: border-box;
     position: relative;
     z-index: 1;
-    width: calc(90%-260px - 20px); /* 100% minus sidebar and right margin */
+    width: calc(90%-260px - 20px);
+    /* 100% minus sidebar and right margin */
 }
 
 /* CSS BOX-KONTEN */
-.box-konten{
+.box-konten,
+.body-konten {
+    box-shadow: 0 6px 32px 0 rgba(60, 60, 60, 0.10), 0 1.5px 6px 0 rgba(60, 60, 60, 0.08);
+    border-radius: 32px !important;
+    background: #fff;
+    transition: box-shadow 0.2s, background 0.2s;
+}
+
+.box-konten {
     background-color: #F0F0F0;
     border-radius: 40px;
     height: 84dvh;
@@ -29,48 +41,74 @@ body {
     width: 100%;
 }
 
-.box-konten.sekolah{
+.box-konten.sekolah {
     height: 93dvh;
 }
 
-.head-box-konten{
+.head-box-konten {
     display: flex;
     align-items: center;
     gap: 74dvh;
 }
 
 
-.option-button{
+.option-button {
     margin-top: 30px;
 }
-.option-button button{
+
+.option-button button {
     display: block;
     height: 40px;
     border: none;
     background-color: yellow;
     border-radius: 40px;
-    font-size: 14px ;
+    font-size: 14px;
     padding: 10px;
     font-weight: 500;
     margin-bottom: 10px;
 }
 
-.option-button .tambah-siswa{
-    background-color: lime;
+.option-button .tambah-siswa {
+    background: linear-gradient(90deg, #ffe259 0%, #f6e27a 100%);
+    color: #222;
+    border: none;
+    border-radius: 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px 38px;
+    min-width: 180px;
+    box-shadow: 0 2px 12px 0 rgba(255, 226, 89, 0.12);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    margin-left: 0;
+    margin-right: 0;
+    z-index: 2;
+    position: relative;
+    outline: none;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
 }
 
-.teks-head-box-konten h1{
+.option-button .tambah-siswa:hover {
+    background: linear-gradient(90deg, #f6e27a 0%, #ffe259 100%);
+    box-shadow: 0 4px 18px 0 rgba(255, 226, 89, 0.18);
+    transform: translateY(-2px) scale(1.03);
+    color: #222;
+}
+
+.teks-head-box-konten h1 {
     font-size: 1.5rem;
     font-weight: 600;
 }
 
-.teks-head-box-konten p{
+.teks-head-box-konten p {
     font-size: 1rem;
 }
+
 /* CSS BOX-KONTEN */
 
 /* CSS KATEGORI & SEARCH */
-.option-head-box{
+.option-head-box {
     display: flex;
     align-items: center;
     gap: 30px;
@@ -83,30 +121,41 @@ body {
     border: 1px black solid;
     outline: none;
     background-color: #F0F0F0;
-    cursor: pointer;   
+    cursor: pointer;
 }
 
 .search-container {
-  position: relative;
-  max-width: 200px;
+    position: relative;
+    max-width: 200px;
 }
 
 .search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
 }
 
 .search-input {
-  width: 100%;
-  padding: 8px 15px 8px 40px;
-  border: none;
-  border-radius: 40px;
-  font-size: 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    padding: 8px 15px 8px 40px;
+    border: none;
+    border-radius: 40px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1.5px 6px 0 rgba(60, 60, 60, 0.07);
+    border-radius: 24px;
+    background: #f7f7fa;
+    border: 1px solid #e0e0e0;
+    transition: box-shadow 0.15s;
 }
+
+.search-input:focus {
+    box-shadow: 0 2px 12px 0 rgba(60, 60, 60, 0.13);
+    outline: none;
+}
+
 /* CSS KATEGORI & SEARCH */
 
 
@@ -119,36 +168,42 @@ body {
     border-radius: 20px;
     margin-top: 20px;
     padding: 15px;
-
+    box-shadow: 0 4px 24px 0 rgba(60, 60, 60, 0.08);
+    border-radius: 20px;
+    background: #fafbfc;
+    padding: 18px;
+    margin-top: 18px;
+    transition: box-shadow 0.2s;
 }
 
 .table-konten {
     width: 100%;
-    border-collapse: separate; /* WAJIB agar border-radius bisa bekerja */
+    border-collapse: separate;
+    /* WAJIB agar border-radius bisa bekerja */
     border-spacing: 0;
     font-size: 12px;
 }
 
 
 .table-konten th {
-    background-color: #F0F0F0;   
+    background-color: #F0F0F0;
     text-align: left;
     font-weight: 600;
     color: black;
     padding: 10px;
-   
+
 }
 
 /* Radius hanya pada sudut-sudut */
 th:first-child {
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 th:last-child {
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  margin-bottom: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .table-konten td {
@@ -156,6 +211,14 @@ th:last-child {
     border-bottom: 1px solid #e9ecef;
     color: black;
     font-size: 12px;
+}
+
+.table-konten tr {
+    transition: background 0.15s;
+}
+
+.table-konten tr:hover {
+    background: #f6f8fa;
 }
 
 /* CSS TABLE */
@@ -207,6 +270,7 @@ th:last-child {
     background-color: #e9ecef;
     color: #0056b3;
 }
+
 /* END CSS PAGINATION */
 
 /* CSS FORM */
@@ -230,6 +294,10 @@ th:last-child {
     width: 100vh;
     height: 85vh;
     max-width: 90%;
+    box-shadow: 0 8px 40px 0 rgba(60, 60, 60, 0.18);
+    border-radius: 32px;
+    background: #fff;
+    padding: 32px 24px;
 }
 
 .sub-head-box h1 {
@@ -244,10 +312,11 @@ th:last-child {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
+
 /* CSS HEAD FORM BOX */
 
 /* CSS form ajukan SK */
-.border-form{
+.border-form {
     border: 2px black solid;
     padding: 10px;
 }
@@ -256,7 +325,7 @@ th:last-child {
     background-color: white;
     height: 70vh;
     padding: 20px;
-    
+
 }
 
 .sub-form-box:last-child {
@@ -316,7 +385,7 @@ th:last-child {
 /* CSS form ajukan SK */
 
 /* CSS BUTTON */
-.all-button{
+.all-button {
     display: flex;
     align-items: center;
     justify-content: end;
@@ -324,7 +393,7 @@ th:last-child {
     margin-top: 10px;
 }
 
-.all-button button{
+.all-button button {
     border: none;
     border-radius: 20px;
     font-weight: 300;
@@ -332,11 +401,11 @@ th:last-child {
     width: 70px;
 }
 
-.batal{
+.batal {
     background-color: red;
 }
 
-.kirim{
+.kirim {
     background-color: #88CFA5;
 }
 
@@ -356,16 +425,19 @@ th:last-child {
     font-weight: 600;
     color: #fff;
     z-index: 9999;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
     opacity: 0.95;
 }
+
 .alert-success {
     background-color: #28a745;
 }
+
 .alert-danger {
     background-color: #dc3545;
 }
+
 /* CSS NOTIF */
 
 
@@ -378,9 +450,166 @@ th:last-child {
         border-right: none;
         box-shadow: none;
     }
+
     .konten {
         margin-left: 0;
         margin-right: 0;
         margin-top: 20px;
+    }
+}
+
+/* Additional styles for buttons and editable fields in siswa table */
+.btn-edit,
+.btn-delete,
+.btn-simpan,
+.btn-cancel {
+    border: none;
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 2px 4px;
+    transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+    box-shadow: 0 2px 8px 0 rgba(60, 60, 60, 0.10);
+}
+
+.btn-edit {
+    background: linear-gradient(90deg, #4f8cff 0%, #38c6ff 100%);
+    color: #fff;
+}
+
+.btn-edit:hover {
+    background: linear-gradient(90deg, #38c6ff 0%, #4f8cff 100%);
+    color: #fff;
+}
+
+.btn-delete {
+    background: linear-gradient(90deg, #ff4f4f 0%, #ff7b38 100%);
+    color: #fff;
+}
+
+.btn-delete:hover {
+    background: linear-gradient(90deg, #ff7b38 0%, #ff4f4f 100%);
+    color: #fff;
+}
+
+.btn-simpan {
+    background: linear-gradient(90deg, #28a745 0%, #5be584 100%);
+    color: #fff;
+}
+
+.btn-simpan:hover {
+    background: linear-gradient(90deg, #5be584 0%, #28a745 100%);
+    color: #fff;
+}
+
+.btn-cancel {
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.btn-cancel:hover {
+    background: #e0e0e0;
+    color: #111;
+}
+
+.table-konten td.editable input,
+.table-konten td.editable select {
+    border-radius: 16px;
+    border: 1px solid #bfc9d1;
+    padding: 5px 12px;
+    font-size: 14px;
+    outline: none;
+    background: #f8fbff;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.table-konten td.editable input:focus,
+.table-konten td.editable select:focus {
+    border: 1.5px solid #4f8cff;
+    background: #fff;
+}
+
+/* Modal blur effect for siswa modal */
+.form-modal-blur {
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 8px 32px 0 rgba(67, 233, 123, 0.12);
+    padding: 0 0 18px 0;
+    min-width: 340px;
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+    animation: fadeInModal 0.3s;
+}
+
+@keyframes fadeInModal {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.upload-siswa,
+.tambah-siswa {
+    display: inline-block;
+    padding: 12px 0;
+    border: none;
+    border-radius: 999px !important;
+    background: linear-gradient(90deg, #f6eb61 0%, #f9d423 100%);
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.2s;
+    width: 220px;
+    text-align: center;
+    font-size: 1.08rem;
+    box-shadow: 0 2px 8px 0 rgba(249, 212, 35, 0.10);
+    outline: none;
+}
+
+.upload-siswa:hover,
+.tambah-siswa:hover {
+    background: linear-gradient(90deg, #f9d423 0%, #f6eb61 100%);
+    box-shadow: 0 4px 16px 0 rgba(249, 212, 35, 0.18);
+}
+
+/* Make modal scrollable and always show action buttons */
+#PopUpForm .form-modal-blur {
+    max-height: 80vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#PopUpForm .all-button {
+    position: sticky;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.97);
+    z-index: 2;
+    padding-bottom: 10px;
+    margin-bottom: -10px;
+}
+
+@media (max-width: 600px) {
+    #PopUpForm .form-modal-blur {
+        max-width: 98vw;
+        padding: 18px 4vw 10px 4vw;
+    }
+
+    .upload-siswa,
+    .tambah-siswa {
+        width: 98vw;
+        min-width: 0;
+        font-size: 1rem;
     }
 }

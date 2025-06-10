@@ -46,9 +46,10 @@
 
 {{-- BERANDA START --}}
 <div id="Beranda" class="beranda">
-    <img class="slide" src="{{ asset('image/Image_LandingPage/img-index-1.svg') }}" alt="">
+    <img class="slide" src="{{ asset('image/Image_LandingPage/gambar-header-pgri.jpeg') }}" alt="">
     <img class="slide" src="{{ asset('image/Image_LandingPage/img-index-2.svg') }}" alt="">
     <img class="slide" src="{{ asset('image/Image_LandingPage/img-index-3.svg') }}" alt="">
+    <img class="slide" src="{{ asset('image/Image_LandingPage/img-index-1.svg') }}" alt="">
 </div>
 
 {{-- BERANDA END --}}

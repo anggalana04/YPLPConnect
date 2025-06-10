@@ -7,50 +7,57 @@ body {
 }
 
 .sidebar {
-    background-color: white;
-    width: 250px;         /* Fixed width */
+    background: linear-gradient(135deg, #ffffff 80%, #e8f5e9 100%);
+    width: 250px;
     height: 100vh;
-    position: fixed;      /* Fixed position */
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
-    border-right: 1px solid #e0e0e0;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.03);
+    border-right: none;
+    box-shadow: 0 8px 32px 0 rgba(60, 60, 60, 0.13), 2px 0 8px rgba(60, 60, 60, 0.06);
+    border-top-right-radius: 32px;
+    border-bottom-right-radius: 32px;
     overflow-y: auto;
+    transition: box-shadow 0.2s, background 0.2s;
 }
 
 .head-sidebar {
     display: flex;
-    /* flex membuat anak-anak sejajar horizontal */
     align-items: center;
-    /* sejajarkan vertikal */
-    border-bottom: 1px #5A8E6F solid;
+    border-bottom: 1.5px #5A8E6F solid;
     justify-content: center;
+    padding: 18px 0 10px 0;
+    background: transparent;
 }
 
 .img-sidebar {
-    width: 80px;
-    /* disesuaikan agar tidak terlalu besar */
-    height: auto;
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px 0 rgba(60, 60, 60, 0.10);
 }
 
 .head-sidebar-text {
     display: flex;
     flex-direction: column;
-    /* supaya h1 dan h4 vertikal di samping gambar */
     margin-left: 10px;
     padding-top: 10px;
 }
 
 .head-sidebar-text h1 {
-    font-size: 25px;
+    font-size: 22px;
     margin: 0;
+    font-weight: 700;
+    color: #388e3c;
+    letter-spacing: 0.02em;
 }
 
 .head-sidebar-text h4 {
-    font-weight: 300;
-    font-size: 15.5px;
+    font-weight: 400;
+    font-size: 14px;
     margin-top: 4px;
+    color: #5A8E6F;
 }
 
 .menu-sidebar {
@@ -59,46 +66,60 @@ body {
 
 .menu-sidebar .menu-item {
     display: flex;
-    gap: 8px;
-    /* Jarak antara icon dan teks */
+    gap: 10px;
     padding-left: 20px;
-    /* Supaya mentok kiri */
     list-style: none;
-    /* Hilangkan bullet point */
+    align-items: center;
+    border-radius: 18px;
+    transition: background 0.18s, box-shadow 0.18s;
+    cursor: pointer;
 }
 
-span a {
+.menu-sidebar .menu-item:hover,
+.menu-sidebar .menu-item.active {
+    background: linear-gradient(90deg, #e0f7fa 60%, #c8e6c9 100%);
+    box-shadow: 0 2px 12px 0 rgba(60, 60, 60, 0.08);
+}
+
+span a,
+.menu-item a {
     text-decoration: none;
-    color: black;
+    color: #222;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    transition: color 0.15s;
 }
 
-a span{
-    color: black;
-}
-
-.menu-item {
-    margin-bottom: 30px;
+span a:hover,
+.menu-item a:hover {
+    color: #388e3c;
 }
 
 .dropdown-item {
     margin-left: 20px;
+    border-radius: 12px;
+    padding: 6px 12px;
+    transition: background 0.15s;
+}
+
+.dropdown-item:hover {
+    background: #e0f2f1;
+    color: #388e3c;
 }
 
 #laporanCollapse {
     margin-left: 29px;
     margin-bottom: 20px;
-
 }
 
 .nav.flex-column {
-    gap: 30px;
-    /* Jarak antar dropdown-item */
+    gap: 18px;
     margin-top: 0px;
 }
 
-
-.icon-dropdown{
-    margin-left: 60px;
+.icon-dropdown {
+    margin-left: 40px;
     transition: transform 0.3s ease;
 }
 
@@ -107,26 +128,44 @@ a span{
 }
 
 form.logout {
-    display: inline;
+    display: flex;
     position: fixed;
-    bottom: 10px;
+    bottom: 18px;
+    left: 0;
+    width: 250px;
+    padding-left: 0;
+    margin-left: 0;
+    justify-content: flex-start;
+    background: none;
+    z-index: 110;
 }
 
 form.logout .logout-btn {
     display: inline-flex;
     align-items: center;
     padding: 10px 16px;
-    background-color: #D9D9D9;
-    color: black;
+    background: linear-gradient(90deg, #e0e0e0 60%, #f5f5f5 100%);
+    color: #333;
     text-decoration: none;
     border-radius: 20px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     font-weight: bold;
-    transition: background-color 0.3s ease;
-    bottom: 0px;
+    transition: background 0.3s, color 0.2s;
+    box-shadow: 0 2px 8px 0 rgba(60, 60, 60, 0.08);
+    width: 90%;
+    min-width: 0;
+    max-width: 210px;
+    margin-left: 16px;
+    margin-right: 0;
+    border-radius: 20px;
+    box-sizing: border-box;
 }
 
+form.logout .logout-btn:hover {
+    background: #d1e7dd;
+    color: #388e3c;
+}
 
 form.logout .logout-icon {
     margin-right: 8px;
@@ -140,6 +179,6 @@ form.logout .logout-icon .icon-img {
     object-fit: contain;
 }
 
-.logout-text{
+.logout-text {
     font-weight: 500;
 }

@@ -50,8 +50,8 @@ Route::middleware('auth')->group(function () {
                 ->where('tahun', $tahunDipilih)
                 ->get();
             $pengaduans = Pengaduan::where('npsn', $npsn)
-                       ->where('status', 'menunggu')
-                       ->get();
+                ->where('status', 'menunggu')
+                ->get();
 
 
             $tahunSekarang = date('Y');
@@ -130,6 +130,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/keuangan/by-tahun', [KeuanganController::class, 'getByTahun'])->name('keuangan.byTahun');
     Route::get('/yayasan/keuangan/by-tahun', [DashboardController::class, 'getKeuanganYayasanByTahun'])->name('yayasan.keuangan.byTahun');
 
+    // AJAX: Keuangan Yayasan per tahun (for dashboard)
+    Route::get('/ajax/yayasan/keuangan/by-tahun', [\App\Http\Controllers\KeuanganController::class, 'ajaxYayasanKeuanganByTahun']);
+
     // Route::get('/keuangan/by-tahun', function (Request $request) {
     //     $tahun = $request->get('tahun') ?? date('Y');
 
@@ -170,6 +173,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/keuangan/validasi/{id}', [KeuanganController::class, 'validasi'])->name('keuangan.validasi');
     Route::get('/keuangan/bukti-preview/{id}', [KeuanganController::class, 'previewBukti'])->name('keuangan.bukti.preview');
     Route::get('/keuangan/download-recap', [KeuanganController::class, 'downloadRecap'])->name('keuangan.download.recap');
+    Route::post('/keuangan/setujui/{id}', [KeuanganController::class, 'setujui'])->name('keuangan.setujui');
+    Route::post('/keuangan/tolak/{id}', [KeuanganController::class, 'tolak'])->name('keuangan.tolak');
 
     // Dokumen routes
     Route::get('/dokumen', [DokumenController::class, 'index'])->name('dokumen.index');
@@ -186,18 +191,28 @@ Route::middleware('auth')->group(function () {
     Route::post('/siswa/import', [SiswaController::class, 'import'])->name('siswa.import');
     Route::get('/siswa/search', [SiswaController::class, 'search'])->name('siswa.search');
     Route::get('/siswa/by-sekolah/{npsn}', [SiswaController::class, 'index'])->name('siswa.by-sekolah');
+    Route::resource('siswa', SiswaController::class)->only(['index', 'store', 'update', 'destroy'])->names([
+        'index' => 'siswa.index',
+        'store' => 'siswa.store',
+        'update' => 'siswa.update',
+        'destroy' => 'siswa.destroy',
+    ]);
 
     // Data guru routes
     Route::get('/guru', [GuruController::class, 'index'])->name('guru.index');
-    Route::get('/search-guru', [GuruController::class, 'search'])->name('search.guru');
     Route::post('/guru', [GuruController::class, 'store'])->name('guru.store');
     Route::post('/guru/import', [GuruController::class, 'import'])->name('guru.import');
+    Route::get('/guru/search', [GuruController::class, 'search'])->name('search.guru');
+    Route::post('/guru/{nuptk}', [GuruController::class, 'update'])->name('guru.update');
+    Route::put('/guru/{nuptk}', [GuruController::class, 'update']);
+    Route::delete('/guru/{nuptk}', [GuruController::class, 'destroy'])->name('guru.destroy');
 
     // Users route
     Route::get('/users', [RegisteredUserController::class, 'index'])->name('users.index');
     Route::post('/user-manage/update-inline/{id}', [RegisteredUserController::class, 'updateInline'])->name('user.update-inline');
     Route::patch('/users/{id}', [RegisteredUserController::class, 'update'])->name('user.update');
     Route::post('/user/add', [RegisteredUserController::class, 'store'])->name('user.add');
+    Route::delete('/users/{id}', [RegisteredUserController::class, 'destroy'])->name('user.destroy');
 
     // Route Sekolah
     Route::post('/sekolah', [SekolahController::class, 'store'])->name('sekolah.store');

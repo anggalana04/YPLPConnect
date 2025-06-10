@@ -12,9 +12,9 @@
         <div class="head-box-konten">
             <div class="teks-head-box-konten">
                 <h1>List Sekolah</h1>
-                <p>Lihat Dan Kelola Data Siswa Sekolah Anda</p>
+                <p>Lihat Dan Kelola Data Sekolah Anda</p>
             </div>
-            <button onclick="openPopUpForm()">Tambah Sekolah</button>
+            <button type="button" onclick="openPopUpForm()" class="btn-tambah-sekolah">Tambah Sekolah</button>
         </div>
 
         <form method="GET" action="{{ route('sekolah.index') }}">
@@ -76,42 +76,43 @@
 </div>
 
 <div class="modal-pengaduan" id="PopUpForm" style="display:none;">
-    <form method="POST" action="{{ route('sekolah.store') }}">
+    <form method="POST" action="{{ route('sekolah.store') }}" class="form-box">
         @csrf
-        <div class="form-box">
+        <div class="form-modal-blur">
             <div class="sub-head-box">
                 <h1>Form Penambahan Sekolah </h1>
             </div>
-
-            <div class="sub-form-box">
-                <div class="border-form">
-                    <div class="form-group">
-                        <label for="npsn">NPSN</label>
-                        <input type="text" id="npsn" name="npsn" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="nama">Nama Sekolah</label>
-                        <input type="text" id="nama" name="nama" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="jenjang">Jenjang</label>
-                        <input type="text" id="jenjang" name="jenjang" placeholder="" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="alamat">Alamat</label>
-                        <input type="text" id="alamat" name="alamat" placeholder="" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text" id="email" name="email" placeholder="" required />
-                    </div>
+            <div class="sub-form-box" style="background: #f7f7fa; border-radius: 18px; padding: 24px 24px 12px 24px; display: flex; flex-direction: column; gap: 18px;">
+                <div>
+                    <label for="npsn" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">NPSN</label>
+                    <input type="text" id="npsn" name="npsn" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px; margin-bottom:0;">
                 </div>
-
-                <!-- Tombol Aksi -->
-                <div class="all-button">
-                    <button type="button" class="batal">Batal</button>
-                    <button type="submit" class="kirim">Kirim</button>
+                <div>
+                    <label for="nama" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Nama Sekolah</label>
+                    <input type="text" id="nama" name="nama" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px; margin-bottom:0;">
                 </div>
+                <div>
+                    <label for="jenjang" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Jenjang</label>
+                    <select id="jenjang" name="jenjang" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px; margin-bottom:0;">
+                        <option value="">Pilih Jenjang</option>
+                        <option value="SD">SD</option>
+                        <option value="SMP">SMP</option>
+                        <option value="SMA">SMA</option>
+                        <option value="SMK">SMK</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="alamat" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Alamat</label>
+                    <input type="text" id="alamat" name="alamat" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px; margin-bottom:0;">
+                </div>
+                <div>
+                    <label for="email" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Email</label>
+                    <input type="email" id="email" name="email" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px; margin-bottom:0;">
+                </div>
+            </div>
+            <div class="all-button" style="display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 28px; width: 100%;">
+                <button type="button" class="batal" onclick="closePopUpForm()">Batal</button>
+                <button type="submit" class="kirim">Kirim</button>
             </div>
         </div>
     </form>
@@ -181,5 +182,19 @@ $(document).ready(function () {
         });
     });
 });
+</script>
+
+<script>
+// Modal blur animation logic
+function openPopUpForm() {
+    const modal = document.getElementById('PopUpForm');
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('show-blur'), 10);
+}
+function closePopUpForm() {
+    const modal = document.getElementById('PopUpForm');
+    modal.classList.remove('show-blur');
+    setTimeout(() => modal.style.display = 'none', 250);
+}
 </script>
 @endpush

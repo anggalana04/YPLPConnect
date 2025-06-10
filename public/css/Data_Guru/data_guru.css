@@ -3,7 +3,7 @@
 
 body {
     font-family: 'Montserrat' !important;
-  }
+}
 
 .sidebar {
     position: fixed;
@@ -13,73 +13,75 @@ body {
     padding: 0;
 }
 
-.konten{
+.konten {
     margin-left: 276px;
     margin-top: 15px;
     margin-right: 20px;
 }
 
 /* CSS BOX-KONTEN */
-.box-konten{
+.box-konten {
     background-color: #F0F0F0;
     border-radius: 40px;
     height: 95vh;
     padding: 20px;
 }
 
-.box-konten.sekolah{
+.box-konten.sekolah {
     height: 95vh;
 }
 
-.head-box-konten{
+.head-box-konten {
     display: flex;
     align-items: center;
     gap: 74vh;
 }
 
-.head-box-konten button{
+.head-box-konten button {
     height: 40px;
     border: none;
     background-color: yellow;
     border-radius: 40px;
-    font-size: 14px ;
+    font-size: 14px;
     padding: 10px;
     font-weight: 500;
 }
 
-.teks-head-box-konten h1{
+.teks-head-box-konten h1 {
     font-size: 1.5rem;
     font-weight: 600;
 }
 
-.teks-head-box-konten p{
+.teks-head-box-konten p {
     font-size: 1rem;
 }
+
 /* CSS BOX-KONTEN */
 
 /* CSS KATEGORI & SEARCH */
-.option-head-box{
+.option-head-box {
     display: flex;
     align-items: center;
     gap: 30px;
 }
 
-.option-button{
+.option-button {
     margin-top: 30px;
 }
-.option-button button{
+
+.option-button button {
     display: block;
     height: 40px;
     border: none;
     background-color: yellow;
     border-radius: 40px;
-    font-size: 14px ;
+    font-size: 14px;
     padding: 10px;
     font-weight: 500;
     margin-bottom: 10px;
 }
 
-.option-button .tambah-guru{
+.option-button .tambah-guru {
     background-color: lime;
 }
 
@@ -89,30 +91,31 @@ body {
     border: 1px black solid;
     outline: none;
     background-color: #F0F0F0;
-    cursor: pointer;   
+    cursor: pointer;
 }
 
 .search-container {
-  position: relative;
-  max-width: 200px;
+    position: relative;
+    max-width: 200px;
 }
 
 .search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
 }
 
 .search-input {
-  width: 100%;
-  padding: 8px 15px 8px 40px;
-  border: none;
-  border-radius: 40px;
-  font-size: 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    padding: 8px 15px 8px 40px;
+    border: none;
+    border-radius: 40px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 /* CSS KATEGORI & SEARCH */
 
 
@@ -128,19 +131,20 @@ body {
     overflow-y: auto;
 }
 
-.table-box.yayasan{
+.table-box.yayasan {
     height: 60dvh;
 }
 
 .table-konten {
     width: 100%;
-    border-collapse: separate; /* WAJIB agar border-radius bisa bekerja */
+    border-collapse: separate;
+    /* WAJIB agar border-radius bisa bekerja */
     border-spacing: 0;
     font-size: 12px;
 }
 
 .table-konten th {
-    background-color: #F0F0F0;   
+    background-color: #F0F0F0;
     text-align: left;
     font-weight: 600;
     color: black;
@@ -149,14 +153,14 @@ body {
 
 /* Radius hanya pada sudut-sudut */
 th:first-child {
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 th:last-child {
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  margin-bottom: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .table-konten td {
@@ -245,10 +249,11 @@ th:last-child {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
+
 /* CSS HEAD FORM BOX */
 
 /* CSS form ajukan SK */
-.border-form{
+.border-form {
     border: 2px black solid;
     padding: 10px;
 }
@@ -257,7 +262,7 @@ th:last-child {
     background-color: white;
     height: 70vh;
     padding: 20px;
-    
+
 }
 
 .sub-form-box:last-child {
@@ -317,7 +322,7 @@ th:last-child {
 /* CSS form ajukan SK */
 
 /* CSS BUTTON */
-.all-button{
+.all-button {
     display: flex;
     align-items: center;
     justify-content: end;
@@ -325,7 +330,7 @@ th:last-child {
     margin-top: 10px;
 }
 
-.all-button button{
+.all-button button {
     border: none;
     border-radius: 20px;
     font-weight: 300;
@@ -333,14 +338,88 @@ th:last-child {
     width: 70px;
 }
 
-.batal{
+.batal {
     background-color: red;
 }
 
-.kirim{
+.kirim {
     background-color: #88CFA5;
 }
 
 /* CSS BUTTON */
+
+.btn-edit,
+.btn-delete,
+.btn-simpan,
+.btn-cancel {
+    border: none;
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 2px 4px;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.btn-edit {
+    background: linear-gradient(90deg, #4f8cff 0%, #38c6ff 100%);
+    color: #fff;
+}
+
+.btn-edit:hover {
+    background: linear-gradient(90deg, #38c6ff 0%, #4f8cff 100%);
+    color: #fff;
+}
+
+.btn-delete {
+    background: linear-gradient(90deg, #ff4f4f 0%, #ff7b38 100%);
+    color: #fff;
+}
+
+.btn-delete:hover {
+    background: linear-gradient(90deg, #ff7b38 0%, #ff4f4f 100%);
+    color: #fff;
+}
+
+.btn-simpan {
+    background: linear-gradient(90deg, #28a745 0%, #5be584 100%);
+    color: #fff;
+}
+
+.btn-simpan:hover {
+    background: linear-gradient(90deg, #5be584 0%, #28a745 100%);
+    color: #fff;
+}
+
+.btn-cancel {
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.btn-cancel:hover {
+    background: #e0e0e0;
+    color: #111;
+}
+
+.table-konten td.editable input,
+.table-konten td.editable select {
+    border-radius: 16px;
+    border: 1px solid #bfc9d1;
+    padding: 5px 12px;
+    font-size: 14px;
+    outline: none;
+    background: #f8fbff;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.table-konten td.editable input:focus,
+.table-konten td.editable select:focus {
+    border: 1.5px solid #4f8cff;
+    background: #fff;
+}
 
 /* CSS FORM */

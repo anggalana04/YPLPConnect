@@ -3,7 +3,7 @@
 
 body {
     font-family: 'Montserrat' !important;
-  }
+}
 
 .sidebar {
     position: fixed;
@@ -13,30 +13,30 @@ body {
     padding: 0;
 }
 
-.konten{
+.konten {
     margin-left: 296px;
     margin-top: 30px;
     margin-right: 40px;
 }
 
 /* CSS BOX-KONTEN */
-.box-konten{
+.box-konten {
     background-color: #f0f0f0;
     border-radius: 20px;
     padding: 20px;
     height: 93vh;
 }
 
-.head-box-konten h1{
+.head-box-konten h1 {
     font-size: 1.5rem;
     font-weight: 600;
 }
 
-.head-box-konten p{
+.head-box-konten p {
     font-weight: 1rem;
 }
 
-.option-box-konten{
+.option-box-konten {
     display: flex;
     align-items: center;
     right: 10px;
@@ -51,7 +51,8 @@ body {
 }
 
 .option-box-konten.gap-operator-yayasan {
-    gap: 48vh; /* Atur sesuai kebutuhan layout yayasan */
+    gap: 48vh;
+    /* Atur sesuai kebutuhan layout yayasan */
 }
 
 /* Gaya umum untuk tombol */
@@ -68,24 +69,26 @@ body {
 
 
 .kategori label {
-  font-weight: 400;
-  margin-bottom: 5px;
-  text-align: center;
+    font-weight: 400;
+    margin-bottom: 5px;
+    text-align: center;
 }
 
 .kategori select {
-  padding: 5px;
-  border-radius: 20px;
-  border: 1px black solid;
-  outline: none;
-  background-color: #D9D9D9;
-  cursor: pointer;
+    padding: 5px;
+    border-radius: 20px;
+    border: 1px black solid;
+    outline: none;
+    background-color: #D9D9D9;
+    cursor: pointer;
 }
+
 /* CSS BOX-KONTEN */
 
 /* CSS TAHUN */
 .bulan-wrapper {
-    max-height: 360px; /* 6 baris x 60px tinggi rata-rata */
+    max-height: 360px;
+    /* 6 baris x 60px tinggi rata-rata */
     overflow-y: auto;
     border-radius: 16px;
     width: 100%;
@@ -133,11 +136,16 @@ body {
     border-radius: 10px;
     border: none;
     cursor: pointer;
-    display: flex;             /* Gunakan flex */
-    align-items: center;       /* Vertikal tengah */
-    justify-content: center;   /* Horizontal tengah */
-    padding: 0;                /* Hilangkan padding bawaan */
+    display: flex;
+    /* Gunakan flex */
+    align-items: center;
+    /* Vertikal tengah */
+    justify-content: center;
+    /* Horizontal tengah */
+    padding: 0;
+    /* Hilangkan padding bawaan */
 }
+
 .status-hijau {
     background-color: lime;
 }
@@ -162,7 +170,7 @@ body {
     margin-bottom: 10px;
 }
 
-.bulan-item.genap + .detail-collapsible {
+.bulan-item.genap+.detail-collapsible {
     background-color: white;
 }
 
@@ -180,8 +188,10 @@ body {
 }
 
 .detail-teks p {
-    margin: 2px 0; /* Kurangi margin vertikal */
-    line-height: 1.4; /* Atur tinggi baris agar tetap terbaca tapi tidak terlalu renggang */
+    margin: 2px 0;
+    /* Kurangi margin vertikal */
+    line-height: 1.4;
+    /* Atur tinggi baris agar tetap terbaca tapi tidak terlalu renggang */
 }
 
 .upload-input {
@@ -197,7 +207,7 @@ body {
     right: 20px;
 }
 
-.upload-button-container .upload-bukti-button{
+.upload-button-container .upload-bukti-button {
     border: none;
     background-color: yellow;
     border-radius: 20px;
@@ -207,7 +217,8 @@ body {
 }
 
 .bayar-button {
-    background-color: #00FF22; /* warna hijau */
+    background-color: #00FF22;
+    /* warna hijau */
     color: black;
     font-weight: 500;
     border: none;
@@ -216,7 +227,7 @@ body {
     cursor: pointer;
 }
 
-.upload-button-container .cek-bukti-button{
+.upload-button-container .cek-bukti-button {
     border: none;
     background-color: yellow;
     border-radius: 20px;
@@ -226,7 +237,8 @@ body {
 }
 
 .sudah-bayar-button {
-    background-color: #00FF22; /* warna hijau */
+    background-color: #00FF22;
+    /* warna hijau */
     color: black;
     font-weight: 500;
     border: none;
@@ -240,13 +252,15 @@ body {
 
 /* CSS POPUP */
 .popup-rekening {
-    display: none; /* Tersembunyi awalnya */
+    display: none;
+    /* Tersembunyi awalnya */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Transparan gelap */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Transparan gelap */
     justify-content: center;
     align-items: center;
     z-index: 9999;
@@ -260,17 +274,21 @@ body {
     width: 300px;
 }
 
-.popup-content button{
+.popup-content button {
     border: none;
     border-radius: 20px;
     background-color: red;
     padding: 10px;
 }
+
 /* CSS POPUP */
 
 .popup-rekening {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.6);
     display: flex;
     align-items: center;
@@ -316,16 +334,66 @@ body {
 
 /* Tambahkan di css/data_keuangan/DataKeuangan.css */
 .popup-bukti {
-    position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .popup-bukti .popup-content {
-    background: #fff; padding: 20px; border-radius: 8px; max-width: 90vw; max-height: 90vh; overflow: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
     position: relative;
 }
+
 .close-popup {
-    position: absolute; top: 10px; right: 20px; font-size: 2rem; cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
 }
-#buktiContainer img, #buktiContainer embed {
-    max-width: 80vw; max-height: 70vh; display: block; margin: 0 auto;
+
+#buktiContainer img,
+#buktiContainer embed {
+    max-width: 80vw;
+    max-height: 70vh;
+    display: block;
+    margin: 0 auto;
+}
+
+.setujui-button {
+    background-color: lime;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.tolak-button {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.popup-content .form-validasi {
+    display: inline-block;
+    margin: 5px;
 }

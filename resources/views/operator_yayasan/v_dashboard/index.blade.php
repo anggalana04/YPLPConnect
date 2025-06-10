@@ -72,7 +72,7 @@
                     <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Guru.svg') }}" alt="">
                     <p class="jumlah-data">{{ array_sum($jumlahGuruPerTahun) }}</p>
                 </div>
-                <canvas id="chartGuru" style="height: 300px;"></canvas>
+                <canvas id="chartGuru" style="height: 180px;"></canvas>
             </div>
 
             {{-- Card Jumlah Siswa --}}
@@ -83,7 +83,7 @@
                     <p class="jumlah-data">{{ array_sum($jumlahSiswaPerTahun) }}</p>
                 </div>
                 <div class="chart-wrapper">
-                    <canvas id="chartSiswa" style="height: 300px"></canvas>
+                    <canvas id="chartSiswa" style="height: 180px"></canvas>
                 </div>
             </div>
 
@@ -214,15 +214,21 @@
 
             {{-- Card Keuangan Yayasan --}}
             <div class="card card-yayasan" style="grid-column: span 2; width: 100%; min-width: 600px;">
-                <h1 class="head-guru">Rekap Keuangan Tahunan</h1>
-                <div class="chart-wrapper" style="width:100%; min-width:600px;">
-                    <canvas id="chartKeuanganYayasan" style="height: 300px; width:100%"></canvas>
-                </div>
-                <div style="text-align:center;margin-top:10px;font-weight:500;">
-                    <span id="totalKeuanganYayasan">Rp.0</span>
-                </div>
-                <form method="GET" action="{{ route('dashboard') }}" id="formTahunYayasan">
-                    <select id="tahunKeuanganYayasan" name="tahun" class="select-tahun-yayasan" onchange="document.getElementById('formTahunYayasan').submit()">
+            <h1 class="head-guru" style="padding-bottom: 12px; padding-top: 8px;">Rekap Keuangan Tahunan</h1>
+                @if(empty($tahunDipilih))
+                    <div style="text-align:center; color:#888; font-size:1.1rem; margin:30px 0;">
+                        Silakan pilih tahun terlebih dahulu untuk melihat data keuangan.
+                    </div>
+                @else
+                    <div class="chart-wrapper" style="width:100%; min-width:600px;">
+                        <canvas id="chartKeuanganYayasan" style="height: 180px; width:100%"></canvas>
+                    </div>
+                    <div style="text-align:center;margin-top:10px;font-weight:500;">
+                        <span id="totalKeuanganYayasan">Rp.0</span>
+                    </div>
+                @endif
+                <form method="GET" action="{{ route('dashboard') }}" id="formTahunYayasan" onsubmit="return false;">
+                    <select id="tahunKeuanganYayasan" name="tahun" class="select-tahun-yayasan">
                         <option value="">Pilih Tahun</option>
                         @foreach ($tahunList as $tahun)
                             <option value="{{ $tahun }}" {{ $tahun == $tahunDipilih ? 'selected' : '' }}>{{ $tahun }}</option>
@@ -241,7 +247,7 @@
                     <img src="{{ asset('image/icon-dashboard/icon-Jumlah-Guru.svg') }}" alt="">
                     <p class="jumlah-data">{{ array_sum($jumlahGuruPerTahun) }}</p>
                 </div>
-                <canvas id="chartGuru" style="height: 300px;"></canvas>
+                <canvas id="chartGuru" style="height: 180px;"></canvas>
             </div>
 
             {{-- Card Jumlah Siswa --}}
@@ -252,7 +258,7 @@
                     <p class="jumlah-data">{{ array_sum($jumlahSiswaPerTahun) }}</p>
                 </div>
                 <div class="chart-wrapper">
-                    <canvas id="chartSiswa" style="height: 300px"></canvas>
+                    <canvas id="chartSiswa" style="height: 180px"></canvas>
                 </div>
             </div>
 
@@ -267,9 +273,20 @@
                         $currentMonth = (int) date('n');
                         $currentYear = (int) date('Y');
                         $isCurrentYear = ($tahunDipilih == $currentYear);
+                        // Task 2: Count overdue months (Menunggu) up to current month only
+                        $overdueCount = 0;
+                        foreach ($bulanList as $i => $bulan) {
+                            if ($isCurrentYear && ($i + 1) > $currentMonth) break;
+                            $item = $keuanganData->first(fn($d) => ($d->bulan ?? null) === $bulan);
+                            $status = $item->status ?? 'Menunggu';
+                            if ($status === 'Menunggu') $overdueCount++;
+                        }
                     @endphp
                     <div id="keuanganBar" class="keuangan-bar" style="width: {{ $percent }}%;"></div>
                 </div>
+                @if($overdueCount > 0)
+                    <div style="color:#e53935;font-weight:500;margin:8px 0 0 0;">Pembayaran belum dilakukan untuk {{ $overdueCount }} bulan</div>
+                @endif
                 <form method="GET" action="{{ route('dashboard') }}" id="formTahun">
                     <select id="kategori" name="tahun" class="select-tahun" onchange="document.getElementById('formTahun').submit()">
                         <option value="">Pilih Tahun</option>
@@ -645,7 +662,6 @@
     <script>
         const tahunList = @json($tahunList);
         let sekolahList = @json(isset($sekolahList) ? $sekolahList : []);
-        // Data: {tahun: {sekolah: total}}
         let yearlySchoolData = {};
         @php
             $allTahun = $tahunList;
@@ -654,7 +670,6 @@
             foreach ($allTahun as $tahun) {
                 $totals = [];
                 foreach ($allSekolah as $npsn => $nama) {
-                    // Defensive: always set value, even if 0
                     $sum = \App\Models\Keuangan::where('npsn', $npsn)
                         ->where('tahun', $tahun)
                         ->where('status', 'Disetujui')
@@ -740,6 +755,18 @@
             const total = totals.reduce((sum, v) => sum + v, 0);
             document.getElementById('totalKeuanganTahunAll').textContent = 'Rp.' + total.toLocaleString('id-ID');
         }
+
+        // Auto-load current year chart on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentYear = new Date().getFullYear().toString();
+            if (tahunList.includes(currentYear)) {
+                renderKeuanganAllChart(currentYear);
+                const tahunSelect = document.getElementById('tahunKeuanganAll');
+                if (tahunSelect) tahunSelect.value = currentYear;
+            } else if (tahunList.length > 0) {
+                renderKeuanganAllChart(tahunList[tahunList.length - 1]);
+            }
+        });
     </script>
 
     {{-- JS: Chart Keuangan Yayasan (Operator Yayasan) --}}
@@ -748,17 +775,8 @@
             if ({{ auth()->user()->role === 'operator_yayasan' ? 'true' : 'false' }}) {
                 const ctx = document.getElementById('chartKeuanganYayasan').getContext('2d');
                 const bulanList = @json($bulanList);
-                // Use keuanganData as array of objects for yayasan (handle both array and collection)
-                let keuanganData = @json($keuanganData);
-                if (Array.isArray(keuanganData) && keuanganData.length && typeof keuanganData[0] !== 'object') {
-                    // If keuanganData is array of numbers (from $keuanganPerBulan), convert to objects
-                    keuanganData = bulanList.map((bulan, i) => ({ bulan, status: 'Disetujui', jumlah_spp: keuanganData[i] }));
-                } else if (keuanganData && typeof keuanganData === 'object' && !Array.isArray(keuanganData)) {
-                    // If keuanganData is an object (Laravel collection as object), convert to array
-                    keuanganData = Object.values(keuanganData);
-                }
-                let dataPerBulan = bulanList.map(bulan => {
-                    const item = keuanganData.find(d => (d.bulan ?? null) === bulan && (d.status ?? null) === 'Disetujui');
+                let initialData = bulanList.map(bulan => {
+                    const item = @json($keuanganData).find(d => (d.bulan ?? null) === bulan && (d.status ?? null) === 'Disetujui');
                     return item ? (item.jumlah_spp ?? 0) : 0;
                 });
                 let chartKeuanganYayasan = new Chart(ctx, {
@@ -767,8 +785,10 @@
                         labels: bulanList,
                         datasets: [{
                             label: 'Jumlah Diterima',
-                            data: dataPerBulan,
+                            data: initialData,
                             backgroundColor: '#43e97b',
+                            borderRadius: 12, // Rounded bar
+                            maxBarThickness: 38,
                         }]
                     },
                     options: {
@@ -799,12 +819,25 @@
                     },
                     plugins: [ChartDataLabels]
                 });
-                // Show total
-                const total = dataPerBulan.reduce((sum, v) => sum + (typeof v === 'number' ? v : parseFloat(v) || 0), 0);
-                document.getElementById('totalKeuanganYayasan').textContent = 'Rp.' + total.toLocaleString('id-ID');
-                // AJAX update on tahun change (if needed)
+                // Helper: update chart and total
+                function updateKeuanganYayasanChart(data) {
+                    const dataPerBulan = data.map(item => Number(item.jumlah_spp));
+                    chartKeuanganYayasan.data.datasets[0].data = dataPerBulan;
+                    chartKeuanganYayasan.update();
+                    const total = dataPerBulan.reduce((sum, v) => sum + v, 0);
+                    document.getElementById('totalKeuanganYayasan').textContent = 'Rp.' + total.toLocaleString('id-ID');
+                }
+                // On tahun change (AJAX)
                 document.getElementById('tahunKeuanganYayasan').addEventListener('change', function () {
-                    // Optionally, fetch new data if you want AJAX, or just submit form
+                    const tahun = this.value || '{{ date('Y') }}';
+                    fetch(`/ajax/yayasan/keuangan/by-tahun?tahun=${tahun}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            updateKeuanganYayasanChart(data);
+                        })
+                        .catch(() => {
+                            updateKeuanganYayasanChart(bulanList.map(() => 0));
+                        });
                 });
             }
         });

@@ -14,28 +14,28 @@ class GuruController extends Controller
      * Display a listing of the resource.
      */
 
-public function index()
-{
-    $npsn = request()->query('npsn');
+    public function index()
+    {
+        $npsn = request()->query('npsn');
 
-    if (Auth::user()->role == 'operator_sekolah') {
-        $guru = Guru::where('npsn', Auth::user()->npsn)->get();
-    } elseif (Auth::user()->role == 'operator_yayasan') {
-        if ($npsn) {
-            $guru = Guru::where('npsn', $npsn)->get();
+        if (Auth::user()->role == 'operator_sekolah') {
+            $guru = Guru::where('npsn', Auth::user()->npsn)->get();
+        } elseif (Auth::user()->role == 'operator_yayasan') {
+            if ($npsn) {
+                $guru = Guru::where('npsn', $npsn)->get();
+            } else {
+                $guru = collect();
+            }
         } else {
             $guru = collect();
         }
-    } else {
-        $guru = collect();
-    }
 
-    return view('operator_yayasan.v_data_guru.index', compact('guru'));
-}
+        return view('operator_yayasan.v_data_guru.index', compact('guru'));
+    }
 
     /**
      * Show the form for creating a new resource.
-    */
+     */
     public function create()
     {
         //
@@ -83,25 +83,47 @@ public function index()
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Guru $guru)
+    public function edit($nuptk)
     {
-        //
+        $guru = Guru::findOrFail($nuptk);
+        return response()->json($guru);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Guru $guru)
+    public function update(Request $request, $nuptk)
     {
-        //
+        
+        $guru = Guru::findOrFail($nuptk);
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'jenis_kelamin' => 'required|in:L,P',
+            'tanggal_lahir' => 'required|date',
+            'alamat' => 'required|string',
+            'no_hp' => 'nullable|string|max:20', // allow nullable for inline edit
+            'status' => 'required|in:Aktif,Nonaktif',
+        ]);
+        $guru->update($validated);
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json(['success' => true]);
+        }
+        return redirect()->to(url('/guru?npsn=' . $guru->npsn))->with('success', 'Data guru berhasil diupdate.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Guru $guru)
+    public function destroy($nuptk, Request $request)
     {
-        //
+        $guru = Guru::findOrFail($nuptk);
+        $npsn = Auth::user()->npsn;
+        $guru->delete();
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true]);
+        }
+        // Redirect to /guru?npsn={npsn} (not /guru/{npsn})
+        return redirect()->to(url('/guru?npsn=' . $npsn))->with('success', 'Data guru berhasil dihapus.');
     }
 
     public function search(Request $request)
@@ -112,7 +134,7 @@ public function index()
             $gurus = Guru::where('npsn', Auth::user()->npsn)
                 ->where(function ($q) use ($query) {
                     $q->where('nama', 'LIKE', "%{$query}%")
-                    ->orWhere('nuptk', 'LIKE', "%{$query}%");
+                        ->orWhere('nuptk', 'LIKE', "%{$query}%");
                 })
                 ->get();
         } else {
@@ -124,14 +146,14 @@ public function index()
         return response()->json($gurus);
     }
 
-public function import(Request $request)
-{
-    $request->validate([
-        'file' => 'required|mimes:xlsx,xls,csv',
-    ]);
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
 
-    Excel::import(new GuruImport, $request->file('file'));
+        Excel::import(new GuruImport, $request->file('file'));
 
-    return redirect()->back()->with('success', 'Data guru berhasil Ditambahkan.');
-}
+        return redirect()->back()->with('success', 'Data guru berhasil Ditambahkan.');
+    }
 }

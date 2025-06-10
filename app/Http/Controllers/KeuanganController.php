@@ -102,7 +102,7 @@ class KeuanganController extends Controller
         $keuangan->verified_at = now();
         $keuangan->save();
 
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true, 'status' => $keuangan->status]);
     }
 
     /**
@@ -205,5 +205,67 @@ class KeuanganController extends Controller
         ]);
 
         return $pdf->stream("Rekap_Pembayaran_{$tahun}.pdf");
+    }
+
+    // AJAX: Keuangan Yayasan per tahun (for dashboard)
+    public function ajaxYayasanKeuanganByTahun(Request $request)
+    {
+        $tahun = $request->input('tahun', date('Y'));
+        $bulanList = [
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        ];
+        $data = [];
+        foreach ($bulanList as $bulan) {
+            $jumlah = \App\Models\Keuangan::where('tahun', $tahun)
+                ->where('bulan', $bulan)
+                ->where('status', 'Disetujui')
+                ->sum('jumlah_spp');
+            $data[] = [
+                'bulan' => $bulan,
+                'jumlah_spp' => (float) $jumlah,
+            ];
+        }
+        return response()->json($data);
+    }
+
+    // Approve keuangan (Setujui)
+    public function setujui(Request $request, $id)
+    {
+        $user = Auth::user();
+        if ($user->role !== 'operator_yayasan') {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+        $keuangan = Keuangan::findOrFail($id);
+        $keuangan->status = 'Disetujui';
+        $keuangan->verified_by = $user->id;
+        $keuangan->verified_at = now();
+        $keuangan->save();
+        return response()->json(['success' => true, 'status' => $keuangan->status]);
+    }
+
+    // Reject keuangan (Tolak)
+    public function tolak(Request $request, $id)
+    {
+        $user = Auth::user();
+        if ($user->role !== 'operator_yayasan') {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+        $keuangan = Keuangan::findOrFail($id);
+        $keuangan->status = 'Ditolak';
+        $keuangan->verified_by = $user->id;
+        $keuangan->verified_at = now();
+        $keuangan->save();
+        return response()->json(['success' => true, 'status' => $keuangan->status]);
     }
 }
