@@ -112,14 +112,25 @@ class RegisteredUserController extends Controller
      * Remove the specified user from storage (AJAX).
      */
     public function destroy($id)
-    {
-        try {
-            $user = User::findOrFail($id);
-            $user->delete();
-            return response()->json(['success' => true]);
-        } catch (\Exception $e) {
-            Log::error('User delete failed: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Gagal hapus user!'], 500);
+{
+    try {
+        $user = User::findOrFail($id);
+
+        // Cek apakah user yang login adalah operator yayasan dan mencoba hapus dirinya sendiri
+        if (auth()->id() == $user->id && auth()->user()->npsn === null) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda tidak dapat menghapus akun Anda sendiri.'
+            ], 403);
         }
+
+        $user->delete();
+
+        return response()->json(['success' => true]);
+    } catch (\Exception $e) {
+        Log::error('User delete failed: ' . $e->getMessage());
+        return response()->json(['success' => false, 'message' => 'Gagal hapus user!'], 500);
     }
+}
+
 }

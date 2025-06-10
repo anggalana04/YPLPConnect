@@ -166,7 +166,7 @@
             </div>
             <div class="sub-form-box" style="background: #f7f7fa; border-radius: 18px; padding: 20px 18px 10px 18px; display: flex; flex-direction: column; gap: 16px; box-shadow:0 2px 8px 0 rgba(60,60,60,0.04);">
                 <div>
-                    <label for="nama" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Nama</label>
+                    <label for="nama" style="font-weight:600; font-size:0.97rem; margin-bottom:2px; display:block;">Nama</label>
                     <input type="text" id="nama" name="nama" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
                 </div>
                 <div>
@@ -194,7 +194,7 @@
                     </select>
                 </div>
             </div>
-            <div class="all-button" style="display: flex; flex-direction:column; justify-content: center; align-items: center; gap: 10px; margin-top: 32px; width: 100%; background:transparent; padding-top: 18px;">
+            <div class="all-button">
                 <button type="button" class="batal" onclick="closePopUpForm()">Batal</button>
                 <button type="submit" class="kirim">Kirim</button>
             </div>
@@ -252,10 +252,10 @@
                         </select>
                     </div>
                 </div>
-                <div class="all-button">
-                    <button type="button" class="batal" onclick="closeEditSiswaModal()">Batal</button>
-                    <button type="submit" class="kirim">Simpan</button>
-                </div>
+            </div>
+            <div class="all-button">
+                <button type="button" class="batal" onclick="closeEditSiswaModal()">Batal</button>
+                <button type="submit" class="kirim">Simpan</button>
             </div>
         </div>
     </form>

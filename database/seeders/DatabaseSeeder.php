@@ -39,7 +39,7 @@ public function run(): void
     // =======================
     // BUAT DATA USER
     // =======================
-    User::factory(10)->make()->each(function ($user) use ($npsnList) {
+    User::factory(15)->make()->each(function ($user) use ($npsnList) {
         if ($user->role === 'operator_sekolah') {
             $user->npsn = $npsnList[array_rand($npsnList)];
         }

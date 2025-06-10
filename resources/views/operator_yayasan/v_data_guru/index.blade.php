@@ -152,10 +152,15 @@
                     </select>
                 </div>
             </div>
-            <div class="all-button" style="display: flex; flex-direction:column; justify-content: center; align-items: center; gap: 10px; margin-top: 32px; width: 100%; background:transparent; padding-top: 18px;">
-                <button type="button" class="batal" onclick="closePopUpForm()">Batal</button>
-                <button type="submit" class="kirim">Kirim</button>
-            </div>
+            <form>
+    <!-- input fields di sini -->
+
+    <div class="all-button" style="display: flex; flex-direction: column; align-items: stretch; gap: 10px; margin-top: 32px;">
+        <button type="button" class="batal" onclick="closePopUpForm()">Batal</button>
+        <button type="submit" class="kirim">Kirim</button>
+    </div>
+</form>
+
         </div>
     </form>
 </div>
