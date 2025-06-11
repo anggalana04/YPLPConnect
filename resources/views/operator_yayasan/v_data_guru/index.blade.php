@@ -122,40 +122,58 @@
             <div class="sub-head-box" style="margin-bottom:18px;">
                 <h1 style="font-size:1.25rem; font-weight:600; margin-bottom:0;">Form Tambah Data Guru</h1>
             </div>
-            <div class="sub-form-box" style="background: #f7f7fa; border-radius: 18px; padding: 20px 18px 10px 18px; display: flex; flex-direction: column; gap: 16px; box-shadow:0 2px 8px 0 rgba(60,60,60,0.04);">
+            <div class="sub-form-box" style="background: #f7f7fa; border-radius: 18px; padding: 20px 18px 10px 18px; display: flex; flex-direction: column; gap: 8px; box-shadow:0 2px 8px 0 rgba(60,60,60,0.04);">
                 <div>
                     <label for="nama" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Nama</label>
-                    <input type="text" id="nama" name="nama" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    <input type="text" id="nama" name="nama" value="{{ old('nama') }}" required minlength="3" maxlength="100" oninput="if(this.value.length>=3){this.setCustomValidity('')}else{this.setCustomValidity('Nama minimal 3 karakter')}" style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    @error('nama')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div>
                     <label for="nuptk" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">NUPTK</label>
-                    <input type="text" id="nuptk" name="nuptk" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    <input type="text" id="nuptk" name="nuptk" value="{{ old('nuptk') }}" required pattern="[0-9]{16}" maxlength="16" minlength="16" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,16);if(this.value.length===16)this.setCustomValidity('');else this.setCustomValidity('NUPTK harus 16 digit angka')" style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    @error('nuptk')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div>
                     <label for="ttl" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Tempat, Tanggal Lahir</label>
-                    <input type="text" id="ttl" name="ttl" placeholder="Jakarta, 1990-01-01" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    <input type="text" id="ttl" name="ttl" value="{{ old('ttl') }}" placeholder="Jakarta, 1990-01-01" required pattern="^[A-Za-z .,'-]+,\s*\d{4}-\d{2}-\d{2}$" oninput="if(this.value.match(/^[A-Za-z .,'-]+,\s*\d{4}-\d{2}-\d{2}$/)){this.setCustomValidity('')}else{this.setCustomValidity('Format: Tempat, yyyy-mm-dd')}" style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    @error('ttl')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div>
                     <label for="no_hp" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">No HP</label>
-                    <input type="text" id="no_hp" name="no_hp" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    <input type="text" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" required pattern="[0-9]{10,15}" maxlength="15" minlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,15);if(this.value.length>=10){this.setCustomValidity('')}else{this.setCustomValidity('No HP minimal 10 digit angka')}" style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    @error('no_hp')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div>
                     <label for="alamat" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Alamat</label>
-                    <input type="text" id="alamat" name="alamat" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    <input type="text" id="alamat" name="alamat" value="{{ old('alamat') }}" required minlength="5" maxlength="255" oninput="if(this.value.length>=5){this.setCustomValidity('')}else{this.setCustomValidity('Alamat minimal 5 karakter')}" style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    @error('alamat')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div>
                     <label for="jenis_kelamin" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Jenis Kelamin</label>
                     <select id="jenis_kelamin" name="jenis_kelamin" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
                         <option value="">Pilih Jenis Kelamin</option>
-                        <option value="L">Laki-laki</option>
-                        <option value="P">Perempuan</option>
+                        <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                        <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
                     </select>
+                    @error('jenis_kelamin')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
     <!-- input fields di sini -->
 
-    <div class="all-button" >
+    <div class="all-button" style="margin-top:16px; display:flex; gap:10px; justify-content:flex-end;">
         <button type="button" class="batal" onclick="closePopUpForm()">Batal</button>
         <button type="submit" class="kirim">Kirim</button>
     </div>

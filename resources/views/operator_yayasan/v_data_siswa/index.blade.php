@@ -157,9 +157,10 @@
     </div>
 </div>
 
-<div class="modal-pengaduan" id="PopUpForm" style="display:none;">
+<div class="modal-pengaduan" id="PopUpForm" style="display:{{ ($errors->any() && old('_form') === 'tambah') ? 'flex' : 'none' }}; align-items:center; justify-content:center; position:fixed; top:0; left:0; width:100vw; height:100vh;">
     <form method="POST" action="{{ route('siswa.store') }}" class="form-box" style="padding:0; background:transparent; box-shadow:none;">
         @csrf
+        <input type="hidden" name="_form" value="tambah">
         <div class="form-modal-blur" style="background:#f0f0f0; border-radius:24px; max-width:420px; margin:0 auto; box-shadow:0 8px 32px 0 rgba(67,233,123,0.12);">
             <div class="sub-head-box" style="margin-bottom:18px;">
                 <h1 style="font-size:1.25rem; font-weight:600; margin-bottom:0;">Form Tambah Data Siswa</h1>
@@ -167,31 +168,50 @@
             <div class="sub-form-box" style="background: #f7f7fa; border-radius: 18px; padding: 20px 18px 10px 18px; display: flex; flex-direction: column; gap: 10px; box-shadow:0 2px 8px 0 rgba(60,60,60,0.04);">
                 <div>
                     <label for="nama" style="font-weight:600; font-size:0.97rem; margin-bottom:2px; display:block;">Nama</label>
-                    <input type="text" id="nama" name="nama" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    <input type="text" id="nama" name="nama" value="{{ old('nama') }}" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    @error('nama')
+                        <div class="text-danger" style="color:#dc3545; font-size:0.92em; margin-top:2px;">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div>
                     <label for="nisn" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">NISN</label>
-                    <input type="text" id="nisn" name="nisn" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    <input type="text" id="nisn" name="nisn" value="{{ old('nisn') }}" required pattern="[0-9]{10}" maxlength="10" minlength="10" style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                    <small style="color:#888;">NISN harus 10 digit angka</small>
+                    @error('nisn')
+                        <div class="text-danger" style="color:#dc3545; font-size:0.92em; margin-top:2px;">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div>
                     <label for="ttl" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Tempat, Tanggal Lahir</label>
-                    <input type="text" id="ttl" name="ttl" placeholder="Jakarta, 1990-01-01" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    <input type="text" id="ttl" name="ttl" value="{{ old('ttl') }}" placeholder="Jakarta, 1990-01-01" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    @error('ttl')
+                        <div class="text-danger" style="color:#dc3545; font-size:0.92em; margin-top:2px;">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div>
                     <label for="kelas" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Kelas</label>
-                    <input type="text" id="kelas" name="kelas" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    <input type="text" id="kelas" name="kelas" value="{{ old('kelas') }}" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    @error('kelas')
+                        <div class="text-danger" style="color:#dc3545; font-size:0.92em; margin-top:2px;">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div>
                     <label for="alamat" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Alamat</label>
-                    <input type="text" id="alamat" name="alamat" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    <input type="text" id="alamat" name="alamat" value="{{ old('alamat') }}" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    @error('alamat')
+                        <div class="text-danger" style="color:#dc3545; font-size:0.92em; margin-top:2px;">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div>
                     <label for="jenis_kelamin" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Jenis Kelamin</label>
                     <select id="jenis_kelamin" name="jenis_kelamin" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
                         <option value="">Pilih Jenis Kelamin</option>
-                        <option value="L">Laki-laki</option>
-                        <option value="P">Perempuan</option>
+                        <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                        <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
                     </select>
+                    @error('jenis_kelamin')
+                        <div class="text-danger" style="color:#dc3545; font-size:0.92em; margin-top:2px;">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
             <div class="all-button">
@@ -319,7 +339,7 @@ document.getElementById('searchInputAjax').addEventListener('keyup', function ()
 
     fetch(`/siswa/search?keyword=${encodeURIComponent(keyword)}&kategori=${encodeURIComponent(kategori)}`)
         .then(response => response.json())
-        .then(data => {
+        .then data => {
             const tbody = document.querySelector(".table-konten tbody");
             tbody.innerHTML = '';
 
@@ -484,5 +504,23 @@ function saveRowEditSiswa(btn) {
         }
     }).catch(() => alert('Gagal update data!'));
 }
+</script>
+
+<script>
+// Auto open PopUpForm if there are validation errors and center it
+@if ($errors->any() && old('_form') === 'tambah')
+    document.addEventListener('DOMContentLoaded', function() {
+        const popup = document.getElementById('PopUpForm');
+        popup.style.display = 'flex';
+        popup.style.position = 'fixed';
+        popup.style.top = '0';
+        popup.style.left = '0';
+        popup.style.width = '100vw';
+        popup.style.height = '100vh';
+        popup.style.alignItems = 'center';
+        popup.style.justifyContent = 'center';
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+@endif
 </script>
 @endpush
