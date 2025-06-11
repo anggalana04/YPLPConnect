@@ -102,7 +102,7 @@
 
                     <div class="form-group">
                         <label for="alamat">Alamat Unit Kerja</label>
-                        <input type="text" id="alamat" name="alamat" required />
+                        <input type="text" id="alamat" name="alamat" required minlength="12" />
                     </div>
                     <div class="form-group">
                         <label for="kategori">Jenis SK</label>

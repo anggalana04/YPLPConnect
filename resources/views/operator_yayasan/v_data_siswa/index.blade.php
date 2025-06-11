@@ -315,15 +315,16 @@ document.getElementById('uploadDataButton').addEventListener('click', function (
 <script>
 document.getElementById('searchInputAjax').addEventListener('keyup', function () {
     let keyword = this.value;
+    let kategori = document.getElementById('kategori').value;
 
-    fetch(`/siswa/search?keyword=${encodeURIComponent(keyword)}`)
+    fetch(`/siswa/search?keyword=${encodeURIComponent(keyword)}&kategori=${encodeURIComponent(kategori)}`)
         .then(response => response.json())
-        .then data => {
+        .then(data => {
             const tbody = document.querySelector(".table-konten tbody");
             tbody.innerHTML = '';
 
             if (data.data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center">Tidak ada hasil ditemukan.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center">Tidak ada hasil ditemukan.</td></tr>`;
                 return;
             }
 
@@ -340,6 +341,14 @@ document.getElementById('searchInputAjax').addEventListener('keyup', function ()
                         <td>${item.tempat_lahir}, ${tanggalFormatted}</td>
                         <td>${item.alamat ?? '-'}</td>
                         <td>${item.status ?? '-'}</td>
+                        <td>
+                            <form action="/siswa/${item.nisn}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-delete" onclick="return confirm('Yakin ingin menghapus data siswa ini?')">Hapus</button>
+                            </form>
+                            <button type="button" class="btn-edit" onclick="enableRowEditSiswa(this)">Edit</button>
+                        </td>
                     </tr>
                 `;
             });

@@ -77,7 +77,7 @@
                 name="judul"
                 placeholder="Judul Pengajuan Masalah"
                 required
-                minlength="15"
+                minlength="12"
             />
         </div>
 

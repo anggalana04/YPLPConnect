@@ -50,9 +50,9 @@
                 @if(auth()->user()->role === 'operator_sekolah')
                     <form action="{{ route('guru.import') }}" method="POST" enctype="multipart/form-data" id="uploadGuruForm" style="display:inline-block; width:100%;">
                         @csrf
-                        <button type="button" class="upload-guru" id="uploadGuruButton" style="display:block; width:220px; margin:0 auto; padding:10px 20px; border:none; border-radius:5px; background:linear-gradient(90deg,#f6eb61 0%,#f9d423 100%); color:#000; font-weight:bold; cursor:pointer; transition:background 0.3s; text-align:center;">Upload Data Guru</button>
+                        <button type="button" class="upload-guru" id="uploadGuruButton" style="display:block; width:220px; margin:0 auto; padding:10px 20px; border:none; border-radius:20px; background:linear-gradient(90deg,#f6eb61 0%,#f9d423 100%); color:#000; font-weight:bold; cursor:pointer; transition:background 0.3s; text-align:center;">Upload Data Guru</button>
                     </form>
-                    <button type="button" class="tambah-guru" onclick="openPopUpForm()" style="display:block; width:220px; margin:0 auto; padding:10px 20px; border:none; border-radius:5px; background:linear-gradient(90deg,#f6eb61 0%,#f9d423 100%); color:#000; font-weight:bold; cursor:pointer; transition:background 0.3s; text-align:center;">Tambah Data Guru</button>
+                    <button type="button" class="tambah-guru" onclick="openPopUpForm()" style="display:block; width:220px; margin:0 auto; padding:10px 20px; border:none; border-radius:20px; background:linear-gradient(90deg,#f6eb61 0%,#f9d423 100%); color:#000; font-weight:bold; cursor:pointer; transition:background 0.3s; text-align:center;">Tambah Data Guru</button>
                 @endif
             </div>
         </div>
