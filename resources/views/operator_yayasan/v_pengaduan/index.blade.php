@@ -144,6 +144,12 @@
     searchInput.addEventListener('keyup', function () {
         const keyword = searchInput.value.trim();
 
+        if (keyword === '') {
+            // Jika kolom pencarian kosong, muat ulang data awal
+            location.reload();
+            return;
+        }
+
         fetch(`/pengaduan/search?q=${encodeURIComponent(keyword)}`)
             .then(response => response.json())
             .then(data => {

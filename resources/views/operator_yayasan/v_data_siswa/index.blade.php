@@ -333,68 +333,55 @@ document.getElementById('uploadDataButton').addEventListener('click', function (
 
 {{-- AJAX UNTUK SEARCH --}}
 <script>
-document.getElementById('searchInputAjax').addEventListener('keyup', function () {
-    let keyword = this.value;
-    let kategori = document.getElementById('kategori').value;
+    document.getElementById('searchInputAjax').addEventListener('keyup', function () {
+        let keyword = this.value;
+        let kategori = document.getElementById('kategori').value;
 
-    fetch(`/siswa/search?keyword=${encodeURIComponent(keyword)}&kategori=${encodeURIComponent(kategori)}`)
-        .then(response => response.json())
-        .then data => {
-            const tbody = document.querySelector(".table-konten tbody");
-            tbody.innerHTML = '';
-
-            if (data.data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center">Tidak ada hasil ditemukan.</td></tr>`;
-                return;
-            }
-
-            data.data.forEach(item => {
-                let jenis_kelamin = item.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan';
-                let tanggal_lahir = new Date(item.tanggal_lahir);
-                let tanggalFormatted = tanggal_lahir.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
-
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${item.nisn}</td>
-                        <td>${item.nama}</td>
-                        <td>${jenis_kelamin}</td>
-                        <td>${item.tempat_lahir}, ${tanggalFormatted}</td>
-                        <td>${item.alamat ?? '-'}</td>
-                        <td>${item.status ?? '-'}</td>
-                        <td>
-                            <form action="/siswa/${item.nisn}" method="POST" style="display:inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn-delete" onclick="return confirm('Yakin ingin menghapus data siswa ini?')">Hapus</button>
-                            </form>
-                            <button type="button" class="btn-edit" onclick="enableRowEditSiswa(this)">Edit</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        });
-});
-</script>
-{{-- AJAX UNTUK SEARCH --}}
-
-{{-- JS UNTUK CLOSE NOTIF --}}
-<script>
-    window.onload = function() {
-        const alertBox = document.querySelector('.alert');
-        if (alertBox) {
-            setTimeout(() => {
-                const alerts = document.querySelectorAll('.alert.fixed-top-center');
-                alerts.forEach(alert => {
-                    alert.style.transition = 'opacity 0.5s ease';
-                    alert.style.opacity = '0';
-                    setTimeout(() => alert.remove(), 500);
-                });
-            }, 3000);
+        if (keyword.trim() === '') {
+            // Jika kolom pencarian kosong, muat ulang data awal (10 data per halaman)
+            location.reload();
+            return;
         }
-    };
-</script>
 
-{{-- JS UNTUK CLOSE NOTIF --}}
+        fetch(`/siswa/search?keyword=${encodeURIComponent(keyword)}&kategori=${encodeURIComponent(kategori)}`)
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.querySelector(".table-konten tbody");
+                tbody.innerHTML = '';
+
+                if (data.data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="text-center">Tidak ada hasil ditemukan.</td></tr>`;
+                    return;
+                }
+
+                data.data.forEach(item => {
+                    let jenis_kelamin = item.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan';
+                    let tanggal_lahir = new Date(item.tanggal_lahir);
+                    let tanggalFormatted = tanggal_lahir.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${item.nisn}</td>
+                            <td>${item.nama}</td>
+                            <td>${jenis_kelamin}</td>
+                            <td>${item.tempat_lahir}, ${tanggalFormatted}</td>
+                            <td>${item.alamat ?? '-'}</td>
+                            <td>${item.status ?? '-'}</td>
+                            <td style="text-align: center;">
+                                <form action="/siswa/${item.nisn}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-delete" onclick="return confirm('Yakin ingin menghapus data siswa ini?')">Hapus</button>
+                                </form>
+                                <button type="button" class="btn-edit" onclick="enableRowEditSiswa(this)">Edit</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            });
+    });
+</script>
+@endpush
 
 <script>
 function openEditSiswaModal(item) {
@@ -523,4 +510,3 @@ function saveRowEditSiswa(btn) {
     });
 @endif
 </script>
-@endpush
