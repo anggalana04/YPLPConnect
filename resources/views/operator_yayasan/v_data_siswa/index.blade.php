@@ -157,10 +157,9 @@
     </div>
 </div>
 
-<div class="modal-pengaduan" id="PopUpForm" style="display:{{ ($errors->any() && old('_form') === 'tambah') ? 'flex' : 'none' }}; align-items:center; justify-content:center; position:fixed; top:0; left:0; width:100vw; height:100vh;">
+<div class="modal-pengaduan" id="PopUpForm" style="display:none;">
     <form method="POST" action="{{ route('siswa.store') }}" class="form-box" style="padding:0; background:transparent; box-shadow:none;">
         @csrf
-        <input type="hidden" name="_form" value="tambah">
         <div class="form-modal-blur" style="background:#f0f0f0; border-radius:24px; max-width:420px; margin:0 auto; box-shadow:0 8px 32px 0 rgba(67,233,123,0.12);">
             <div class="sub-head-box" style="margin-bottom:18px;">
                 <h1 style="font-size:1.25rem; font-weight:600; margin-bottom:0;">Form Tambah Data Siswa</h1>
@@ -168,50 +167,31 @@
             <div class="sub-form-box" style="background: #f7f7fa; border-radius: 18px; padding: 20px 18px 10px 18px; display: flex; flex-direction: column; gap: 10px; box-shadow:0 2px 8px 0 rgba(60,60,60,0.04);">
                 <div>
                     <label for="nama" style="font-weight:600; font-size:0.97rem; margin-bottom:2px; display:block;">Nama</label>
-                    <input type="text" id="nama" name="nama" value="{{ old('nama') }}" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
-                    @error('nama')
-                        <div class="text-danger" style="color:#dc3545; font-size:0.92em; margin-top:2px;">{{ $message }}</div>
-                    @enderror
+                    <input type="text" id="nama" name="nama" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
                 </div>
                 <div>
                     <label for="nisn" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">NISN</label>
-                    <input type="text" id="nisn" name="nisn" value="{{ old('nisn') }}" required pattern="[0-9]{10}" maxlength="10" minlength="10" style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                    <small style="color:#888;">NISN harus 10 digit angka</small>
-                    @error('nisn')
-                        <div class="text-danger" style="color:#dc3545; font-size:0.92em; margin-top:2px;">{{ $message }}</div>
-                    @enderror
+                    <input type="text" id="nisn" name="nisn" required pattern="\d{10}" minlength="10" maxlength="10" oninput="this.setCustomValidity(this.value.length < 10 ? 'NISN harus terdiri dari 10 digit angka.' : '')" style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
                 </div>
                 <div>
                     <label for="ttl" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Tempat, Tanggal Lahir</label>
-                    <input type="text" id="ttl" name="ttl" value="{{ old('ttl') }}" placeholder="Jakarta, 1990-01-01" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
-                    @error('ttl')
-                        <div class="text-danger" style="color:#dc3545; font-size:0.92em; margin-top:2px;">{{ $message }}</div>
-                    @enderror
+                    <input type="text" id="ttl" name="ttl" placeholder="Jakarta, 1990-01-01" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
                 </div>
                 <div>
                     <label for="kelas" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Kelas</label>
-                    <input type="text" id="kelas" name="kelas" value="{{ old('kelas') }}" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
-                    @error('kelas')
-                        <div class="text-danger" style="color:#dc3545; font-size:0.92em; margin-top:2px;">{{ $message }}</div>
-                    @enderror
+                    <input type="text" id="kelas" name="kelas" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
                 </div>
                 <div>
                     <label for="alamat" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Alamat</label>
-                    <input type="text" id="alamat" name="alamat" value="{{ old('alamat') }}" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
-                    @error('alamat')
-                        <div class="text-danger" style="color:#dc3545; font-size:0.92em; margin-top:2px;">{{ $message }}</div>
-                    @enderror
+                    <input type="text" id="alamat" name="alamat" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
                 </div>
                 <div>
                     <label for="jenis_kelamin" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Jenis Kelamin</label>
                     <select id="jenis_kelamin" name="jenis_kelamin" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
                         <option value="">Pilih Jenis Kelamin</option>
-                        <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki</option>
-                        <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
+                        <option value="L">Laki-laki</option>
+                        <option value="P">Perempuan</option>
                     </select>
-                    @error('jenis_kelamin')
-                        <div class="text-danger" style="color:#dc3545; font-size:0.92em; margin-top:2px;">{{ $message }}</div>
-                    @enderror
                 </div>
             </div>
             <div class="all-button">
@@ -333,55 +313,73 @@ document.getElementById('uploadDataButton').addEventListener('click', function (
 
 {{-- AJAX UNTUK SEARCH --}}
 <script>
-    document.getElementById('searchInputAjax').addEventListener('keyup', function () {
-        let keyword = this.value;
-        let kategori = document.getElementById('kategori').value;
+document.getElementById('searchInputAjax').addEventListener('keyup', function () {
+    let keyword = this.value;
 
-        if (keyword.trim() === '') {
-            // Jika kolom pencarian kosong, muat ulang data awal (10 data per halaman)
-            location.reload();
-            return;
-        }
+    if (keyword.trim() === '') {
+        // Jika keyword kosong, reload halaman untuk menampilkan data awal (10 data per halaman)
+        location.reload();
+        return;
+    }
 
-        fetch(`/siswa/search?keyword=${encodeURIComponent(keyword)}&kategori=${encodeURIComponent(kategori)}`)
-            .then(response => response.json())
-            .then(data => {
-                const tbody = document.querySelector(".table-konten tbody");
-                tbody.innerHTML = '';
+    fetch(`/siswa/search?keyword=${encodeURIComponent(keyword)}`)
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.querySelector(".table-konten tbody");
+            tbody.innerHTML = '';
 
-                if (data.data.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="7" class="text-center">Tidak ada hasil ditemukan.</td></tr>`;
-                    return;
-                }
+            if (data.data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center">Tidak ada hasil ditemukan.</td></tr>`;
+                return;
+            }
 
-                data.data.forEach(item => {
-                    let jenis_kelamin = item.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan';
-                    let tanggal_lahir = new Date(item.tanggal_lahir);
-                    let tanggalFormatted = tanggal_lahir.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+            data.data.forEach(item => {
+                let jenis_kelamin = item.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan';
+                let tanggal_lahir = new Date(item.tanggal_lahir);
+                let tanggalFormatted = tanggal_lahir.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
 
-                    tbody.innerHTML += `
-                        <tr>
-                            <td>${item.nisn}</td>
-                            <td>${item.nama}</td>
-                            <td>${jenis_kelamin}</td>
-                            <td>${item.tempat_lahir}, ${tanggalFormatted}</td>
-                            <td>${item.alamat ?? '-'}</td>
-                            <td>${item.status ?? '-'}</td>
-                            <td style="text-align: center;">
-                                <form action="/siswa/${item.nisn}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn-delete" onclick="return confirm('Yakin ingin menghapus data siswa ini?')">Hapus</button>
-                                </form>
-                                <button type="button" class="btn-edit" onclick="enableRowEditSiswa(this)">Edit</button>
-                            </td>
-                        </tr>
-                    `;
-                });
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${item.nisn}</td>
+                        <td>${item.nama}</td>
+                        <td>${jenis_kelamin}</td>
+                        <td>${item.tempat_lahir}, ${tanggalFormatted}</td>
+                        <td>${item.alamat ?? '-'}</td>
+                        <td>${item.status ?? '-'}</td>
+                        <td>
+                            <form action="/siswa/${item.nisn}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-delete" onclick="return confirm('Yakin ingin menghapus data siswa ini?')">Hapus</button>
+                            </form>
+                            <button type="button" class="btn-edit" onclick="enableRowEditSiswa(this)">Edit</button>
+                        </td>
+                    </tr>
+                `;
             });
-    });
+        });
+});
 </script>
-@endpush
+{{-- AJAX UNTUK SEARCH --}}
+
+{{-- JS UNTUK CLOSE NOTIF --}}
+<script>
+    window.onload = function() {
+        const alertBox = document.querySelector('.alert');
+        if (alertBox) {
+            setTimeout(() => {
+                const alerts = document.querySelectorAll('.alert.fixed-top-center');
+                alerts.forEach(alert => {
+                    alert.style.transition = 'opacity 0.5s ease';
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 500);
+                });
+            }, 3000);
+        }
+    };
+</script>
+
+{{-- JS UNTUK CLOSE NOTIF --}}
 
 <script>
 function openEditSiswaModal(item) {
@@ -494,19 +492,17 @@ function saveRowEditSiswa(btn) {
 </script>
 
 <script>
-// Auto open PopUpForm if there are validation errors and center it
-@if ($errors->any() && old('_form') === 'tambah')
-    document.addEventListener('DOMContentLoaded', function() {
-        const popup = document.getElementById('PopUpForm');
-        popup.style.display = 'flex';
-        popup.style.position = 'fixed';
-        popup.style.top = '0';
-        popup.style.left = '0';
-        popup.style.width = '100vw';
-        popup.style.height = '100vh';
-        popup.style.alignItems = 'center';
-        popup.style.justifyContent = 'center';
-        window.scrollTo({top: 0, behavior: 'smooth'});
-    });
-@endif
+// Validasi tambahan untuk memastikan NISN hanya berupa angka
+const nisnInput = document.getElementById('nisn');
+nisnInput.addEventListener('input', function () {
+    const value = this.value;
+    if (!/^[0-9]*$/.test(value)) {
+        this.setCustomValidity('NISN harus berupa angka.');
+    } else if (value.length < 10) {
+        this.setCustomValidity('NISN harus terdiri dari 10 digit angka.');
+    } else {
+        this.setCustomValidity('');
+    }
+});
 </script>
+@endpush

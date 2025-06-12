@@ -102,7 +102,7 @@
 
                     <div class="form-group">
                         <label for="alamat">Alamat Unit Kerja</label>
-                        <input type="text" id="alamat" name="alamat" required minlength="12" />
+                        <input type="text" id="alamat" name="alamat" required />
                     </div>
                     <div class="form-group">
                         <label for="kategori">Jenis SK</label>
@@ -158,15 +158,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('search-form');
     const tableBody = document.getElementById('dokumen-body');
 
+    // Fungsi untuk kirim AJAX dan update tabel
     function fetchData() {
         const q = form.querySelector('input[name="q"]').value;
         const kategori = form.querySelector('select[name="kategori"]').value;
-
-        if (q.trim() === '' && kategori === '') {
-            // Jika kolom pencarian kosong, muat ulang data awal
-            location.reload();
-            return;
-        }
 
         let url = '{{ route("dokumen.ajaxSearch") }}?';
         if (q) url += 'q=' + encodeURIComponent(q) + '&';
@@ -186,15 +181,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Submit form dicegah supaya ajax jalan
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         fetchData();
     });
 
+    // Auto search saat input berubah
     form.querySelector('input[name="q"]').addEventListener('input', function() {
         fetchData();
     });
 
+    // Auto search saat kategori berubah
     form.querySelector('select[name="kategori"]').addEventListener('change', function() {
         fetchData();
     });
