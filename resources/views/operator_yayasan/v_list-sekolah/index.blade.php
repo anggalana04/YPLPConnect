@@ -82,7 +82,7 @@
             <div class="sub-head-box">
                 <h1>Form Penambahan Sekolah </h1>
             </div>
-            <div class="sub-form-box" style="background: #f7f7fa; border-radius: 18px; padding: 24px 24px 12px 24px; display: flex; flex-direction: column; gap: 18px;">
+            <div class="sub-form-box">
                 <div>
                     <label for="npsn" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">NPSN</label>
                     <input type="text" id="npsn" name="npsn" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px; margin-bottom:0;">
@@ -110,7 +110,7 @@
                     <input type="email" id="email" name="email" required style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px; margin-bottom:0;">
                 </div>
             </div>
-            <div class="all-button" style="display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 28px; width: 100%;">
+            <div class="all-button">
                 <button type="button" class="batal" onclick="closePopUpForm()">Batal</button>
                 <button type="submit" class="kirim">Kirim</button>
             </div>

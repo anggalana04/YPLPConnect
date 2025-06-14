@@ -10,6 +10,8 @@
 
     <title>YPLP PGRI</title>
 </head>
+
+
 <body>
     {{-- NAVBAR START --}}
       <nav class="navbar" id="navbar">
@@ -88,6 +90,8 @@
 </div>
 {{-- ABOUT END --}}
 
+
+
 {{-- SERVICES START --}}
 <div id="services">
     <h1 class="services-header">Our Services</h1>
@@ -138,6 +142,7 @@
     </div>
 {{-- CONTACT US END --}}
 </body>
+
 
 <script src="{{ asset('JavaScript/ANIMASI/Animasi-AboutUs.js') }}"></script>
 <script src="{{ asset('JavaScript/ANIMASI/Animasi-Services.js') }}"></script>
