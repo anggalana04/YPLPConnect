@@ -118,17 +118,17 @@
                 <div class="contact_info">
                     <div class="sub-contact-info">
                         <img src="{{ asset('image/icon-Landing_Page/icon-contact-location.svg') }}" alt="">
-                        <span class="detail_contact">Jl. in aja dulu</span>
+                        <span class="detail_contact">Jl. Pangeran Assogiri</span>
                     </div>
 
                     <div class="sub-contact-info">
                         <img src="{{ asset('image/icon-Landing_Page/icon-contact-telpon.svg') }}" alt="">
-                        <span class="detail_contact">08587684765736</span>
+                        <span class="detail_contact">0218755887</span>
                     </div>
 
                     <div class="sub-contact-info">
                         <img src="{{ asset('image/icon-Landing_Page/icon-contact-email.svg') }}" alt="">
-                        <span class="detail_contact">yplppgri@gmail.com</span>
+                        <span class="detail_contact">yplppgribgrkab@gmail.com</span>
                     </div>
 
                 </div>
