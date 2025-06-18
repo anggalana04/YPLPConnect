@@ -103,6 +103,7 @@
                     <div class="form-group">
                         <label for="alamat">Alamat Unit Kerja</label>
                         <input type="text" id="alamat" name="alamat" required />
+                        
                     </div>
                     <div class="form-group">
                         <label for="kategori">Jenis SK</label>
@@ -149,6 +150,16 @@
             const id = this.getAttribute('data-id');
             window.location.href = `/dokumen/detail/${id}`;
         });
+    });
+
+    // Validasi untuk input alamat unit kerja
+    const alamatInput = document.getElementById('alamat');
+    alamatInput.addEventListener('input', function () {
+        if (this.value.length < 12) {
+            this.setCustomValidity('Alamat unit kerja harus terdiri dari minimal 12 karakter.');
+        } else {
+            this.setCustomValidity('');
+        }
     });
 </script>
 

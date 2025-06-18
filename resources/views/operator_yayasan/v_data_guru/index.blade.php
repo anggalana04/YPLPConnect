@@ -153,7 +153,7 @@
                 </div>
                 <div>
                     <label for="alamat" style="font-weight:600; font-size:0.97rem; margin-bottom:4px; display:block;">Alamat</label>
-                    <input type="text" id="alamat" name="alamat" value="{{ old('alamat') }}" required minlength="5" maxlength="255" oninput="if(this.value.length>=5){this.setCustomValidity('')}else{this.setCustomValidity('Alamat minimal 5 karakter')}" style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
+                    <input type="text" id="alamat" name="alamat" value="{{ old('alamat') }}" required minlength="15" maxlength="255" oninput="if(this.value.length>=5){this.setCustomValidity('')}else{this.setCustomValidity('Alamat minimal 5 karakter')}" style="width:100%; border-radius:12px; border:1px solid #e0e0e0; padding:10px 14px;">
                     @error('alamat')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

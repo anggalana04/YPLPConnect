@@ -505,4 +505,16 @@ nisnInput.addEventListener('input', function () {
     }
 });
 </script>
+
+<script>
+// Validasi untuk input alamat
+const alamatInput = document.getElementById('alamat');
+alamatInput.addEventListener('input', function () {
+    if (this.value.length < 15) {
+        this.setCustomValidity('Alamat harus terdiri dari minimal 15 karakter.');
+    } else {
+        this.setCustomValidity('');
+    }
+});
+</script>
 @endpush

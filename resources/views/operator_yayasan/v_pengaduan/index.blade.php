@@ -75,6 +75,7 @@
             <input
                 type="text"
                 name="judul"
+                id="judul"
                 placeholder="Judul Pengajuan Masalah"
                 required
             />
@@ -219,6 +220,16 @@
                 }
             });
         });
+    });
+
+    // Validasi untuk input judul
+    const judulInput = document.getElementById('judul');
+    judulInput.addEventListener('input', function () {
+        if (this.value.length < 10) {
+            this.setCustomValidity('Judul harus terdiri dari minimal 10 karakter.');
+        } else {
+            this.setCustomValidity('');
+        }
     });
 });
 </script>
