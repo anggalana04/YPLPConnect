@@ -10,9 +10,20 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 
 class GuruImport implements ToCollection
 {
+    public $errorMessage = null;
+    public static $requiredColumns = [
+        'nuptk', 'npa', 'nama', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir', 'alamat', 'no_hp'
+    ];
+
     public function collection(Collection $rows)
     {
         $header = array_map('strtolower', $rows[0]->toArray());
+        $missing = array_diff(self::$requiredColumns, $header);
+        $extra = array_diff($header, self::$requiredColumns);
+        if (count($missing) > 0 || count($extra) > 0) {
+            $this->errorMessage = 'Kolom pada file excel hanya (nuptk, npa, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, no_hp)';
+            return;
+        }
 
         foreach ($rows->skip(1) as $row) {
             $rowData = array_combine($header, $row->toArray());

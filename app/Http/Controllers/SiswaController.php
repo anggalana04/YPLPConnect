@@ -190,7 +190,12 @@ class SiswaController extends Controller
             'file' => 'required|file|mimes:csv,xlsx,xls',
         ]);
 
-        Excel::import(new SiswaImport, $request->file('file'));
+        try {
+            $import = new \App\Imports\SiswaImport;
+            \Maatwebsite\Excel\Facades\Excel::import($import, $request->file('file'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
 
         return redirect()->back()->with('success', 'Data siswa berhasil diimpor.');
     }

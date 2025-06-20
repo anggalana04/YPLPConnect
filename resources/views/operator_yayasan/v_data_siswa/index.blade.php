@@ -29,6 +29,18 @@
 
 .alert-danger.fixed-top-center {
     background-color: #dc3545;
+    max-width: 700px;
+    min-width: 350px;
+    width: fit-content;
+    word-break: break-word;
+    white-space: pre-line;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 16px 32px;
+    font-size: 1.08rem;
+    box-sizing: border-box;
 }
 
 .tambah-siswa {
@@ -59,6 +71,7 @@
     padding: 24px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 </style>
 @endpush
 
@@ -69,8 +82,11 @@
 @endif
 
 @if (session('error'))
-    <div class="alert alert-danger fixed-top-center" role="alert">
-        {{ session('error') }}
+    <div class="alert alert-danger fixed-top-center" role="alert" id="customErrorAlert">
+        <div style="width:100%">
+            <div>{{ session('error') }}</div>
+            <button id="closeErrorAlertBtn" style="margin-top:12px; padding:6px 22px; border:none; border-radius:4px; color:black; font-weight:600; cursor:pointer;">OK</button>
+        </div>
     </div>
 @endif
 
@@ -98,14 +114,6 @@
                     <img src="{{ asset('image/search/search.svg') }}" alt="Search Icon">
                 </div>
                 <input type="text" placeholder="Cari Siswa" class="search-input" id="searchInputAjax">
-            </div>
-            <div class="kategori">
-                <select id="kategori" name="kategori">
-                    <option value="">Kategori Kelas</option>
-                    <option value="kelas1">Kelas 1</option>
-                    <option value="kelas2">Kelas 2</option>
-                    <option value="kelas3">Kelas 3</option>
-                </select>
             </div>
         </div>
 
@@ -273,15 +281,14 @@ document.querySelectorAll('.batal').forEach(function(btn) {
     });
 });
 
-// Auto hide alert setelah 3 detik
-setTimeout(() => {
-    const alerts = document.querySelectorAll('.alert');
-    alerts.forEach(alert => {
-        alert.style.transition = 'opacity 0.5s ease';
-        alert.style.opacity = '0';
-        setTimeout(() => alert.remove(), 500);
-    });
-}, 3000);
+// setTimeout(() => {
+//     const alerts = document.querySelectorAll('.alert');
+//     alerts.forEach(alert => {
+//         alert.style.transition = 'opacity 0.5s ease';
+//         alert.style.opacity = '0';
+//         setTimeout(() => alert.remove(), 500);
+//     });
+// }, 3000);
 </script>
 
 {{-- JS UPLOAD DATA SISWA BUTTON --}}
@@ -340,22 +347,29 @@ document.getElementById('searchInputAjax').addEventListener('keyup', function ()
 
                 tbody.innerHTML += `
                     <tr>
-                        <td>${item.nisn}</td>
-                        <td>${item.nama}</td>
-                        <td>${jenis_kelamin}</td>
-                        <td>${item.tempat_lahir}, ${tanggalFormatted}</td>
-                        <td>${item.alamat ?? '-'}</td>
-                        <td>${item.status ?? '-'}</td>
+                        <td class='editable' data-field='nisn'>${item.nisn}</td>
+                        <td class='editable' data-field='nama'>${item.nama}</td>
+                        <td class='editable' data-field='jenis_kelamin'>${jenis_kelamin}</td>
+                        <td class='editable' data-field='ttl'>${item.tempat_lahir}, ${tanggalFormatted}</td>
+                        <td class='editable' data-field='alamat'>${item.alamat ?? '-'}</td>
+                        <td class='editable' data-field='status'>${item.status ?? '-'}</td>
+                        <td class='editable' data-field='kelas' style='display:none;'>${item.kelas ?? ''}</td>
                         <td>
                             <form action="/siswa/${item.nisn}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn-delete" onclick="return confirm('Yakin ingin menghapus data siswa ini?')">Hapus</button>
                             </form>
-                            <button type="button" class="btn-edit" onclick="enableRowEditSiswa(this)">Edit</button>
+                            <button type="button" class="btn-edit">Edit</button>
                         </td>
                     </tr>
                 `;
+            });
+            // Rebind event edit
+            document.querySelectorAll('.btn-edit').forEach(function(btn) {
+                btn.onclick = function() {
+                    enableRowEditSiswa(this);
+                };
             });
         });
 });
@@ -363,6 +377,7 @@ document.getElementById('searchInputAjax').addEventListener('keyup', function ()
 {{-- AJAX UNTUK SEARCH --}}
 
 {{-- JS UNTUK CLOSE NOTIF --}}
+{{--
 <script>
     window.onload = function() {
         const alertBox = document.querySelector('.alert');
@@ -378,7 +393,7 @@ document.getElementById('searchInputAjax').addEventListener('keyup', function ()
         }
     };
 </script>
-
+--}}
 {{-- JS UNTUK CLOSE NOTIF --}}
 
 <script>
@@ -401,6 +416,16 @@ function closeEditSiswaModal() {
 
 <script>
 function enableRowEditSiswa(btn) {
+    // Tutup mode edit pada baris lain jika ada
+    document.querySelectorAll('tr.editing').forEach(function(row) {
+        if (row._original) {
+            Array.from(row.children).forEach((td, i) => {
+                td.innerHTML = row._original[i];
+            });
+            row.classList.remove('editing');
+            delete row._original;
+        }
+    });
     const tr = btn.closest('tr');
     if (tr.classList.contains('editing')) return;
     tr.classList.add('editing');
@@ -449,6 +474,14 @@ function cancelRowEditSiswa(btn) {
     });
     tr.classList.remove('editing');
     delete tr._original;
+    // Rebind event ke tombol Edit baru setelah cancel
+    setTimeout(() => {
+        document.querySelectorAll('.btn-edit').forEach(function(btn) {
+            btn.onclick = function() {
+                enableRowEditSiswa(this);
+            };
+        });
+    }, 10);
 }
 function saveRowEditSiswa(btn) {
     const tr = btn.closest('tr');
@@ -514,6 +547,18 @@ alamatInput.addEventListener('input', function () {
         this.setCustomValidity('Alamat harus terdiri dari minimal 15 karakter.');
     } else {
         this.setCustomValidity('');
+    }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const closeBtn = document.getElementById('closeErrorAlertBtn');
+    const alertBox = document.getElementById('customErrorAlert');
+    if (closeBtn && alertBox) {
+        closeBtn.addEventListener('click', function() {
+            alertBox.remove();
+        });
     }
 });
 </script>

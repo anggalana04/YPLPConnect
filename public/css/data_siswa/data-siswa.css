@@ -102,7 +102,7 @@ body {
 }
 
 .teks-head-box-konten p {
-    font-size: 1rem;
+    font-size: 0.8rem;
 }
 
 /* CSS BOX-KONTEN */
@@ -365,7 +365,7 @@ th:last-child {
     padding-right: 30px;
 }
 
-.kategori {
+/* .kategori {
     display: flex;
     flex-direction: column;
 }
@@ -382,7 +382,7 @@ th:last-child {
     border: 1px black solid;
     background-color: white;
     cursor: pointer;
-}
+} */
 
 /* CSS BUTTON */
 .all-button{

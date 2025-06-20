@@ -103,7 +103,6 @@
                     <div class="form-group">
                         <label for="alamat">Alamat Unit Kerja</label>
                         <input type="text" id="alamat" name="alamat" required />
-                        
                     </div>
                     <div class="form-group">
                         <label for="kategori">Jenis SK</label>
@@ -142,72 +141,63 @@
     });
 
     // Membuat setiap baris tabel bisa diklik untuk menuju detail
-    document.querySelectorAll('tr[data-id]').forEach(row => {
-        row.style.cursor = 'pointer';
-        row.addEventListener('click', function (e) {
-            // Prevent row click if the target is inside a select (dropdown)
-            if (e.target.tagName.toLowerCase() === 'select') return;
-            const id = this.getAttribute('data-id');
-            window.location.href = `/dokumen/detail/${id}`;
-        });
-    });
-
-    // Validasi untuk input alamat unit kerja
-    const alamatInput = document.getElementById('alamat');
-    alamatInput.addEventListener('input', function () {
-        if (this.value.length < 12) {
-            this.setCustomValidity('Alamat unit kerja harus terdiri dari minimal 12 karakter.');
-        } else {
-            this.setCustomValidity('');
-        }
-    });
-</script>
-
-{{-- SCRIPT AJAX --}}
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('search-form');
-    const tableBody = document.getElementById('dokumen-body');
-
-    // Fungsi untuk kirim AJAX dan update tabel
-    function fetchData() {
-        const q = form.querySelector('input[name="q"]').value;
-        const kategori = form.querySelector('select[name="kategori"]').value;
-
-        let url = '{{ route("dokumen.ajaxSearch") }}?';
-        if (q) url += 'q=' + encodeURIComponent(q) + '&';
-        if (kategori) url += 'kategori=' + encodeURIComponent(kategori);
-
-        fetch(url, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            tableBody.innerHTML = data.html || '<tr><td colspan="5" style="text-align:center;">Data tidak ditemukan</td></tr>';
-        })
-        .catch(err => {
-            console.error('Error:', err);
+    function setRowClickListeners() {
+        document.querySelectorAll('tr[data-id]').forEach(row => {
+            row.style.cursor = 'pointer';
+            row.addEventListener('click', function (e) {
+                if (e.target.tagName.toLowerCase() === 'select') return;
+                const id = this.getAttribute('data-id');
+                window.location.href = `/dokumen/detail/${id}`;
+            });
         });
     }
+    setRowClickListeners();
 
-    // Submit form dicegah supaya ajax jalan
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        fetchData();
-    });
+    {{-- SCRIPT AJAX --}}
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('search-form');
+        const tableBody = document.getElementById('dokumen-body');
 
-    // Auto search saat input berubah
-    form.querySelector('input[name="q"]').addEventListener('input', function() {
-        fetchData();
-    });
+        // Fungsi untuk kirim AJAX dan update tabel
+        function fetchData() {
+            const q = form.querySelector('input[name="q"]').value;
+            const kategori = form.querySelector('select[name="kategori"]').value;
 
-    // Auto search saat kategori berubah
-    form.querySelector('select[name="kategori"]').addEventListener('change', function() {
-        fetchData();
+            let url = '{{ route("dokumen.ajaxSearch") }}?';
+            if (q) url += 'q=' + encodeURIComponent(q) + '&';
+            if (kategori) url += 'kategori=' + encodeURIComponent(kategori);
+
+            fetch(url, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                tableBody.innerHTML = data.html || '<tr><td colspan="5" style="text-align:center;">Data tidak ditemukan</td></tr>';
+                setRowClickListeners(); // Pasang ulang event klik setelah update tabel
+            })
+            .catch(err => {
+                console.error('Error:', err);
+            });
+        }
+
+        // Submit form dicegah supaya ajax jalan
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            fetchData();
+        });
+
+        // Auto search saat input berubah
+        form.querySelector('input[name="q"]').addEventListener('input', function() {
+            fetchData();
+        });
+
+        // Auto search saat kategori berubah
+        form.querySelector('select[name="kategori"]').addEventListener('change', function() {
+            fetchData();
+        });
     });
-});
 </script>
 
 

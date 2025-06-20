@@ -36,7 +36,50 @@
     </div>
 @endif
 
+<style>
+#customErrorAlertGuru {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #dc3545;
+    color: #fff;
+    padding: 16px 32px;
+    border-radius: 8px;
+    z-index: 9999;
+    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 350px;
+    max-width: 700px;
+    width: fit-content;
+    word-break: break-word;
+    white-space: pre-line;
+    text-align: center;
+}
+#closeErrorAlertBtnGuru {
+    margin-top: 18px;
+    padding: 6px 22px;
+    border: none;
+    border-radius: 6px;
+    background: #fff;
+    color: black;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid #fff;
+    transition: background 0.2s, color 0.2s;
+}
+</style>
 
+@if(session('error'))
+    <div class="alert alert-danger" id="customErrorAlertGuru">
+        <span>{{ session('error') }}</span>
+        <button id="closeErrorAlertBtnGuru">OK</button>
+    </div>
+@endif
 
 @section('content')
 <div class="konten">
@@ -202,19 +245,27 @@ $('#searchInput').on('input', function () {
             if (data.length > 0) {
                 data.forEach(function (guru) {
                     html += `
-                        <tr>
-                            <td>${guru.nuptk}</td>
-                            <td>${guru.nama}</td>
-                            <td>${guru.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan'}</td>
-                            <td>${guru.tanggal_lahir}</td>
-                            <td>${guru.alamat}</td>
-                            <td>${guru.no_hp}</td>
-                            <td>${guru.status}</td>
+                        <tr data-nuptk="${guru.nuptk}">
+                            <td class="editable" data-field="nuptk">${guru.nuptk}</td>
+                            <td class="editable" data-field="nama">${guru.nama}</td>
+                            <td class="editable" data-field="jenis_kelamin">${guru.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan'}</td>
+                            <td class="editable" data-field="tanggal_lahir">${guru.tanggal_lahir}</td>
+                            <td class="editable" data-field="alamat">${guru.alamat}</td>
+                            <td class="editable" data-field="no_hp">${guru.no_hp}</td>
+                            <td class="editable" data-field="status">${guru.status}</td>
+                            <td>
+                                <form action="/guru/${guru.nuptk}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-delete" onclick="return confirm('Yakin ingin menghapus data guru ini?')">Hapus</button>
+                                </form>
+                                <button type="button" class="btn-edit" onclick="enableRowEditGuru(this)">Edit</button>
+                            </td>
                         </tr>
                     `;
                 });
             } else {
-                html = '<tr><td colspan="7" class="text-center">Tidak ada data guru.</td></tr>';
+                html = '<tr><td colspan="8" class="text-center">Tidak ada data guru.</td></tr>';
             }
 
             $('tbody').html(html);
@@ -338,5 +389,17 @@ function saveRowEditGuru(btn) {
         }
     }).catch(() => alert('Gagal update data!'));
 }
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const closeBtn = document.getElementById('closeErrorAlertBtnGuru');
+    const alertBox = document.getElementById('customErrorAlertGuru');
+    if (closeBtn && alertBox) {
+        closeBtn.addEventListener('click', function() {
+            alertBox.remove();
+        });
+    }
+});
 </script>
 @endpush
