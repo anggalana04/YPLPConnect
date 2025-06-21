@@ -152,12 +152,7 @@ class GuruController extends Controller
             'file' => 'required|mimes:xlsx,xls,csv',
         ]);
 
-        $import = new \App\Imports\GuruImport;
-        \Maatwebsite\Excel\Facades\Excel::import($import, $request->file('file'));
-
-        if ($import->errorMessage) {
-            return redirect()->back()->with('error', $import->errorMessage);
-        }
+        Excel::import(new GuruImport, $request->file('file'));
 
         return redirect()->back()->with('success', 'Data guru berhasil Ditambahkan.');
     }
