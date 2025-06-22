@@ -50,16 +50,18 @@ class SiswaImport implements ToModel, WithHeadingRow, WithEvents
 
     public function model(array $row)
     {
-        // Jika pakai heading row, pastikan key sesuai nama kolom heading Excel, contoh:
-        // 'nisn', 'npsn', 'nama', 'kelas', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir', 'alamat'
-
         $tanggal_lahir = $row['tanggal_lahir'];
 
         if (is_numeric($tanggal_lahir)) {
-            // Convert serial date Excel ke format Y-m-d
             $tanggal_lahir = Date::excelToDateTimeObject($tanggal_lahir)->format('Y-m-d');
         } else {
             $tanggal_lahir = date('Y-m-d', strtotime($tanggal_lahir));
+        }
+
+        // Cek jika sudah ada siswa dengan NISN yang sama
+        $existing = \App\Models\Siswa::where('nisn', $row['nisn'])->first();
+        if ($existing) {
+            throw new \Exception('Siswa dengan NISN = ' . $row['nisn'] . ' sudah ada');
         }
 
         return new Siswa([

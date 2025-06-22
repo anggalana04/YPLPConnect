@@ -197,7 +197,7 @@ class SiswaController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->back()->with('success', 'Data siswa berhasil diimpor.');
+        return redirect()->back()->with('success', 'Data siswa berhasil ditambahkan.');
     }
 
     public function search(Request $request)

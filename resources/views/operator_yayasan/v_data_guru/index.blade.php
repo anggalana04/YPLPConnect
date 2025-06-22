@@ -89,7 +89,7 @@
                 <h1>Data Guru</h1>
                 <p>Lihat Dan Kelola Data Guru Sekolah Anda</p>
             </div>
-            <div class="option-button" style="display:flex; flex-direction:column; gap:14px; align-items:center; justify-content:center; margin-top:18px;">
+            <div class="option-button" style="display:flex; flex-direction:column; align-items:center; justify-content:center; margin-top:18px;">
                 @if(auth()->user()->role === 'operator_sekolah')
                     <form action="{{ route('guru.import') }}" method="POST" enctype="multipart/form-data" id="uploadGuruForm" style="display:inline-block; width:100%;">
                         @csrf

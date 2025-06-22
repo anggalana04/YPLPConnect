@@ -76,7 +76,7 @@
 @endpush
 
 @if (session('success'))
-    <div class="alert alert-success fixed-top-center" role="alert">
+    <div class="alert alert-success fixed-top-center" role="alert" id="customSuccessAlert">
         {{ session('success') }}
     </div>
 @endif
@@ -553,6 +553,16 @@ alamatInput.addEventListener('input', function () {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Success alert auto-hide after 3 seconds
+    const successAlert = document.getElementById('customSuccessAlert');
+    if (successAlert) {
+        setTimeout(() => {
+            successAlert.style.transition = 'opacity 0.5s ease';
+            successAlert.style.opacity = '0';
+            setTimeout(() => successAlert.remove(), 500);
+        }, 3000);
+    }
+    // Error alert close button
     const closeBtn = document.getElementById('closeErrorAlertBtn');
     const alertBox = document.getElementById('customErrorAlert');
     if (closeBtn && alertBox) {
